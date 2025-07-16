@@ -213,9 +213,9 @@ export default function DoctorsPage() {
                     )}
 
                     <div className="flex space-x-2">
-                      <button className="flex-1 bg-primary hover:bg-primaryDark text-white px-4 py-2 rounded-md font-medium transition-colors">
+                      {/* <button className="flex-1 bg-primary hover:bg-primaryDark text-white px-4 py-2 rounded-md font-medium transition-colors">
                         Записаться
-                      </button>
+                      </button> */}
                       <button className="px-4 py-2 border border-primary text-primary hover:bg-primary hover:text-white rounded-md font-medium transition-colors">
                         Подробнее
                       </button>
