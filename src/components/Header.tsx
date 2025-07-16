@@ -57,7 +57,7 @@ export default function Header() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </span>
-              <Link to="/contacts" className="hover:text-teal">Контакты</Link>
+              <Link to="/contacts" className="hover:text-primary">Контакты</Link>
             </div>
             <div className="flex items-center text-sm text-gray-600">
               <span className="mr-1">
@@ -65,16 +65,16 @@ export default function Header() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
               </span>
-              <a href="tel:88314111122" className="hover:text-teal">8 (831) 411-11-22</a>
+              <a href="tel:+7XXXXXXXXXX" className="hover:text-primary">+7 (XXX) XXX-XX-XX</a>
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <Link to="/personal-cabinet" className="text-gray-600 hover:text-teal">
+            <Link to="/personal-cabinet" className="text-gray-600 hover:text-primary">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
             </Link>
-            <Link to="/cart" className="text-gray-600 hover:text-teal">
+            <Link to="/certificates" className="text-gray-600 hover:text-primary">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
@@ -84,26 +84,27 @@ export default function Header() {
 
         {/* Main header */}
         <div className="py-4 flex items-center justify-between">
-          <Link to="/" className="text-2xl font-semibold text-teal">
-            SPECTRE
+          <Link to="/" className="text-2xl font-semibold text-primary">
+            КЛИНИКА АЛДАН
           </Link>
 
           {/* Desktop navigation */}
           <nav className="hidden md:flex">
             <ul className="flex space-x-8">
-              <li><Link to="/about" className="text-dark hover:text-teal transition-colors">О клинике</Link></li>
-              <li><Link to="/doctors" className="text-dark hover:text-teal transition-colors">Врачи</Link></li>
-              <li><Link to="/stock" className="text-dark hover:text-teal transition-colors">Акции</Link></li>
-              <li><Link to="/news" className="text-dark hover:text-teal transition-colors">Новости</Link></li>
-              <li><Link to="/reviews" className="text-dark hover:text-teal transition-colors">Отзывы</Link></li>
-              <li><Link to="/questions" className="text-dark hover:text-teal transition-colors">Вопросы</Link></li>
-              <li><Link to="/contacts" className="text-dark hover:text-teal transition-colors">Контакты</Link></li>
+              <li><Link to="/about" className="text-dark hover:text-primary transition-colors">О клинике</Link></li>
+              <li><Link to="/doctors" className="text-dark hover:text-primary transition-colors">Врачи</Link></li>
+              <li><Link to="/prices" className="text-dark hover:text-primary transition-colors">Прайс-лист</Link></li>
+              <li><Link to="/stock" className="text-dark hover:text-primary transition-colors">Акции</Link></li>
+              <li><Link to="/certificates" className="text-dark hover:text-primary transition-colors">Сертификаты</Link></li>
+              <li><Link to="/reviews" className="text-dark hover:text-primary transition-colors">Отзывы</Link></li>
+              <li><Link to="/questions" className="text-dark hover:text-primary transition-colors">Вопросы</Link></li>
+              <li><Link to="/contacts" className="text-dark hover:text-primary transition-colors">Контакты</Link></li>
             </ul>
           </nav>
 
           {/* Mobile menu button */}
           <button
-            className="md:hidden text-dark p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-teal/50"
+            className="md:hidden text-dark p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-expanded={isMenuOpen}
             aria-label="Toggle menu"
@@ -142,7 +143,7 @@ export default function Header() {
         data-mobile-menu
       >
         <div className="p-4 border-b border-gray-100 flex justify-between items-center">
-          <span className="text-xl font-semibold text-teal">SPECTRE</span>
+          <span className="text-xl font-semibold text-primary">КЛИНИКА АЛДАН</span>
           <button
             className="text-gray-500 hover:text-dark"
             onClick={() => setIsMenuOpen(false)}
@@ -156,19 +157,20 @@ export default function Header() {
 
         <nav className="p-4">
           <ul className="space-y-4">
-            <li><Link to="/about" className="block py-2 text-dark hover:text-teal transition-colors">О клинике</Link></li>
-            <li><Link to="/doctors" className="block py-2 text-dark hover:text-teal transition-colors">Врачи</Link></li>
-            <li><Link to="/stock" className="block py-2 text-dark hover:text-teal transition-colors">Акции</Link></li>
-            <li><Link to="/news" className="block py-2 text-dark hover:text-teal transition-colors">Новости</Link></li>
-            <li><Link to="/reviews" className="block py-2 text-dark hover:text-teal transition-colors">Отзывы</Link></li>
-            <li><Link to="/questions" className="block py-2 text-dark hover:text-teal transition-colors">Вопросы</Link></li>
-            <li><Link to="/contacts" className="block py-2 text-dark hover:text-teal transition-colors">Контакты</Link></li>
+            <li><Link to="/about" className="block py-2 text-dark hover:text-primary transition-colors">О клинике</Link></li>
+            <li><Link to="/doctors" className="block py-2 text-dark hover:text-primary transition-colors">Врачи</Link></li>
+            <li><Link to="/prices" className="block py-2 text-dark hover:text-primary transition-colors">Прайс-лист</Link></li>
+            <li><Link to="/stock" className="block py-2 text-dark hover:text-primary transition-colors">Акции</Link></li>
+            <li><Link to="/certificates" className="block py-2 text-dark hover:text-primary transition-colors">Сертификаты</Link></li>
+            <li><Link to="/reviews" className="block py-2 text-dark hover:text-primary transition-colors">Отзывы</Link></li>
+            <li><Link to="/questions" className="block py-2 text-dark hover:text-primary transition-colors">Вопросы</Link></li>
+            <li><Link to="/contacts" className="block py-2 text-dark hover:text-primary transition-colors">Контакты</Link></li>
           </ul>
 
           <div className="mt-8 pt-4 border-t border-gray-100">
             <Link
               to="/appointment"
-              className="block w-full bg-teal text-white text-center py-3 rounded-md font-medium"
+              className="block w-full bg-primary hover:bg-primaryDark text-white text-center py-3 rounded-md font-medium transition-colors"
             >
               ЗАПИСАТЬСЯ
             </Link>
@@ -177,7 +179,7 @@ export default function Header() {
       </div>
 
       {/* Call to action button */}
-      <div className="bg-teal text-white text-center py-3">
+      <div className="bg-primary hover:bg-primaryDark text-white text-center py-3 transition-colors">
         <Link to="/appointment" className="font-medium">ЗАПИСАТЬСЯ НА ПРИЕМ</Link>
       </div>
     </header>

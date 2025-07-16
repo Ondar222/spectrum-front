@@ -4,19 +4,19 @@ const slides = [
   {
     id: 1,
     title: 'ЗАПИСАТЬСЯ НА ПРИЕМ',
-    subtitle: 'Сеть медицинских клиник "Spectre"',
-    description: 'Клиника полного цикла, где с 1999 года ведут прием профессионалы высочайшего уровня, среди которых 25 кандидатов медицинских наук, врачи высшей категории, лучшие специалисты города.',
+    subtitle: 'Клиника Алдан',
+    description: 'Современная медицинская клиника с высококвалифицированными специалистами. Мы предоставляем полный спектр медицинских услуг с использованием передовых технологий и индивидуальным подходом к каждому пациенту.',
     buttonText: 'ЗАПИСАТЬСЯ',
-    buttonLink: '/zapis-na-priem/',
+    buttonLink: '/appointment',
     image: '/bg-hero.jpg',
   },
   {
     id: 2,
-    title: 'Комплексные чекап программы',
-    subtitle: 'Полное обследование за один день',
-    description: 'Современные программы комплексного обследования организма позволяют выявить заболевания на ранних стадиях и предотвратить их развитие.',
+    title: 'Комплексные программы обследования',
+    subtitle: 'Полная диагностика за один день',
+    description: 'Современные программы комплексного обследования организма позволяют выявить заболевания на ранних стадиях и предотвратить их развитие. Индивидуальный подход к каждому пациенту.',
     buttonText: 'ПОДРОБНЕЕ',
-    buttonLink: '/programmy-check-up/',
+    buttonLink: '/services',
     image: '/bg-hero2.jpg',
   },
 ];
@@ -85,7 +85,7 @@ export default function Hero() {
                 </p>
                 <a
                   href={slide.buttonLink}
-                  className="bg-teal hover:bg-teal/90 transition-colors text-white py-3 px-8 inline-block font-medium rounded-md animate-fadeInUp opacity-0 shadow-lg"
+                  className="bg-primary hover:bg-primaryDark transition-colors text-white py-3 px-8 inline-block font-medium rounded-md animate-fadeInUp opacity-0 shadow-lg"
                   style={{ animationDelay: '0.7s', animationFillMode: 'forwards' }}
                 >
                   {slide.buttonText}
@@ -125,7 +125,7 @@ export default function Hero() {
             key={`slide-indicator-${slide.id}`}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
               slides.indexOf(slide) === currentSlide
-                ? 'bg-teal w-8'
+                ? 'bg-primary w-8'
                 : 'bg-white/60 hover:bg-white/80'
             }`}
             onClick={() => handleSlideChange(slides.indexOf(slide))}

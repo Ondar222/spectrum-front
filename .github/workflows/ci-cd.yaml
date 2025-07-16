@@ -1,0 +1,40 @@
+name: "deploy api"
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  deploy-main:
+    runs-on: "ubuntu-latest"
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SERVER: ${{ secrets.HOST_IP }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          eval `ssh-agent -s`
+          ssh-keyscan $SERVER >> ~/.ssh/known_hosts
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-add ~/.ssh/id_rsa
+
+      - name: Rebuild aldan-front
+        env:
+          SERVER: ${{ secrets.HOST_IP }}
+          USERNAME: ${{ secrets.HOST_USER }}
+        run: |
+          ssh -o StrictHostKeyChecking=no $USERNAME@$SERVER << 'EOF'
+            cd /var/www/aldan-site/aldan-front
+            git checkout main
+            git pull origin main
+            npm install
+            npm run build
+          EOF

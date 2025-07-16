@@ -14,6 +14,9 @@ import PromotionsPage from './components/PromotionsPage';
 import ContactsPage from './components/ContactsPage';
 import FAQPage from './components/FAQPage';
 import AboutClinicPage from './components/AboutClinicPage';
+import GiftCertificatesPage from './components/GiftCertificatesPage';
+import PriceListPage from './components/PriceListPage';
+import PatientCabinetPage from './components/PatientCabinetPage';
 
 function HomePage() {
   return (
@@ -42,6 +45,9 @@ function App() {
             <Route path="/stock" element={<PromotionsPage />} />
             <Route path="/contacts" element={<ContactsPage />} />
             <Route path="/questions" element={<FAQPage />} />
+            <Route path="/certificates" element={<GiftCertificatesPage />} />
+            <Route path="/prices" element={<PriceListPage />} />
+            <Route path="/personal-cabinet" element={<PatientCabinetPage />} />
           </Routes>
         </main>
         <Footer />

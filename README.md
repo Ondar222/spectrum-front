@@ -1,50 +1,128 @@
-# React + TypeScript + Vite
+# Клиника Алдан - Веб-сайт
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Современный веб-сайт для медицинской клиники Алдан, разработанный с использованием React, TypeScript и Tailwind CSS.
 
-Currently, two official plugins are available:
+## Особенности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🏥 Современный дизайн с брендингом клиники Алдан
+- 📱 Адаптивный дизайн для всех устройств
+- 🎨 Красная цветовая схема (RGB 210, 0, 46)
+- 📊 Интеграция с Directus CMS
+- ⚡ Быстрая загрузка и оптимизация
+- 🔍 SEO-оптимизированный
 
-## Expanding the ESLint configuration
+## Технологии
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Frontend**: React 18, TypeScript, Tailwind CSS
+- **CMS**: Directus
+- **Сборка**: Vite
+- **Стили**: Tailwind CSS с кастомными цветами
+- **Роутинг**: React Router
 
-- Configure the top-level `parserOptions` property like this:
+## Установка и запуск
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Предварительные требования
+
+- Node.js 18+ 
+- npm или yarn
+
+### Установка зависимостей
+
+```bash
+npm install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Настройка переменных окружения
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Создайте файл `.env` в корне проекта:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```env
+# Directus CMS Configuration
+REACT_APP_DIRECTUS_URL=http://localhost:8055
+REACT_APP_DIRECTUS_TOKEN=your_directus_token_here
+
+# App Configuration
+REACT_APP_SITE_NAME=Клиника Алдан
+REACT_APP_SITE_DESCRIPTION=Современная медицинская клиника с высококвалифицированными специалистами
 ```
+
+### Запуск в режиме разработки
+
+```bash
+npm run dev
+```
+
+Сайт будет доступен по адресу: http://localhost:5173
+
+### Сборка для продакшена
+
+```bash
+npm run build
+```
+
+## Структура проекта
+
+```
+src/
+├── components/          # React компоненты
+│   ├── Header.tsx      # Шапка сайта
+│   ├── Footer.tsx      # Подвал сайта
+│   ├── Hero.tsx        # Главный баннер
+│   ├── ServiceGrid.tsx # Сетка услуг
+│   └── ...
+├── services/           # Сервисы для работы с API
+│   └── directus.ts    # Сервис для Directus CMS
+├── types/              # TypeScript типы
+│   ├── cms.ts         # Типы для CMS
+│   └── doctors.ts     # Типы для врачей
+└── App.tsx            # Главный компонент приложения
+```
+
+## Цветовая схема
+
+Основные цвета клиники Алдан:
+
+- **Основной красный**: `#d2002e` (RGB 210, 0, 46)
+- **Темный красный**: `#b30026` (для hover эффектов)
+- **Светлый красный**: `#e6334d` (для акцентов)
+- **Темно-синий**: `#2c3e50` (для текста)
+- **Белый**: `#ffffff` (фон)
+
+## Интеграция с Directus CMS
+
+Сайт интегрирован с Directus CMS для управления контентом. Поддерживаемые типы контента:
+
+- **Врачи**: информация о специалистах
+- **Услуги**: медицинские услуги клиники
+- **Отзывы**: отзывы пациентов
+- **Новости**: новости клиники
+- **Акции**: специальные предложения
+- **FAQ**: часто задаваемые вопросы
+- **Контакты**: контактная информация
+
+## Настройка Directus
+
+1. Установите Directus CMS
+2. Создайте коллекции согласно типам в `src/types/cms.ts`
+3. Настройте API токены
+4. Обновите переменные окружения
+
+## Развертывание
+
+### Netlify
+
+Сайт настроен для развертывания на Netlify. Файл `netlify.toml` содержит необходимые настройки.
+
+### Другие платформы
+
+Для развертывания на других платформах используйте команду:
+
+```bash
+npm run build
+```
+
+И загрузите содержимое папки `dist/` на ваш хостинг.
+
+## Лицензия
+
+© 2024 Клиника Алдан. Все права защищены.
