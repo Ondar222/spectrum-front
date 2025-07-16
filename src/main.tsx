@@ -1,6 +1,11 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import "./topbar.css";
 import App from "./App.tsx";
+// @ts-ignore
+import * as isvek from "bvi"
+
+
 
 const rootElement = document.getElementById("root");
 if (!rootElement) {
@@ -8,3 +13,5 @@ if (!rootElement) {
 }
 
 createRoot(rootElement).render(<App />);
+
+new isvek.Bvi();
