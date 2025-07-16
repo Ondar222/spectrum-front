@@ -3,27 +3,42 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#38b8bc" />
   <meta name="description"
     content="Сеть медицинских клиник 'Spectre' в Кызыле. Высококвалифицированные специалисты, современное оборудование, широкий спектр медицинских услуг." />
-  <title>Сеть медицинских клиник "Spectre" в Кызыле</title>
+  <title>Клиника Алдан</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://someshit.yurta.site/dist/css/bvi.min.css" type="text/css">
+  <link rel="stylesheet" href="dist/css/bvi.min.css" type="text/css">
   <script>
     (function (w, d, s, h, i, js, fjs) {
       js = d.createElement(s), fjs = d.getElementsByTagName(s)[0], js.src = h + i, js.async = 1, fjs.parentNode.insertBefore(js, fjs);
     }(window, document, 'script', 'https://widget.archimed-soft.ru/init/', '8b376fec94c62b15cfd228227a24eb95'));
   </script>
+
 </head>
 
 <body>
+  <!-- Button visually impaired LINK -->
+  <button href="#" class="bvi-open" title="Версия сайта для слабовидящих">Версия сайта для слабовидящих</button>
+
+  <!-- Button visually impaired CLASS bvi-hide -->
+  <div class="bvi-hide">Текст скроется при включении плагина.</div>
+
+  <!-- Button visually impaired CLASS bvi-show -->
+  <div class="bvi-show">Текст покажется при включении плагина.</div>
+
   <div id="root"></div>
   <script type="module" src="/src/main.tsx"></script>
-  <script src="https://someshit.yurta.site/dist/js/bvi.min.js"></script>
+
+  <script src="button/js/bvi.min.js"></script>
+
+  <script>
+    new isvek.Bvi();
+  </script>
 </body>
 
 </html>
