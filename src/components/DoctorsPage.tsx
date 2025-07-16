@@ -39,15 +39,13 @@ export default function DoctorsPage() {
     loadData();
   }, []);
 
-  const filteredDoctors = doctors.filter(doctor => {
-    const matchesBranch = selectedBranch === 'all' || doctor.branch_id.toString() === selectedBranch;
-    const matchesCategory = selectedCategory === 'all' || doctor.category_id.toString() === selectedCategory;
+  const filteredDoctors = doctors?.filter((doctor: ArchimedDoctor) => {
+    // const matchesBranch = selectedBranch === 'all' || doctor.branch_id.toString() === selectedBranch;
+    // const matchesCategory = selectedCategory === 'all' || doctor.category_id.toString() === selectedCategory;
     const matchesSearch =
-      `${doctor.name} ${doctor.name1} ${doctor.name2}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      doctor.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      doctor.branch.toLowerCase().includes(searchTerm.toLowerCase());
+      `${doctor.name} ${doctor.name1} ${doctor.name2}`.toLowerCase().includes(searchTerm.toLowerCase())
 
-    return matchesBranch && matchesCategory && matchesSearch;
+    return matchesSearch;
   });
 
   const getDoctorFullName = (doctor: ArchimedDoctor) => {
@@ -157,12 +155,12 @@ export default function DoctorsPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredDoctors.map(doctor => (
-                <div key={doctor.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              {filteredDoctors?.map((doctor: ArchimedDoctor) => (
+                <div key={'doctor-' + doctor.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                   <div className="h-48 bg-gradient-to-br from-primary to-primaryDark flex items-center justify-center">
                     {doctor.photo ? (
                       <img
-                        src={doctor.photo}
+                        src={new Image().src = `data:image/png;base64,${doctor.photo}`}
                         alt={getDoctorFullName(doctor)}
                         className="w-32 h-32 rounded-full object-cover border-4 border-white"
                       />

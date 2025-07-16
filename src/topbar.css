@@ -8,6 +8,9 @@
   background-color: #ffffff;
   font-size: 0.875rem;
   line-height: 1.25rem;
+
+  margin: 0 auto;
+  max-width: 1536px;
 }
 
 .top-bar-left {
@@ -73,13 +76,13 @@
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .top-bar-left,
   .top-bar-right {
     gap: 0.5rem;
   }
-  
+
   .contact-item {
     font-size: 0.75rem;
   }
-} 
+}
