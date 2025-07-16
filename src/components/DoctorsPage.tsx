@@ -19,14 +19,14 @@ export default function DoctorsPage() {
         setIsLoading(true);
         setError(null);
 
-        const [doctorsData] = await Promise.all([
+        const [doctorsData, branchesData] = await Promise.all([
           archimedService.getDoctors(),
-          // archimedService.getBranches(),
+          archimedService.getBranches(),
           // archimedService.getCategories()
         ]);
 
         setDoctors(doctorsData);
-        // setBranches(branchesData);
+        setBranches(branchesData);
         // setCategories(categoriesData);
       } catch (err) {
         console.error('Ошибка загрузки данных:', err);
@@ -40,12 +40,12 @@ export default function DoctorsPage() {
   }, []);
 
   const filteredDoctors = doctors?.filter((doctor: ArchimedDoctor) => {
-    // const matchesBranch = selectedBranch === 'all' || doctor.branch_id.toString() === selectedBranch;
+    const matchesBranch = selectedBranch === 'all' || doctor?.branch_id?.toString() === selectedBranch;
     // const matchesCategory = selectedCategory === 'all' || doctor.category_id.toString() === selectedCategory;
     const matchesSearch =
       `${doctor.name} ${doctor.name1} ${doctor.name2}`.toLowerCase().includes(searchTerm.toLowerCase())
 
-    return matchesSearch;
+    return matchesBranch && matchesSearch;
   });
 
   const getDoctorFullName = (doctor: ArchimedDoctor) => {
