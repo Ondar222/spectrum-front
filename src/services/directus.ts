@@ -8,12 +8,16 @@ import {
   Contact, 
   ClinicInfo,
   DirectusResponse,
-  DirectusListResponse 
+  DirectusListResponse,
+  ApiService
 } from '../types/cms';
 
 // Directus API configuration
-const DIRECTUS_URL = process.env.REACT_APP_DIRECTUS_URL || 'http://localhost:8055';
-const DIRECTUS_TOKEN = process.env.REACT_APP_DIRECTUS_TOKEN || '';
+const DIRECTUS_URL = import.meta.env.VITE_DIRECTUS_URL || 'http://localhost:8055';
+const DIRECTUS_TOKEN = import.meta.env.VITE_DIRECTUS_TOKEN || '';
+
+// Real API configuration for services
+const SERVICES_API_URL = import.meta.env.VITE_SERVICES_API_URL || '';
 
 class DirectusService {
   private baseUrl: string;
@@ -41,6 +45,155 @@ class DirectusService {
     return response.json();
   }
 
+  // Real services API
+  async getServices(): Promise<ApiService[]> {
+    if (!SERVICES_API_URL) {
+      // Fallback to mock data if API URL is not configured
+      console.warn('SERVICES_API_URL not configured, using mock data');
+      return this.getMockServices();
+    }
+
+    try {
+      const response = await fetch(SERVICES_API_URL);
+      
+      if (!response.ok) {
+        throw new Error(`Services API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.data || data;
+    } catch (error) {
+      console.warn('Failed to fetch services from API, using mock data:', error);
+      return this.getMockServices();
+    }
+  }
+
+  // Mock services for development
+  private getMockServices(): ApiService[] {
+    return [
+      {
+        id: 11000,
+        kind: 0,
+        code: "11-10-001",
+        name: "Общий анализ крови (CBC/Diff - 5 фракций лейкоцитов)",
+        altcode: "11-10-001",
+        altname: "Общий анализ крови (CBC/Diff - 5 фракций лейкоцитов)",
+        barcode: "",
+        info: "Включает определение гемоглобина, эритроцитов, лейкоцитов, тромбоцитов и лейкоцитарной формулы",
+        group_name: "Лабораторные исследования",
+        group_id: 1002,
+        mz_code: "",
+        cito_cost: 0,
+        duration: 0,
+        base_cost: 470,
+        purchase_price: 0,
+        denomination: 0,
+        unit_id: null,
+        unit: null
+      },
+      {
+        id: 11001,
+        kind: 0,
+        code: "11-10-002",
+        name: "Биохимический анализ крови",
+        altcode: "11-10-002",
+        altname: "Биохимический анализ крови",
+        barcode: "",
+        info: "Определение глюкозы, холестерина, креатинина, мочевины и других показателей",
+        group_name: "Лабораторные исследования",
+        group_id: 1002,
+        mz_code: "",
+        cito_cost: 800,
+        duration: 0,
+        base_cost: 650,
+        purchase_price: 0,
+        denomination: 0,
+        unit_id: null,
+        unit: null
+      },
+      {
+        id: 12000,
+        kind: 0,
+        code: "12-01-001",
+        name: "Консультация терапевта",
+        altcode: "12-01-001",
+        altname: "Консультация терапевта",
+        barcode: "",
+        info: "Первичная консультация врача-терапевта с осмотром и назначением лечения",
+        group_name: "Консультации специалистов",
+        group_id: 1003,
+        mz_code: "",
+        cito_cost: 0,
+        duration: 30,
+        base_cost: 1500,
+        purchase_price: 0,
+        denomination: 0,
+        unit_id: null,
+        unit: null
+      },
+      {
+        id: 12001,
+        kind: 0,
+        code: "12-01-002",
+        name: "Консультация кардиолога",
+        altcode: "12-01-002",
+        altname: "Консультация кардиолога",
+        barcode: "",
+        info: "Консультация врача-кардиолога с ЭКГ и расшифровкой",
+        group_name: "Консультации специалистов",
+        group_id: 1003,
+        mz_code: "",
+        cito_cost: 2500,
+        duration: 45,
+        base_cost: 2000,
+        purchase_price: 0,
+        denomination: 0,
+        unit_id: null,
+        unit: null
+      },
+      {
+        id: 13000,
+        kind: 0,
+        code: "13-01-001",
+        name: "УЗИ брюшной полости",
+        altcode: "13-01-001",
+        altname: "УЗИ брюшной полости",
+        barcode: "",
+        info: "Ультразвуковое исследование органов брюшной полости",
+        group_name: "Ультразвуковая диагностика",
+        group_id: 1004,
+        mz_code: "",
+        cito_cost: 0,
+        duration: 30,
+        base_cost: 2000,
+        purchase_price: 0,
+        denomination: 0,
+        unit_id: null,
+        unit: null
+      },
+      {
+        id: 13001,
+        kind: 0,
+        code: "13-01-002",
+        name: "УЗИ сердца",
+        altcode: "13-01-002",
+        altname: "Эхокардиография",
+        barcode: "",
+        info: "Ультразвуковое исследование сердца с допплерографией",
+        group_name: "Ультразвуковая диагностика",
+        group_id: 1004,
+        mz_code: "",
+        cito_cost: 0,
+        duration: 45,
+        base_cost: 2500,
+        purchase_price: 0,
+        denomination: 0,
+        unit_id: null,
+        unit: null
+      }
+    ];
+  }
+
   // Doctors
   async getDoctors(): Promise<DirectusListResponse<Doctor>> {
     return this.request<DirectusListResponse<Doctor>>('doctors?sort=name');
@@ -50,8 +203,8 @@ class DirectusService {
     return this.request<DirectusResponse<Doctor>>(`doctors/${id}`);
   }
 
-  // Services
-  async getServices(): Promise<DirectusListResponse<Service>> {
+  // Services (legacy - for other components)
+  async getServicesLegacy(): Promise<DirectusListResponse<Service>> {
     return this.request<DirectusListResponse<Service>>('services?sort=title');
   }
 

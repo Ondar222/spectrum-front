@@ -1,157 +1,58 @@
 import React, { useState, useEffect } from 'react';
-
-interface Service {
-  id: string;
-  title: string;
-  description: string;
-  price: number;
-  duration: number;
-  category: string;
-  is_popular?: boolean;
-}
-
-interface Category {
-  id: string;
-  name: string;
-  icon: string;
-}
+import { ApiService, ServiceGroup } from '../types/cms';
+import directusService from '../services/directus';
 
 export default function PriceListPage() {
-  const [services, setServices] = useState<Service[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [serviceGroups, setServiceGroups] = useState<ServiceGroup[]>([]);
+  const [selectedGroup, setSelectedGroup] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-
-  // Моковые данные для демонстрации
-  const mockCategories: Category[] = [
-    { id: 'therapy', name: 'Терапия', icon: '🏥' },
-    { id: 'diagnostics', name: 'Диагностика', icon: '🔬' },
-    { id: 'surgery', name: 'Хирургия', icon: '⚕️' },
-    { id: 'cosmetology', name: 'Косметология', icon: '💄' },
-    { id: 'dentistry', name: 'Стоматология', icon: '🦷' },
-    { id: 'ophthalmology', name: 'Офтальмология', icon: '👁️' },
-  ];
-
-  const mockServices: Service[] = [
-    {
-      id: '1',
-      title: 'Консультация терапевта',
-      description: 'Первичная консультация врача-терапевта',
-      price: 1500,
-      duration: 30,
-      category: 'therapy',
-    },
-    {
-      id: '2',
-      title: 'Повторная консультация терапевта',
-      description: 'Повторная консультация врача-терапевта',
-      price: 1200,
-      duration: 20,
-      category: 'therapy',
-    },
-    {
-      id: '3',
-      title: 'ЭКГ',
-      description: 'Электрокардиограмма с расшифровкой',
-      price: 800,
-      duration: 15,
-      category: 'diagnostics',
-    },
-    {
-      id: '4',
-      title: 'УЗИ брюшной полости',
-      description: 'Ультразвуковое исследование органов брюшной полости',
-      price: 2000,
-      duration: 30,
-      category: 'diagnostics',
-    },
-    {
-      id: '5',
-      title: 'УЗИ сердца',
-      description: 'Эхокардиография',
-      price: 2500,
-      duration: 45,
-      category: 'diagnostics',
-    },
-    {
-      id: '6',
-      title: 'Консультация хирурга',
-      description: 'Первичная консультация врача-хирурга',
-      price: 2000,
-      duration: 30,
-      category: 'surgery',
-    },
-    {
-      id: '7',
-      title: 'Консультация косметолога',
-      description: 'Первичная консультация врача-косметолога',
-      price: 1500,
-      duration: 30,
-      category: 'cosmetology',
-    },
-    {
-      id: '8',
-      title: 'Чистка лица',
-      description: 'Механическая чистка лица',
-      price: 3000,
-      duration: 60,
-      category: 'cosmetology',
-      is_popular: true,
-    },
-    {
-      id: '9',
-      title: 'Консультация стоматолога',
-      description: 'Первичная консультация врача-стоматолога',
-      price: 1000,
-      duration: 30,
-      category: 'dentistry',
-    },
-    {
-      id: '10',
-      title: 'Лечение кариеса',
-      description: 'Лечение кариеса с пломбированием',
-      price: 4000,
-      duration: 60,
-      category: 'dentistry',
-    },
-    {
-      id: '11',
-      title: 'Консультация офтальмолога',
-      description: 'Первичная консультация врача-офтальмолога',
-      price: 1800,
-      duration: 30,
-      category: 'ophthalmology',
-    },
-    {
-      id: '12',
-      title: 'Проверка зрения',
-      description: 'Комплексная проверка зрения',
-      price: 1200,
-      duration: 20,
-      category: 'ophthalmology',
-    },
-  ];
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Симуляция загрузки данных из API
-    const loadData = async () => {
-      setIsLoading(true);
-      // await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      setCategories(mockCategories);
-      setServices(mockServices);
-      setIsLoading(false);
+    const loadServices = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        
+        const services = await directusService.getServices();
+        
+        // Группируем услуги по group_name
+        const groupedServices = services.reduce((groups: ServiceGroup[], service: ApiService) => {
+          const existingGroup = groups.find(group => group.id === service.group_id);
+          
+          if (existingGroup) {
+            existingGroup.services.push(service);
+          } else {
+            groups.push({
+              id: service.group_id,
+              name: service.group_name,
+              services: [service]
+            });
+          }
+          
+          return groups;
+        }, []);
+        
+        setServiceGroups(groupedServices);
+      } catch (err) {
+        console.error('Ошибка загрузки услуг:', err);
+        setError('Не удалось загрузить прайс-лист. Попробуйте позже.');
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    loadData();
+    loadServices();
   }, []);
 
-  const filteredServices = services.filter(service => {
-    const matchesCategory = selectedCategory === 'all' || service.category === selectedCategory;
-    const matchesSearch = service.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         service.description.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesCategory && matchesSearch;
+  const filteredGroups = serviceGroups.filter(group => {
+    const matchesGroup = selectedGroup === 'all' || group.id.toString() === selectedGroup;
+    const hasMatchingServices = group.services.some(service => 
+      service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      service.altname.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    return matchesGroup && hasMatchingServices;
   });
 
   const formatPrice = (price: number) => {
@@ -159,12 +60,18 @@ export default function PriceListPage() {
   };
 
   const formatDuration = (minutes: number) => {
+    if (minutes === 0) return 'По договоренности';
     if (minutes < 60) {
       return `${minutes} мин`;
     }
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
     return remainingMinutes > 0 ? `${hours} ч ${remainingMinutes} мин` : `${hours} ч`;
+  };
+
+  const getServicePrice = (service: ApiService) => {
+    // Приоритет: cito_cost > base_cost
+    return service.cito_cost > 0 ? service.cito_cost : service.base_cost;
   };
 
   if (isLoading) {
@@ -174,6 +81,26 @@ export default function PriceListPage() {
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
             <p className="mt-4 text-gray-600">Загрузка прайс-листа...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              {error}
+            </div>
+            <button 
+              onClick={() => window.location.reload()}
+              className="bg-primary hover:bg-primaryDark text-white px-6 py-2 rounded-md font-medium transition-colors"
+            >
+              Попробовать снова
+            </button>
           </div>
         </div>
       </div>
@@ -213,19 +140,19 @@ export default function PriceListPage() {
               </div>
             </div>
 
-            {/* Category Filter */}
+            {/* Group Filter */}
             <div>
-              <label htmlFor="category" className="block text-gray-700 mb-2 font-medium">Категория</label>
+              <label htmlFor="group" className="block text-gray-700 mb-2 font-medium">Категория</label>
               <select
-                id="category"
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                id="group"
+                value={selectedGroup}
+                onChange={(e) => setSelectedGroup(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"
               >
                 <option value="all">Все категории</option>
-                {categories.map(category => (
-                  <option key={category.id} value={category.id}>
-                    {category.icon} {category.name}
+                {serviceGroups.map(group => (
+                  <option key={group.id} value={group.id.toString()}>
+                    {group.name}
                   </option>
                 ))}
               </select>
@@ -234,8 +161,8 @@ export default function PriceListPage() {
         </div>
 
         {/* Services List */}
-        <div className="space-y-6">
-          {filteredServices.length === 0 ? (
+        <div className="space-y-8">
+          {filteredGroups.length === 0 ? (
             <div className="bg-white rounded-lg shadow-lg p-8 text-center">
               <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33" />
@@ -244,47 +171,75 @@ export default function PriceListPage() {
               <p className="text-gray-600">Попробуйте изменить параметры поиска</p>
             </div>
           ) : (
-            filteredServices.map(service => (
-              <div
-                key={service.id}
-                className={`bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow ${
-                  service.is_popular ? 'border-2 border-primary' : ''
-                }`}
-              >
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-xl font-semibold text-dark">{service.title}</h3>
-                      {service.is_popular && (
-                        <span className="bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
-                          Популярно
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-gray-600 mb-4">{service.description}</p>
-                    <div className="flex items-center space-x-4 text-sm text-gray-500">
-                      <span className="flex items-center">
-                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        {formatDuration(service.duration)}
-                      </span>
-                      <span className="flex items-center">
-                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
-                        {categories.find(cat => cat.id === service.category)?.name}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="mt-4 md:mt-0 md:ml-6 text-right">
-                    <div className="text-2xl font-bold text-primary mb-2">
-                      {formatPrice(service.price)}
-                    </div>
-                    <button className="bg-primary hover:bg-primaryDark text-white px-6 py-2 rounded-md font-medium transition-colors">
-                      Записаться
-                    </button>
-                  </div>
+            filteredGroups.map(group => (
+              <div key={group.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
+                {/* Group Header */}
+                <div className="bg-primary text-white px-6 py-4">
+                  <h2 className="text-xl font-semibold">{group.name}</h2>
+                  <p className="text-primaryLight text-sm mt-1">
+                    {group.services.length} {group.services.length === 1 ? 'услуга' : 
+                     group.services.length < 5 ? 'услуги' : 'услуг'}
+                  </p>
+                </div>
+
+                {/* Services in Group */}
+                <div className="divide-y divide-gray-200">
+                  {group.services
+                    .filter(service => 
+                      service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      service.altname.toLowerCase().includes(searchTerm.toLowerCase())
+                    )
+                    .map(service => (
+                      <div key={service.id} className="p-6 hover:bg-gray-50 transition-colors">
+                        <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-start justify-between mb-2">
+                              <h3 className="text-lg font-semibold text-dark">{service.name}</h3>
+                              {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
+                                <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">
+                                  Срочно
+                                </span>
+                              )}
+                            </div>
+                            {service.altname && service.altname !== service.name && (
+                              <p className="text-gray-600 mb-2 text-sm italic">{service.altname}</p>
+                            )}
+                            {service.info && (
+                              <p className="text-gray-600 mb-4 text-sm">{service.info}</p>
+                            )}
+                            <div className="flex items-center space-x-4 text-sm text-gray-500">
+                              <span className="flex items-center">
+                                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                {formatDuration(service.duration)}
+                              </span>
+                              {service.code && (
+                                <span className="flex items-center">
+                                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                  </svg>
+                                  Код: {service.code}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="mt-4 md:mt-0 md:ml-6 text-right">
+                            <div className="text-2xl font-bold text-primary mb-2">
+                              {formatPrice(getServicePrice(service))}
+                            </div>
+                            {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
+                              <div className="text-sm text-gray-500 mb-2">
+                                Обычно: {formatPrice(service.base_cost)}
+                              </div>
+                            )}
+                            <button className="bg-primary hover:bg-primaryDark text-white px-6 py-2 rounded-md font-medium transition-colors">
+                              Записаться
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                 </div>
               </div>
             ))

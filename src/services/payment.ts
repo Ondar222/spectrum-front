@@ -24,8 +24,8 @@ class PaymentService {
   private apiKey: string;
 
   constructor() {
-    this.apiUrl = process.env.REACT_APP_PAYMENT_API_URL || '';
-    this.apiKey = process.env.REACT_APP_PAYMENT_API_KEY || '';
+    this.apiUrl = import.meta.env.VITE_PAYMENT_API_URL || '';
+    this.apiKey = import.meta.env.VITE_PAYMENT_API_KEY || '';
   }
 
   // Создание платежа для подарочного сертификата

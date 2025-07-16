@@ -25,6 +25,34 @@ export interface Service {
   is_popular: boolean;
 }
 
+// Real API service types
+export interface ApiService {
+  id: number;
+  kind: number;
+  code: string;
+  name: string;
+  altcode: string;
+  altname: string;
+  barcode: string;
+  info: string;
+  group_name: string;
+  group_id: number;
+  mz_code: string;
+  cito_cost: number;
+  duration: number;
+  base_cost: number;
+  purchase_price: number;
+  denomination: number;
+  unit_id: number | null;
+  unit: string | null;
+}
+
+export interface ServiceGroup {
+  id: number;
+  name: string;
+  services: ApiService[];
+}
+
 export interface Review {
   id: string;
   patient_name: string;
