@@ -3,8 +3,8 @@ import ContactForm from './ContactForm';
 
 export default function ContactsPage() {
   return (
-    <div className="min-h-screen bg-lightTeal">
-      <div className="container mx-auto px-4 py-12">
+    <div className="min-h-screen bg-lightTeal py-12">
+      <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold text-center mb-8">Контакты</h1>
           

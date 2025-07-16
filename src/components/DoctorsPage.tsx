@@ -1,195 +1,232 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { DoctorsApiResponse } from '../types/doctors';
-import useSWR from 'swr';
-
-interface Doctor {
-  id: number;
-  name: string;
-  specialty: string;
-  experience: number;
-  rating: number;
-  image: string;
-  description: string;
-  education: string[];
-  languages: string[];
-  isAvailable: boolean;
-  price: string;
-  schedule: string;
-}
-
-const fetchDoctors = async () => {
-  const response = await fetch('http://77.232.143.97:8055/items/doctors?fields=*.*.*', {
-    headers: {
-      Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`
-    }
-  });
-  const data: DoctorsApiResponse= await response.json();
-  return data.data;
-}
+import React, { useState, useEffect } from 'react';
+import { ArchimedDoctor, ArchimedBranch, ArchimedCategory } from '../types/cms';
+import archimedService from '../services/archimed';
+import ErrorComponent from './ErrorComponent';
 
 export default function DoctorsPage() {
-  const [selectedSpecialty, setSelectedSpecialty] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const {data, isLoading} = useSWR('doctors', fetchDoctors);
-  const [doctors, setDoctors] = useState<Doctor[]>([]);
-
-  const specialties = [
-    'all',
-    'Терапевт',
-    'Кардиолог',
-    'Невролог',
-    'Офтальмолог',
-    'Стоматолог',
-    'Дерматолог',
-    'Гинеколог',
-    'Уролог',
-    'Эндокринолог',
-    'Педиатр',
-    'Хирург',
-    'Ортопед',
-    'ЛОР',
-    'Психиатр',
-    'Аллерголог',
-    'Гастроэнтеролог',
-    'Гематолог',
-    'Инфекционист',
-    'Нефролог',
-    'Ревматолог'
-  ];
-
+  const [doctors, setDoctors] = useState<ArchimedDoctor[]>([]);
+  const [branches, setBranches] = useState<ArchimedBranch[]>([]);
+  const [categories, setCategories] = useState<ArchimedCategory[]>([]);
+  const [selectedBranch, setSelectedBranch] = useState<string>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setDoctors(data?.map((doctor) => ({
-      id: doctor.id,
-      name: doctor.name,
-      specialty: doctor.specialty,
-      experience: doctor.experience,
-      rating: doctor.rating,
-      image: doctor.image || "",
-      description: doctor.description,
-      price: doctor.price.toString(),
-      schedule: "",
-      education: doctor.education.map((education) => education.education_id.name),
-      languages: doctor.languages.map((language) => language.languages_id.name),
-      isAvailable: true
-    })) || []);
-  }, [data]);
-  
+    const loadData = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
 
+        const [doctorsData] = await Promise.all([
+          archimedService.getDoctors(),
+          // archimedService.getBranches(),
+          // archimedService.getCategories()
+        ]);
 
-    // const doctor = {
-    //   id: 1,
-    //   name: 'Иванова Анна Петровна',
-    //   specialty: 'Терапевт',
-    //   experience: 15,
-    //   rating: 4.9,
-    //   image: '/images/doctor1.jpg',
-    //   description: 'Высококвалифицированный терапевт с большим опытом работы. Специализируется на лечении и профилактике заболеваний внутренних органов.',
-    //   education: ['МГМУ им. И.М. Сеченова', 'Клиническая ординатура по терапии'],
-    //   languages: ['Русский', 'Английский'],
-    //   isAvailable: true,
-    //   price: '2 500 ₽',
-    //   schedule: 'Пн-Пт: 9:00-18:00'
-    // }
+        setDoctors(doctorsData);
+        // setBranches(branchesData);
+        // setCategories(categoriesData);
+      } catch (err) {
+        console.error('Ошибка загрузки данных:', err);
+        setError('Не удалось загрузить данные о врачах. Попробуйте позже.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
+    loadData();
+  }, []);
 
   const filteredDoctors = doctors.filter(doctor => {
-    const matchesSpecialty = selectedSpecialty === 'all' || doctor.specialty === selectedSpecialty;
-    const matchesSearch = doctor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         doctor.specialty.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesSpecialty && matchesSearch;
+    const matchesBranch = selectedBranch === 'all' || doctor.branch_id.toString() === selectedBranch;
+    const matchesCategory = selectedCategory === 'all' || doctor.category_id.toString() === selectedCategory;
+    const matchesSearch =
+      `${doctor.name} ${doctor.name1} ${doctor.name2}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      doctor.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      doctor.branch.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return matchesBranch && matchesCategory && matchesSearch;
   });
 
-  if(isLoading) {
-    return <div>Загрузка...</div>
+  const getDoctorFullName = (doctor: ArchimedDoctor) => {
+    return `${doctor.name} ${doctor.name1} ${doctor.name2}`;
+  };
+
+  const getDoctorInitials = (doctor: ArchimedDoctor) => {
+    return `${doctor?.name} ${doctor?.name1?.charAt(0)}. ${doctor?.name2?.charAt(0)}.`;
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-12">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-4 text-gray-600">Загрузка информации о врачах...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <ErrorComponent
+        title="Ошибка загрузки врачей"
+        message={error}
+        onRetry={() => window.location.reload()}
+      />
+    );
   }
 
   return (
-    <div className="min-h-screen bg-lightTeal">
-      <div className="container mx-auto px-4 py-12">
-        <h1 className="text-4xl font-bold text-center mb-8">Наши врачи</h1>
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-dark mb-4">Наши специалисты</h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Высококвалифицированные врачи клиники Алдан с многолетним опытом работы.
+          </p>
+        </div>
 
-        {/* Search and filter section */}
-        <div className="max-w-4xl mx-auto mb-8">
-          <div className="flex flex-col md:flex-row gap-4 mb-6">
-            <input
-              type="text"
-              placeholder="Поиск по имени или специальности..."
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal focus:border-teal"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <select
-              className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal focus:border-teal"
-              value={selectedSpecialty}
-              onChange={(e) => setSelectedSpecialty(e.target.value)}
-            >
-              {specialties.map((specialty) => (
-                <option key={specialty} value={specialty}>
-                  {specialty === 'all' ? 'Все специальности' : specialty}
-                </option>
-              ))}
-            </select>
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="md:col-span-2">
+              <label htmlFor="search" className="block text-gray-700 mb-2 font-medium">Поиск врача</label>
+              <div className="relative">
+                <input
+                  type="text"
+                  id="search"
+                  placeholder="Введите ФИО, специальность или отделение..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full px-4 py-2 pl-10 border border-gray-300 rounded focus:outline-none focus:border-primary"
+                />
+                <svg className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="branch" className="block text-gray-700 mb-2 font-medium">Отделение</label>
+              <select
+                id="branch"
+                value={selectedBranch}
+                onChange={(e) => setSelectedBranch(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"
+              >
+                <option value="all">Все отделения</option>
+                {branches.map(branch => (
+                  <option key={branch.id} value={branch.id.toString()}>
+                    {branch.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="category" className="block text-gray-700 mb-2 font-medium">Категория</label>
+              <select
+                id="category"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"
+              >
+                <option value="all">Все категории</option>
+                {categories.map(category => (
+                  <option key={category.id} value={category.id.toString()}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
 
-        {/* Doctors grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredDoctors.map((doctor) => (
-            <Link
-              key={doctor.id}
-              to={`/doctors/${doctor.id}`}
-              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-            >
-              <div className="relative">
-                <img
-                  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(doctor.name)}&background=random&size=256`}
-                  alt={doctor.name}
-                  className="w-full h-64 object-cover"
-                />
-                {doctor.isAvailable && (
-                  <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm">
-                    Доступен
+        <div className="space-y-6">
+          {filteredDoctors.length === 0 ? (
+            <div className="bg-white rounded-lg shadow-lg p-8 text-center">
+              <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <h3 className="text-lg font-semibold text-dark mb-2">Врачи не найдены</h3>
+              <p className="text-gray-600">Попробуйте изменить параметры поиска</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredDoctors.map(doctor => (
+                <div key={doctor.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                  <div className="h-48 bg-gradient-to-br from-primary to-primaryDark flex items-center justify-center">
+                    {doctor.photo ? (
+                      <img
+                        src={doctor.photo}
+                        alt={getDoctorFullName(doctor)}
+                        className="w-32 h-32 rounded-full object-cover border-4 border-white"
+                      />
+                    ) : (
+                      <div className="w-32 h-32 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
+                        <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">{doctor.name}</h3>
-                <div className="flex items-center mb-2">
-                  <span className="text-gray-600">{doctor.specialty}</span>
-                  <span className="mx-2">•</span>
-                  <span className="text-gray-600">{doctor.experience} лет опыта</span>
-                </div>
-                <div className="flex items-center mb-4">
-                  <div className="flex items-center">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        className={`w-5 h-5 ${
-                          i < Math.floor(doctor.rating)
-                            ? 'text-yellow-400'
-                            : 'text-gray-300'
-                        }`}
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
+
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold text-dark mb-2">
+                      {getDoctorInitials(doctor)}
+                    </h3>
+                    <p className="text-primary font-medium mb-2">{doctor.type}</p>
+
+                    <div className="space-y-2 text-sm text-gray-600 mb-4">
+                      <div className="flex items-center">
+                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        {doctor.branch}
+                      </div>
+                      <div className="flex items-center">
+                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {doctor.category}
+                      </div>
+                      {doctor.scientific_degree && doctor.scientific_degree !== 'Без степени' && (
+                        <div className="flex items-center">
+                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                          </svg>
+                          {doctor.scientific_degree}
+                        </div>
+                      )}
+                      <div className="flex items-center">
+                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Прием: {doctor.max_time} мин
+                      </div>
+                    </div>
+
+                    {doctor.info && (
+                      <p className="text-gray-600 text-sm mb-4">{doctor.info}</p>
+                    )}
+
+                    <div className="flex space-x-2">
+                      <button className="flex-1 bg-primary hover:bg-primaryDark text-white px-4 py-2 rounded-md font-medium transition-colors">
+                        Записаться
+                      </button>
+                      <button className="px-4 py-2 border border-primary text-primary hover:bg-primary hover:text-white rounded-md font-medium transition-colors">
+                        Подробнее
+                      </button>
+                    </div>
                   </div>
-                  <span className="ml-2 text-gray-600">{doctor.rating}</span>
                 </div>
-                <p className="text-gray-600 mb-4 line-clamp-2">{doctor.description}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-xl font-semibold">{doctor.price}</span>
-                  <button className="bg-teal text-white px-6 py-2 rounded-md hover:bg-teal/90 transition-colors">
-                    Подробнее
-                  </button>
-                </div>
-              </div>
-            </Link>
-          ))}
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

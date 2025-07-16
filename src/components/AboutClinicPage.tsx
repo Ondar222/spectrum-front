@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function AboutClinicPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-12">
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="container mx-auto px-4">
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold mb-4 text-dark">О клинике Алдан</h1>

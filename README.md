@@ -45,6 +45,10 @@ npm install
 VITE_DIRECTUS_URL=http://localhost:8055
 VITE_DIRECTUS_TOKEN=your_directus_token_here
 
+# Archimed API Configuration
+VITE_ARCHIMED_API_URL=https://your-archimed-api.com
+VITE_ARCHIMED_API_TOKEN=your_archimed_token_here
+
 # Services API Configuration
 VITE_SERVICES_API_URL=https://your-api-endpoint.com/services
 
@@ -113,11 +117,29 @@ src/
 - **FAQ**: часто задаваемые вопросы
 - **Контакты**: контактная информация
 
-### API Услуг
+### Archimed API
 
-Прайс-лист интегрирован с внешним API для получения актуальных данных об услугах. API возвращает структурированные данные с группировкой по категориям услуг.
+Сайт интегрирован с Archimed - информационной системой клиники. Поддерживаемые типы данных:
 
-**Структура данных услуг:**
+**Врачи:**
+```typescript
+interface ArchimedDoctor {
+  id: number;
+  last_name: string;
+  first_name: string;
+  middle_name: string;
+  type: string;
+  branch: string;
+  category: string;
+  scientific_degree: string;
+  max_time: string;
+  phone: string;
+  info: string;
+  // ... другие поля
+}
+```
+
+**Услуги:**
 ```typescript
 interface ApiService {
   id: number;
@@ -134,12 +156,13 @@ interface ApiService {
 }
 ```
 
-**Функциональность прайс-листа:**
+**Функциональность:**
+- Получение списка врачей с фильтрацией
 - Группировка услуг по категориям
-- Поиск по названию услуги
-- Фильтрация по категориям
+- Поиск по ФИО, специальности, отделению
+- Фильтрация врачей по отделениям и категориям
 - Отображение срочных услуг (cito_cost)
-- Коды услуг для идентификации
+- Интеграция с реальными данными клиники
 
 ## Настройка Directus
 

@@ -53,6 +53,60 @@ export interface ServiceGroup {
   services: ApiService[];
 }
 
+// Archimed API types
+export interface ArchimedDoctor {
+  id: number;
+  name: string;
+  name1: string;
+  name2: string;
+  type: string;
+  code: string;
+  max_time: string;
+  phone: string;
+  snils: string;
+  info: string;
+  zone_id: number;
+  zone: string;
+  branch_id: number;
+  branch: string;
+  category_id: number;
+  category: string;
+  scientific_degree_id: number;
+  scientific_degree: string;
+  user_id: number;
+  photo: string | null;
+  address: string;
+  building_name: string;
+  building_web_name: string | null;
+  primary_type_id: number;
+  types: ArchimedDoctorType[];
+}
+
+export interface ArchimedDoctorType {
+  id: number;
+  name: string;
+}
+
+export interface ArchimedZone {
+  id: number;
+  name: string;
+}
+
+export interface ArchimedBranch {
+  id: number;
+  name: string;
+}
+
+export interface ArchimedCategory {
+  id: number;
+  name: string;
+}
+
+export interface ArchimedScientificDegree {
+  id: number;
+  name: string;
+}
+
 export interface Review {
   id: string;
   patient_name: string;

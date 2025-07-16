@@ -90,8 +90,8 @@ export default function DoctorDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-lightTeal">
-      <div className="container mx-auto px-4 py-12">
+    <div className="min-h-screen bg-lightTeal py-12">
+      <div className="container mx-auto px-4">
         <button
           onClick={() => navigate('/doctors')}
           className="mb-8 text-teal hover:text-teal/80 transition-colors"
