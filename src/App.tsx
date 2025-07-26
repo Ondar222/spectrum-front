@@ -1,26 +1,27 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Hero from './components/Hero';
-import ServiceGrid from './components/ServiceGrid';
-import Advantages from './components/Advantages';
-import Testimonials from './components/Testimonials';
-import ContactForm from './components/ContactForm';
-import DoctorsPage from './components/DoctorsPage';
-import DoctorDetailsPage from './components/DoctorDetailsPage';
-import ReviewsPage from './components/ReviewsPage';
-import PromotionsPage from './components/PromotionsPage';
-import ContactsPage from './components/ContactsPage';
-import FAQPage from './components/FAQPage';
-import AboutClinicPage from './components/AboutClinicPage';
-import GiftCertificatesPage from './components/GiftCertificatesPage';
-import PriceListPage from './components/PriceListPage';
-import PatientCabinetPage from './components/PatientCabinetPage';
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Hero from "./components/Hero";
+import ServiceGrid from "./components/ServiceGrid";
+import Advantages from "./components/Advantages";
+import Testimonials from "./components/Testimonials";
+import ContactForm from "./components/ContactForm";
+import DoctorsPage from "./components/DoctorsPage";
+import DoctorDetailsPage from "./components/DoctorDetailsPage";
+import ReviewsPage from "./components/ReviewsPage";
+import PromotionsPage from "./components/PromotionsPage";
+import ContactsPage from "./components/ContactsPage";
+import FAQPage from "./components/FAQPage";
+import AboutClinicPage from "./components/AboutClinicPage";
+import GiftCertificatesPage from "./components/GiftCertificatesPage";
+import PriceListPage from "./components/PriceListPage";
+import PatientCabinetPage from "./components/PatientCabinetPage";
+import PaymentSuccessPage from "./components/PaymentSuccessPage";
+import PaymentCancelPage from "./components/PaymentCancelPage";
+import PaymentTestPage from "./components/PaymentTestPage";
 
 function HomePage() {
-
-
   return (
     <>
       <Hero />
@@ -48,8 +49,17 @@ function App() {
             <Route path="/contacts" element={<ContactsPage />} />
             <Route path="/questions" element={<FAQPage />} />
             <Route path="/certificates" element={<GiftCertificatesPage />} />
+            <Route
+              path="/certificates/success"
+              element={<PaymentSuccessPage type="certificate" />}
+            />
+            <Route
+              path="/certificates/cancel"
+              element={<PaymentCancelPage />}
+            />
             <Route path="/prices" element={<PriceListPage />} />
             <Route path="/personal-cabinet" element={<PatientCabinetPage />} />
+            <Route path="/payment-test" element={<PaymentTestPage />} />
           </Routes>
         </main>
         <Footer />
