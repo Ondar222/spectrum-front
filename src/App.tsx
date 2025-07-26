@@ -20,6 +20,7 @@ import PatientCabinetPage from "./components/PatientCabinetPage";
 import PaymentSuccessPage from "./components/PaymentSuccessPage";
 import PaymentCancelPage from "./components/PaymentCancelPage";
 import PaymentTestPage from "./components/PaymentTestPage";
+import PaymentDiagnosticPage from "./components/PaymentDiagnosticPage";
 
 function HomePage() {
   return (
@@ -60,6 +61,10 @@ function App() {
             <Route path="/prices" element={<PriceListPage />} />
             <Route path="/personal-cabinet" element={<PatientCabinetPage />} />
             <Route path="/payment-test" element={<PaymentTestPage />} />
+            <Route
+              path="/payment-diagnostic"
+              element={<PaymentDiagnosticPage />}
+            />
           </Routes>
         </main>
         <Footer />

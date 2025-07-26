@@ -28,6 +28,27 @@ app.post("/api/payment/register", async (req, res) => {
   try {
     const { amount, returnUrl, failUrl, description } = req.body;
 
+    console.log("Получен запрос на создание платежа:", {
+      amount,
+      returnUrl,
+      failUrl,
+      description,
+    });
+
+    // Валидация входных данных
+    if (!amount || !returnUrl || !failUrl || !description) {
+      console.error("Отсутствуют обязательные параметры:", {
+        amount,
+        returnUrl,
+        failUrl,
+        description,
+      });
+      return res.status(400).json({
+        error: true,
+        message: "Отсутствуют обязательные параметры",
+      });
+    }
+
     // Генерация orderNumber
     const orderNumber = `cert_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
 
@@ -50,14 +71,25 @@ app.post("/api/payment/register", async (req, res) => {
       body: new URLSearchParams(requestData).toString(),
     });
 
+    console.log("Статус ответа от Альфа-Банка:", response.status);
+
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorText = await response.text();
+      console.error("HTTP ошибка от Альфа-Банка:", response.status, errorText);
+      throw new Error(
+        `HTTP error! status: ${response.status}, body: ${errorText}`
+      );
     }
 
     const result = await response.json();
     console.log("Ответ от Альфа-Банка:", result);
 
     if (result.errorCode) {
+      console.error(
+        "Ошибка Альфа-Банка:",
+        result.errorCode,
+        result.errorMessage
+      );
       return res.status(400).json({
         error: true,
         errorCode: result.errorCode,
@@ -65,6 +97,7 @@ app.post("/api/payment/register", async (req, res) => {
       });
     }
 
+    console.log("Платеж успешно создан:", result.orderId);
     res.json({
       success: true,
       formUrl: result.formUrl,
@@ -76,6 +109,7 @@ app.post("/api/payment/register", async (req, res) => {
     res.status(500).json({
       error: true,
       message: "Внутренняя ошибка сервера",
+      details: error.message,
     });
   }
 });
@@ -85,7 +119,10 @@ app.post("/api/payment/status", async (req, res) => {
   try {
     const { orderId } = req.body;
 
+    console.log("Получен запрос на проверку статуса:", { orderId });
+
     if (!orderId) {
+      console.error("Отсутствует orderId");
       return res.status(400).json({
         error: true,
         message: "orderId обязателен",
@@ -107,14 +144,25 @@ app.post("/api/payment/status", async (req, res) => {
       body: new URLSearchParams(requestData).toString(),
     });
 
+    console.log("Статус ответа от Альфа-Банка:", response.status);
+
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorText = await response.text();
+      console.error("HTTP ошибка от Альфа-Банка:", response.status, errorText);
+      throw new Error(
+        `HTTP error! status: ${response.status}, body: ${errorText}`
+      );
     }
 
     const result = await response.json();
     console.log("Статус заказа от Альфа-Банка:", result);
 
     if (result.errorCode) {
+      console.error(
+        "Ошибка Альфа-Банка при проверке статуса:",
+        result.errorCode,
+        result.errorMessage
+      );
       return res.status(400).json({
         error: true,
         errorCode: result.errorCode,
@@ -122,6 +170,7 @@ app.post("/api/payment/status", async (req, res) => {
       });
     }
 
+    console.log("Статус заказа успешно получен:", result.orderStatus);
     res.json({
       success: true,
       ...result,
@@ -131,6 +180,7 @@ app.post("/api/payment/status", async (req, res) => {
     res.status(500).json({
       error: true,
       message: "Внутренняя ошибка сервера",
+      details: error.message,
     });
   }
 });
