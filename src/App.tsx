@@ -21,6 +21,7 @@ import PaymentSuccessPage from "./components/PaymentSuccessPage";
 import PaymentCancelPage from "./components/PaymentCancelPage";
 import PaymentTestPage from "./components/PaymentTestPage";
 import PaymentDiagnosticPage from "./components/PaymentDiagnosticPage";
+import PaymentMonitorPage from "./components/PaymentMonitorPage";
 
 function HomePage() {
   return (
@@ -65,6 +66,7 @@ function App() {
               path="/payment-diagnostic"
               element={<PaymentDiagnosticPage />}
             />
+            <Route path="/payment-monitor" element={<PaymentMonitorPage />} />
           </Routes>
         </main>
         <Footer />

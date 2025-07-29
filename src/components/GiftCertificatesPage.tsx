@@ -23,6 +23,13 @@ export default function GiftCertificatesPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string>("");
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
+
+  // Функция валидации email
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -34,10 +41,61 @@ export default function GiftCertificatesPage() {
       ...prev,
       [name]: name === "amount" ? parseInt(value) : value,
     }));
+
+    // Очищаем ошибку поля при изменении
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+  };
+
+  // Валидация формы перед отправкой
+  const validateForm = (): { isValid: boolean; errors: string[] } => {
+    const errors: string[] = [];
+    const fieldErrors: { [key: string]: string } = {};
+
+    if (!formData.recipientName.trim()) {
+      errors.push("Имя получателя обязательно");
+      fieldErrors.recipientName = "Имя получателя обязательно";
+    }
+
+    if (!formData.recipientEmail.trim()) {
+      errors.push("Email получателя обязателен");
+      fieldErrors.recipientEmail = "Email получателя обязателен";
+    } else if (!validateEmail(formData.recipientEmail)) {
+      errors.push("Email получателя имеет неверный формат");
+      fieldErrors.recipientEmail = "Email получателя имеет неверный формат";
+    }
+
+    if (!formData.senderName.trim()) {
+      errors.push("Ваше имя обязательно");
+      fieldErrors.senderName = "Ваше имя обязательно";
+    }
+
+    if (!formData.senderEmail.trim()) {
+      errors.push("Ваш email обязателен");
+      fieldErrors.senderEmail = "Ваш email обязателен";
+    } else if (!validateEmail(formData.senderEmail)) {
+      errors.push("Ваш email имеет неверный формат");
+      fieldErrors.senderEmail = "Ваш email имеет неверный формат";
+    }
+
+    setFieldErrors(fieldErrors);
+    return { isValid: errors.length === 0, errors };
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Валидация формы
+    const validation = validateForm();
+    if (!validation.isValid) {
+      setError(validation.errors.join(", "));
+      return;
+    }
+
     setIsSubmitting(true);
     setError("");
 
@@ -368,9 +426,18 @@ export default function GiftCertificatesPage() {
                     name="recipientEmail"
                     value={formData.recipientEmail}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"
+                    className={`w-full px-4 py-2 border rounded focus:outline-none focus:border-primary ${
+                      fieldErrors.recipientEmail
+                        ? "border-red-500 focus:border-red-500"
+                        : "border-gray-300"
+                    }`}
                     required
                   />
+                  {fieldErrors.recipientEmail && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {fieldErrors.recipientEmail}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -409,9 +476,18 @@ export default function GiftCertificatesPage() {
                     name="senderEmail"
                     value={formData.senderEmail}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"
+                    className={`w-full px-4 py-2 border rounded focus:outline-none focus:border-primary ${
+                      fieldErrors.senderEmail
+                        ? "border-red-500 focus:border-red-500"
+                        : "border-gray-300"
+                    }`}
                     required
                   />
+                  {fieldErrors.senderEmail && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {fieldErrors.senderEmail}
+                    </p>
+                  )}
                 </div>
               </div>
 

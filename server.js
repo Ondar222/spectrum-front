@@ -25,10 +25,15 @@ const ALFA_BANK_CONFIG = {
 
 // Прокси для создания платежа
 app.post("/api/payment/register", async (req, res) => {
+  const startTime = Date.now();
+  const requestId = `req_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+
+  console.log(`[${requestId}] === НАЧАЛО СОЗДАНИЯ ПЛАТЕЖА ===`);
+
   try {
     const { amount, returnUrl, failUrl, description } = req.body;
 
-    console.log("Получен запрос на создание платежа:", {
+    console.log(`[${requestId}] Получен запрос на создание платежа:`, {
       amount,
       returnUrl,
       failUrl,
@@ -37,7 +42,7 @@ app.post("/api/payment/register", async (req, res) => {
 
     // Валидация входных данных
     if (!amount || !returnUrl || !failUrl || !description) {
-      console.error("Отсутствуют обязательные параметры:", {
+      console.error(`[${requestId}] ❌ Отсутствуют обязательные параметры:`, {
         amount,
         returnUrl,
         failUrl,
@@ -45,12 +50,33 @@ app.post("/api/payment/register", async (req, res) => {
       });
       return res.status(400).json({
         error: true,
+        errorCode: "MISSING_PARAMETERS",
         message: "Отсутствуют обязательные параметры",
+      });
+    }
+
+    // Дополнительная валидация
+    if (amount < 100) {
+      console.error(`[${requestId}] ❌ Сумма слишком мала: ${amount}`);
+      return res.status(400).json({
+        error: true,
+        errorCode: "INVALID_AMOUNT",
+        message: "Минимальная сумма платежа 100 рублей",
+      });
+    }
+
+    if (amount > 100000) {
+      console.error(`[${requestId}] ❌ Сумма слишком велика: ${amount}`);
+      return res.status(400).json({
+        error: true,
+        errorCode: "INVALID_AMOUNT",
+        message: "Максимальная сумма платежа 100 000 рублей",
       });
     }
 
     // Генерация orderNumber
     const orderNumber = `cert_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+    console.log(`[${requestId}] Сгенерирован номер заказа: ${orderNumber}`);
 
     const requestData = {
       orderNumber: orderNumber,
@@ -61,7 +87,14 @@ app.post("/api/payment/register", async (req, res) => {
       token: ALFA_BANK_CONFIG.token,
     };
 
-    console.log("Отправка запроса к Альфа-Банку:", requestData);
+    console.log(`[${requestId}] Отправка запроса к Альфа-Банку:`, {
+      orderNumber: requestData.orderNumber,
+      amount: requestData.amount,
+      returnUrl: requestData.returnUrl,
+      failUrl: requestData.failUrl,
+      description: requestData.description,
+      token: "***", // Скрываем токен в логах
+    });
 
     const response = await fetch(`${ALFA_BANK_CONFIG.url}/register.do`, {
       method: "POST",
@@ -71,60 +104,88 @@ app.post("/api/payment/register", async (req, res) => {
       body: new URLSearchParams(requestData).toString(),
     });
 
-    console.log("Статус ответа от Альфа-Банка:", response.status);
+    console.log(
+      `[${requestId}] Статус ответа от Альфа-Банка: ${response.status}`
+    );
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("HTTP ошибка от Альфа-Банка:", response.status, errorText);
+      console.error(
+        `[${requestId}] ❌ HTTP ошибка от Альфа-Банка:`,
+        response.status,
+        errorText
+      );
       throw new Error(
         `HTTP error! status: ${response.status}, body: ${errorText}`
       );
     }
 
     const result = await response.json();
-    console.log("Ответ от Альфа-Банка:", result);
+    console.log(`[${requestId}] Ответ от Альфа-Банка:`, result);
 
     if (result.errorCode) {
-      console.error(
-        "Ошибка Альфа-Банка:",
-        result.errorCode,
-        result.errorMessage
-      );
+      console.error(`[${requestId}] ❌ Ошибка Альфа-Банка:`, {
+        errorCode: result.errorCode,
+        errorMessage: result.errorMessage,
+        orderNumber: orderNumber,
+      });
       return res.status(400).json({
         error: true,
         errorCode: result.errorCode,
         errorMessage: result.errorMessage || "Ошибка при создании платежа",
+        orderNumber: orderNumber,
       });
     }
 
-    console.log("Платеж успешно создан:", result.orderId);
+    const duration = Date.now() - startTime;
+    console.log(`[${requestId}] ✅ Платеж успешно создан:`, {
+      orderId: result.orderId,
+      orderNumber: orderNumber,
+      duration: `${duration}ms`,
+    });
+
     res.json({
       success: true,
       formUrl: result.formUrl,
       orderId: result.orderId,
       orderNumber: orderNumber,
+      duration: duration,
     });
   } catch (error) {
-    console.error("Ошибка при создании платежа:", error);
+    const duration = Date.now() - startTime;
+    console.error(`[${requestId}] ❌ Ошибка при создании платежа:`, {
+      error: error.message,
+      duration: `${duration}ms`,
+    });
     res.status(500).json({
       error: true,
+      errorCode: "INTERNAL_ERROR",
       message: "Внутренняя ошибка сервера",
       details: error.message,
+      duration: duration,
     });
   }
 });
 
 // Прокси для проверки статуса заказа
 app.post("/api/payment/status", async (req, res) => {
+  const startTime = Date.now();
+  const requestId = `status_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+
+  console.log(`[${requestId}] === НАЧАЛО ПРОВЕРКИ СТАТУСА ===`);
+
   try {
     const { orderId } = req.body;
 
-    console.log("Получен запрос на проверку статуса:", { orderId });
+    console.log(`[${requestId}] Получен запрос на проверку статуса:`, {
+      orderId,
+    });
 
     if (!orderId) {
-      console.error("Отсутствует orderId");
+      console.error(`[${requestId}] ❌ Отсутствует orderId`);
       return res.status(400).json({
         error: true,
+        errorCode: "MISSING_ORDER_ID",
         message: "orderId обязателен",
       });
     }
@@ -134,7 +195,10 @@ app.post("/api/payment/status", async (req, res) => {
       token: ALFA_BANK_CONFIG.token,
     };
 
-    console.log("Проверка статуса заказа:", requestData);
+    console.log(`[${requestId}] Проверка статуса заказа:`, {
+      orderId: requestData.orderId,
+      token: "***", // Скрываем токен в логах
+    });
 
     const response = await fetch(`${ALFA_BANK_CONFIG.url}/getOrderStatus.do`, {
       method: "POST",
@@ -144,43 +208,69 @@ app.post("/api/payment/status", async (req, res) => {
       body: new URLSearchParams(requestData).toString(),
     });
 
-    console.log("Статус ответа от Альфа-Банка:", response.status);
+    console.log(
+      `[${requestId}] Статус ответа от Альфа-Банка: ${response.status}`
+    );
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("HTTP ошибка от Альфа-Банка:", response.status, errorText);
+      console.error(
+        `[${requestId}] ❌ HTTP ошибка от Альфа-Банка:`,
+        response.status,
+        errorText
+      );
       throw new Error(
         `HTTP error! status: ${response.status}, body: ${errorText}`
       );
     }
 
     const result = await response.json();
-    console.log("Статус заказа от Альфа-Банка:", result);
+    console.log(`[${requestId}] Статус заказа от Альфа-Банка:`, result);
 
     if (result.errorCode) {
       console.error(
-        "Ошибка Альфа-Банка при проверке статуса:",
-        result.errorCode,
-        result.errorMessage
+        `[${requestId}] ❌ Ошибка Альфа-Банка при проверке статуса:`,
+        {
+          errorCode: result.errorCode,
+          errorMessage: result.errorMessage,
+          orderId: orderId,
+        }
       );
       return res.status(400).json({
         error: true,
         errorCode: result.errorCode,
         errorMessage: result.errorMessage || "Ошибка при проверке статуса",
+        orderId: orderId,
       });
     }
 
-    console.log("Статус заказа успешно получен:", result.orderStatus);
+    const duration = Date.now() - startTime;
+    console.log(`[${requestId}] ✅ Статус заказа успешно получен:`, {
+      orderId: orderId,
+      orderStatus: result.orderStatus,
+      orderNumber: result.orderNumber,
+      amount: result.amount,
+      duration: `${duration}ms`,
+    });
+
     res.json({
       success: true,
       ...result,
+      duration: duration,
     });
   } catch (error) {
-    console.error("Ошибка при проверке статуса:", error);
+    const duration = Date.now() - startTime;
+    console.error(`[${requestId}] ❌ Ошибка при проверке статуса:`, {
+      error: error.message,
+      orderId: req.body.orderId,
+      duration: `${duration}ms`,
+    });
     res.status(500).json({
       error: true,
+      errorCode: "INTERNAL_ERROR",
       message: "Внутренняя ошибка сервера",
       details: error.message,
+      duration: duration,
     });
   }
 });

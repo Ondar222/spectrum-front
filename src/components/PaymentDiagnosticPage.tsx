@@ -5,6 +5,9 @@ export default function PaymentDiagnosticPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [logs, setLogs] = useState<string[]>([]);
   const [result, setResult] = useState<any>(null);
+  const [testMode, setTestMode] = useState<"create" | "status" | "diagnostic">(
+    "create"
+  );
 
   const addLog = (message: string) => {
     const timestamp = new Date().toLocaleTimeString();
@@ -17,6 +20,7 @@ export default function PaymentDiagnosticPage() {
     setResult(null);
 
     try {
+      addLog("=== ДИАГНОСТИКА СОЗДАНИЯ ПЛАТЕЖА ===");
       addLog("Начинаем тестирование платежной системы...");
 
       const testData = {
@@ -26,9 +30,13 @@ export default function PaymentDiagnosticPage() {
         description: `Тестовый платеж на сумму ${amount} ₽`,
       };
 
-      addLog(
-        `Отправляем запрос на создание платежа: ${JSON.stringify(testData)}`
-      );
+      addLog(`Проверяем входные данные:`);
+      addLog(`- Сумма: ${amount} ₽ (${amount * 100} копеек)`);
+      addLog(`- Return URL: ${testData.returnUrl}`);
+      addLog(`- Fail URL: ${testData.failUrl}`);
+      addLog(`- Описание: ${testData.description}`);
+
+      addLog(`Отправляем запрос на создание платежа...`);
 
       const response = await fetch("/api/payment/register", {
         method: "POST",
@@ -43,19 +51,38 @@ export default function PaymentDiagnosticPage() {
       );
 
       const result = await response.json();
-      addLog(`Ответ сервера: ${JSON.stringify(result)}`);
+      addLog(`Ответ сервера: ${JSON.stringify(result, null, 2)}`);
 
       if (result.error) {
-        addLog(`ОШИБКА: ${result.errorMessage || result.message}`);
+        addLog(`❌ ОШИБКА СОЗДАНИЯ ПЛАТЕЖА:`);
+        addLog(`- Код ошибки: ${result.errorCode}`);
+        addLog(`- Сообщение: ${result.errorMessage || result.message}`);
+        addLog(`- Детали: ${result.details || "Нет дополнительных деталей"}`);
+
+        // Анализ ошибки
+        if (result.errorCode === "INVALID_AMOUNT") {
+          addLog(`🔍 АНАЛИЗ: Неправильный формат суммы`);
+        } else if (result.errorCode === "INVALID_ORDER_NUMBER") {
+          addLog(`🔍 АНАЛИЗ: Проблема с номером заказа`);
+        } else if (result.errorCode === "INVALID_RETURN_URL") {
+          addLog(`🔍 АНАЛИЗ: Проблема с URL возврата`);
+        } else if (result.errorCode === "ACCESS_DENIED") {
+          addLog(`🔍 АНАЛИЗ: Проблема с аутентификацией`);
+        }
+
         setResult({ error: true, ...result });
       } else {
-        addLog(`Платеж успешно создан: ${result.orderId}`);
+        addLog(`✅ Платеж успешно создан:`);
+        addLog(`- Order ID: ${result.orderId}`);
+        addLog(`- Order Number: ${result.orderNumber}`);
+        addLog(`- Form URL: ${result.formUrl}`);
         setResult(result);
       }
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Неизвестная ошибка";
-      addLog(`КРИТИЧЕСКАЯ ОШИБКА: ${errorMessage}`);
+      addLog(`❌ КРИТИЧЕСКАЯ ОШИБКА: ${errorMessage}`);
+      addLog(`🔍 АНАЛИЗ: Сетевая ошибка или проблема с сервером`);
       setResult({ error: true, message: errorMessage });
     } finally {
       setIsLoading(false);
@@ -64,11 +91,12 @@ export default function PaymentDiagnosticPage() {
 
   const handleTestStatus = async () => {
     if (!result?.orderId) {
-      addLog("ОШИБКА: Нет orderId для проверки статуса");
+      addLog("❌ ОШИБКА: Нет orderId для проверки статуса");
       return;
     }
 
     setIsLoading(true);
+    addLog(`=== ДИАГНОСТИКА СТАТУСА ПЛАТЕЖА ===`);
     addLog(`Проверяем статус заказа: ${result.orderId}`);
 
     try {
@@ -83,24 +111,103 @@ export default function PaymentDiagnosticPage() {
       addLog(`Статус ответа: ${response.status} ${response.statusText}`);
 
       const statusResult = await response.json();
-      addLog(`Результат проверки статуса: ${JSON.stringify(statusResult)}`);
+      addLog(
+        `Результат проверки статуса: ${JSON.stringify(statusResult, null, 2)}`
+      );
 
       if (statusResult.error) {
+        addLog(`❌ ОШИБКА ПРОВЕРКИ СТАТУСА:`);
+        addLog(`- Код ошибки: ${statusResult.errorCode}`);
         addLog(
-          `ОШИБКА ПРОВЕРКИ СТАТУСА: ${statusResult.errorMessage || statusResult.message}`
+          `- Сообщение: ${statusResult.errorMessage || statusResult.message}`
         );
       } else {
-        addLog(`Статус заказа: ${statusResult.orderStatus}`);
+        addLog(`✅ Статус заказа получен:`);
+        addLog(`- Order Status: ${statusResult.orderStatus}`);
+        addLog(`- Order Number: ${statusResult.orderNumber}`);
+        addLog(`- Amount: ${statusResult.amount} копеек`);
+
+        // Анализ статуса
+        switch (statusResult.orderStatus) {
+          case 0:
+            addLog(`🔍 АНАЛИЗ: Заказ зарегистрирован, но не оплачен`);
+            break;
+          case 1:
+            addLog(`🔍 АНАЛИЗ: Предавторизованная сумма захолдирована`);
+            break;
+          case 2:
+            addLog(`🔍 АНАЛИЗ: ✅ Платеж успешно оплачен`);
+            break;
+          case 3:
+            addLog(`🔍 АНАЛИЗ: ❌ Авторизация отменена`);
+            break;
+          case 4:
+            addLog(`🔍 АНАЛИЗ: ❌ По транзакции был проведен возврат`);
+            break;
+          case 5:
+            addLog(
+              `🔍 АНАЛИЗ: Инициирована авторизация через ACS банка-эмитента`
+            );
+            break;
+          case 6:
+            addLog(`🔍 АНАЛИЗ: ❌ Авторизация отклонена`);
+            break;
+          default:
+            addLog(`🔍 АНАЛИЗ: Неизвестный статус заказа`);
+        }
       }
 
       setResult({ ...result, status: statusResult });
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Неизвестная ошибка";
-      addLog(`ОШИБКА ПРОВЕРКИ СТАТУСА: ${errorMessage}`);
+      addLog(`❌ ОШИБКА ПРОВЕРКИ СТАТУСА: ${errorMessage}`);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleDiagnosticCheck = async () => {
+    setIsLoading(true);
+    addLog(`=== ПОЛНАЯ ДИАГНОСТИКА СИСТЕМЫ ===`);
+
+    // Проверка конфигурации
+    addLog(`1. Проверка конфигурации:`);
+    addLog(`- API URL: ${window.location.origin}/api`);
+    addLog(`- Текущий домен: ${window.location.origin}`);
+    addLog(`- Протокол: ${window.location.protocol}`);
+
+    // Проверка доступности API
+    addLog(`2. Проверка доступности API:`);
+    try {
+      const healthCheck = await fetch("/api/payment/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: 100,
+          returnUrl: "test",
+          failUrl: "test",
+          description: "test",
+        }),
+      });
+      addLog(`- Статус API: ${healthCheck.status}`);
+    } catch (error) {
+      addLog(`- ❌ API недоступен: ${error}`);
+    }
+
+    // Проверка CORS
+    addLog(`3. Проверка CORS:`);
+    addLog(`- CORS должен быть настроен на сервере`);
+
+    // Проверка SSL
+    addLog(`4. Проверка SSL:`);
+    if (window.location.protocol === "https:") {
+      addLog(`- ✅ HTTPS активен`);
+    } else {
+      addLog(`- ⚠️ HTTP используется (может вызвать проблемы)`);
+    }
+
+    setIsLoading(false);
   };
 
   const clearLogs = () => {
@@ -114,7 +221,7 @@ export default function PaymentDiagnosticPage() {
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
             <h1 className="text-2xl font-bold text-dark mb-6">
-              Диагностика платежной системы
+              Расширенная диагностика платежной системы
             </h1>
 
             <div className="space-y-4 mb-6">
@@ -132,7 +239,7 @@ export default function PaymentDiagnosticPage() {
                 />
               </div>
 
-              <div className="flex space-x-4">
+              <div className="flex flex-wrap gap-4">
                 <button
                   onClick={handleTestPayment}
                   disabled={isLoading}
@@ -156,6 +263,16 @@ export default function PaymentDiagnosticPage() {
                 )}
 
                 <button
+                  onClick={handleDiagnosticCheck}
+                  disabled={isLoading}
+                  className={`bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-md font-medium transition-colors ${
+                    isLoading ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                >
+                  {isLoading ? "Диагностика..." : "Полная диагностика"}
+                </button>
+
+                <button
                   onClick={clearLogs}
                   className="bg-gray-500 hover:bg-gray-600 text-white py-3 px-6 rounded-md font-medium transition-colors"
                 >
@@ -176,7 +293,7 @@ export default function PaymentDiagnosticPage() {
 
           <div className="bg-white rounded-lg shadow-lg p-8">
             <h2 className="text-xl font-bold text-dark mb-4">
-              Логи диагностики
+              Детальные логи диагностики
             </h2>
             <div className="bg-black text-green-400 p-4 rounded-lg font-mono text-sm h-96 overflow-y-auto">
               {logs.length === 0 ? (
