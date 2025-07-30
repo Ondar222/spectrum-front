@@ -17,11 +17,30 @@ app.use(express.urlencoded({ extended: true }));
 
 // Конфигурация Альфа-Банка
 const ALFA_BANK_CONFIG = {
-  url: "https://alfa.rbsuat.com/payment/rest",
-  token: "pfcr5js74l5jnsqcsrms960nok",
-  login: "clinicaldan-operator",
-  password: "KACr2LiW3R?",
+  // Тестовая среда
+  test: {
+    url: "https://alfa.rbsuat.com/payment/rest",
+    token: "pfcr5js74l5jnsqcsrms960nok",
+    login: "clinicaldan-operator",
+    password: "KACr2LiW3R?",
+  },
+  // Продакшн среда
+  production: {
+    url: "https://pay.alfabank.ru/payment/rest",
+    token: "pfcr5js74l5jnsqcsrms960nok",
+    login: "clinicaldan-operator",
+    password: "vy_$2BTVD*KVD#u/",
+  },
 };
+
+// Определяем текущую среду
+const isProduction = process.env.NODE_ENV === "production";
+const currentConfig = isProduction
+  ? ALFA_BANK_CONFIG.production
+  : ALFA_BANK_CONFIG.test;
+
+console.log(`🚀 Запуск в ${isProduction ? "ПРОДАКШН" : "ТЕСТОВОЙ"} среде`);
+console.log(`🔗 URL Альфа-Банка: ${currentConfig.url}`);
 
 // Прокси для создания платежа
 app.post("/api/payment/register", async (req, res) => {
@@ -84,7 +103,7 @@ app.post("/api/payment/register", async (req, res) => {
       returnUrl: returnUrl,
       failUrl: failUrl,
       description: description,
-      token: ALFA_BANK_CONFIG.token,
+      token: currentConfig.token,
     };
 
     console.log(`[${requestId}] Отправка запроса к Альфа-Банку:`, {
@@ -96,7 +115,7 @@ app.post("/api/payment/register", async (req, res) => {
       token: "***", // Скрываем токен в логах
     });
 
-    const response = await fetch(`${ALFA_BANK_CONFIG.url}/register.do`, {
+    const response = await fetch(`${currentConfig.url}/register.do`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -192,7 +211,7 @@ app.post("/api/payment/status", async (req, res) => {
 
     const requestData = {
       orderId: orderId,
-      token: ALFA_BANK_CONFIG.token,
+      token: currentConfig.token,
     };
 
     console.log(`[${requestId}] Проверка статуса заказа:`, {
@@ -200,7 +219,7 @@ app.post("/api/payment/status", async (req, res) => {
       token: "***", // Скрываем токен в логах
     });
 
-    const response = await fetch(`${ALFA_BANK_CONFIG.url}/getOrderStatus.do`, {
+    const response = await fetch(`${currentConfig.url}/getOrderStatus.do`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",

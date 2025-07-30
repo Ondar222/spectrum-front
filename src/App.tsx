@@ -63,6 +63,14 @@ function App() {
             <Route path="/personal-cabinet" element={<PatientCabinetPage />} />
             <Route path="/payment-test" element={<PaymentTestPage />} />
             <Route
+              path="/payment-test/success"
+              element={<PaymentSuccessPage type="appointment" />}
+            />
+            <Route
+              path="/payment-test/cancel"
+              element={<PaymentCancelPage />}
+            />
+            <Route
               path="/payment-diagnostic"
               element={<PaymentDiagnosticPage />}
             />

@@ -25,6 +25,9 @@ export default function GiftCertificatesPage() {
   const [error, setError] = useState<string>("");
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
 
+  // Определяем текущую среду
+  const isProduction = import.meta.env.PROD || false;
+
   // Функция валидации email
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -192,6 +195,14 @@ export default function GiftCertificatesPage() {
             Не знаете какой подарок преподнести? Подарочный сертификат на услуги
             клиники - идеальный выбор для любого торжества!
           </p>
+
+          {/* Индикатор среды */}
+          {!isProduction && (
+            <div className="mt-4 inline-block bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-2 rounded-lg">
+              <span className="font-medium">🧪 ТЕСТОВАЯ СРЕДА</span>
+              <span className="text-sm ml-2">(платежи не списываются)</span>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">

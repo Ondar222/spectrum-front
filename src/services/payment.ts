@@ -52,10 +52,26 @@ class PaymentService {
   constructor() {
     this.apiUrl = import.meta.env.VITE_PAYMENT_API_URL || '';
     this.apiKey = import.meta.env.VITE_PAYMENT_API_KEY || '';
-    this.alfaBankUrl = 'https://alfa.rbsuat.com/payment/rest';
-    this.alfaBankToken = 'pfcr5js74l5jnsqcsrms960nok';
-    this.alfaBankLogin = 'clinicaldan-operator';
-    this.alfaBankPassword = 'KACr2LiW3R?';
+    
+    // Определяем среду
+    const isProduction = import.meta.env.PROD || false;
+    
+    if (isProduction) {
+      // Продакшн среда
+      this.alfaBankUrl = 'https://pay.alfabank.ru/payment/rest';
+      this.alfaBankToken = 'pfcr5js74l5jnsqcsrms960nok';
+      this.alfaBankLogin = 'clinicaldan-operator';
+      this.alfaBankPassword = 'vy_$2BTVD*KVD#u/';
+    } else {
+      // Тестовая среда
+      this.alfaBankUrl = 'https://alfa.rbsuat.com/payment/rest';
+      this.alfaBankToken = 'pfcr5js74l5jnsqcsrms960nok';
+      this.alfaBankLogin = 'clinicaldan-operator';
+      this.alfaBankPassword = 'KACr2LiW3R?';
+    }
+    
+    console.log(`🔗 Платежный сервис инициализирован в ${isProduction ? 'ПРОДАКШН' : 'ТЕСТОВОЙ'} среде`);
+    console.log(`🌐 URL Альфа-Банка: ${this.alfaBankUrl}`);
   }
 
   // Создание платежа через Альфа-Банк

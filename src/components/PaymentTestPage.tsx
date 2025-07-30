@@ -1,207 +1,265 @@
 import React, { useState } from "react";
 import paymentService from "../services/payment";
 
-export default function PaymentTestPage() {
-  const [amount, setAmount] = useState(1000);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string>("");
-  const [result, setResult] = useState<any>(null);
-  const [logs, setLogs] = useState<string[]>([]);
+interface TestPaymentData {
+  amount: number;
+  description: string;
+  customerEmail: string;
+  customerName: string;
+}
 
-  const addLog = (message: string) => {
-    const timestamp = new Date().toLocaleTimeString();
-    setLogs((prev) => [...prev, `[${timestamp}] ${message}`]);
+export default function PaymentTestPage() {
+  const [formData, setFormData] = useState<TestPaymentData>({
+    amount: 100,
+    description: "Тестовый платеж",
+    customerEmail: "test@example.com",
+    customerName: "Тестовый пользователь",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [result, setResult] = useState<{
+    success: boolean;
+    message: string;
+    paymentUrl?: string;
+    orderId?: string;
+  } | null>(null);
+
+  const isProduction = import.meta.env.PROD || false;
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "amount" ? parseInt(value) : value,
+    }));
   };
 
-  const handleTestPayment = async () => {
-    setIsLoading(true);
-    setError("");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
     setResult(null);
-    setLogs([]);
 
     try {
-      addLog("=== ТЕСТИРОВАНИЕ ПЛАТЕЖНОЙ СИСТЕМЫ ===");
-      addLog(`Создаем тестовый платеж на сумму ${amount} ₽`);
+      const orderId = paymentService.generateOrderId();
 
-      const testData = {
-        amount: amount,
+      const paymentData = {
+        amount: formData.amount,
         currency: "RUB",
-        description: `Тестовый платеж на сумму ${amount} ₽`,
-        orderId: paymentService.generateOrderId(),
-        customerEmail: "test@example.com",
-        customerName: "Тестовый пользователь",
-        returnUrl: `${window.location.origin}/certificates/success?orderId=test`,
-        cancelUrl: `${window.location.origin}/certificates/cancel?orderId=test`,
-        recipientName: "Тестовый получатель",
-        recipientEmail: "recipient@example.com",
-        senderName: "Тестовый отправитель",
-        senderEmail: "sender@example.com",
-        message: "Тестовое сообщение",
+        description: formData.description,
+        orderId: orderId,
+        customerEmail: formData.customerEmail,
+        customerName: formData.customerName,
+        returnUrl: `${window.location.origin}/payment-test/success?orderId=${orderId}`,
+        cancelUrl: `${window.location.origin}/payment-test/cancel?orderId=${orderId}`,
       };
 
-      addLog("Отправляем запрос на создание платежа...");
-      addLog(`Order ID: ${testData.orderId}`);
-      addLog(`Return URL: ${testData.returnUrl}`);
-      addLog(`Cancel URL: ${testData.cancelUrl}`);
+      const { paymentUrl, orderId: alfaOrderId } =
+        await paymentService.createAppointmentPayment(paymentData);
 
-      const response = await paymentService.createCertificatePayment(testData);
+      setResult({
+        success: true,
+        message: "Платеж успешно создан!",
+        paymentUrl,
+        orderId: alfaOrderId,
+      });
 
-      addLog("✅ Платеж успешно создан!");
-      addLog(`Payment URL: ${response.paymentUrl}`);
-      addLog(`Order ID: ${response.orderId}`);
-
-      setResult(response);
+      // Автоматически перенаправляем на страницу оплаты
+      setTimeout(() => {
+        window.location.href = paymentUrl;
+      }, 2000);
     } catch (error) {
-      console.error("Ошибка тестирования:", error);
-      const errorMessage =
-        error instanceof Error ? error.message : "Неизвестная ошибка";
-      addLog(`❌ ОШИБКА: ${errorMessage}`);
-      setError(errorMessage);
+      console.error("Ошибка при создании тестового платежа:", error);
+      setResult({
+        success: false,
+        message: `Ошибка: ${error instanceof Error ? error.message : "Неизвестная ошибка"}`,
+      });
     } finally {
-      setIsLoading(false);
+      setIsSubmitting(false);
     }
-  };
-
-  const handleTestStatus = async () => {
-    if (!result?.orderId) {
-      addLog("❌ ОШИБКА: Нет orderId для проверки статуса");
-      return;
-    }
-
-    setIsLoading(true);
-    addLog(`=== ПРОВЕРКА СТАТУСА ПЛАТЕЖА ===`);
-    addLog(`Проверяем статус заказа: ${result.orderId}`);
-
-    try {
-      const status = await paymentService.checkPaymentStatus(result.orderId);
-      addLog(`✅ Статус получен: ${JSON.stringify(status, null, 2)}`);
-
-      if (status.paid) {
-        addLog("🎉 Платеж успешно оплачен!");
-      } else {
-        addLog("⏳ Платеж в обработке или не оплачен");
-      }
-
-      setResult({ ...result, status });
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Неизвестная ошибка";
-      addLog(`❌ ОШИБКА ПРОВЕРКИ СТАТУСА: ${errorMessage}`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleOpenPayment = () => {
-    if (result?.paymentUrl) {
-      addLog("🔗 Открываем страницу оплаты в новом окне...");
-      window.open(result.paymentUrl, "_blank");
-    }
-  };
-
-  const clearLogs = () => {
-    setLogs([]);
-    setResult(null);
-    setError("");
   };
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
-            <h1 className="text-2xl font-bold text-dark mb-6">
+        <div className="max-w-2xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-dark mb-4">
               Тестирование платежной системы
             </h1>
+            <p className="text-gray-600">
+              Эта страница предназначена для тестирования интеграции с
+              Альфа-Банком
+            </p>
 
-            <div className="space-y-4 mb-6">
+            {/* Индикатор среды */}
+            <div className="mt-4">
+              {isProduction ? (
+                <div className="inline-block bg-red-100 border border-red-400 text-red-800 px-4 py-2 rounded-lg">
+                  <span className="font-medium">🚨 ПРОДАКШН СРЕДА</span>
+                  <span className="text-sm ml-2">(реальные платежи!)</span>
+                </div>
+              ) : (
+                <div className="inline-block bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-2 rounded-lg">
+                  <span className="font-medium">🧪 ТЕСТОВАЯ СРЕДА</span>
+                  <span className="text-sm ml-2">(платежи не списываются)</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Test Form */}
+          <div className="bg-white rounded-lg shadow-lg p-8">
+            <h2 className="text-xl font-semibold text-dark mb-6">
+              Создать тестовый платеж
+            </h2>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-gray-700 mb-2">
+                <label htmlFor="amount" className="block text-gray-700 mb-2">
                   Сумма (рубли)
                 </label>
                 <input
                   type="number"
-                  value={amount}
-                  onChange={(e) => setAmount(Number(e.target.value))}
+                  id="amount"
+                  name="amount"
+                  value={formData.amount}
+                  onChange={handleChange}
+                  min="1"
+                  max="1000"
                   className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"
-                  min="100"
-                  step="100"
+                  required
                 />
               </div>
 
-              <div className="flex flex-wrap gap-4">
-                <button
-                  onClick={handleTestPayment}
-                  disabled={isLoading}
-                  className={`bg-primary hover:bg-primaryDark text-white py-3 px-6 rounded-md font-medium transition-colors ${
-                    isLoading ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
+              <div>
+                <label
+                  htmlFor="description"
+                  className="block text-gray-700 mb-2"
                 >
-                  {isLoading ? "Тестирование..." : "Создать тестовый платеж"}
-                </button>
+                  Описание
+                </label>
+                <input
+                  type="text"
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"
+                  required
+                />
+              </div>
 
-                {result?.orderId && (
-                  <button
-                    onClick={handleTestStatus}
-                    disabled={isLoading}
-                    className={`bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-md font-medium transition-colors ${
-                      isLoading ? "opacity-50 cursor-not-allowed" : ""
-                    }`}
-                  >
-                    {isLoading ? "Проверка..." : "Проверить статус"}
-                  </button>
-                )}
-
-                {result?.paymentUrl && (
-                  <button
-                    onClick={handleOpenPayment}
-                    className="bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-md font-medium transition-colors"
-                  >
-                    Открыть платеж
-                  </button>
-                )}
-
-                <button
-                  onClick={clearLogs}
-                  className="bg-gray-500 hover:bg-gray-600 text-white py-3 px-6 rounded-md font-medium transition-colors"
+              <div>
+                <label
+                  htmlFor="customerName"
+                  className="block text-gray-700 mb-2"
                 >
-                  Очистить
-                </button>
+                  Имя клиента
+                </label>
+                <input
+                  type="text"
+                  id="customerName"
+                  name="customerName"
+                  value={formData.customerName}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"
+                  required
+                />
               </div>
-            </div>
 
-            {error && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-red-800 text-sm">{error}</p>
+              <div>
+                <label
+                  htmlFor="customerEmail"
+                  className="block text-gray-700 mb-2"
+                >
+                  Email клиента
+                </label>
+                <input
+                  type="email"
+                  id="customerEmail"
+                  name="customerEmail"
+                  value={formData.customerEmail}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"
+                  required
+                />
               </div>
-            )}
 
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full bg-primary hover:bg-primaryDark text-white py-3 px-6 rounded-md font-medium transition-colors ${
+                  isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
+                {isSubmitting
+                  ? "Создание платежа..."
+                  : "Создать тестовый платеж"}
+              </button>
+            </form>
+
+            {/* Result */}
             {result && (
-              <div className="mb-6 p-4 bg-gray-50 border border-gray-200 rounded-lg">
-                <h3 className="font-semibold text-dark mb-2">Результат:</h3>
-                <pre className="text-sm text-gray-700 whitespace-pre-wrap">
-                  {JSON.stringify(result, null, 2)}
-                </pre>
+              <div className="mt-6 p-4 rounded-lg border">
+                {result.success ? (
+                  <div className="bg-green-50 border-green-200 text-green-800">
+                    <h3 className="font-medium mb-2">✅ Успешно!</h3>
+                    <p className="text-sm mb-2">{result.message}</p>
+                    {result.orderId && (
+                      <p className="text-sm">Order ID: {result.orderId}</p>
+                    )}
+                    {result.paymentUrl && (
+                      <p className="text-sm">
+                        Перенаправление на страницу оплаты...
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <div className="bg-red-50 border-red-200 text-red-800">
+                    <h3 className="font-medium mb-2">❌ Ошибка!</h3>
+                    <p className="text-sm">{result.message}</p>
+                  </div>
+                )}
               </div>
             )}
           </div>
 
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            <h2 className="text-xl font-bold text-dark mb-4">
-              Логи тестирования
-            </h2>
-            <div className="bg-black text-green-400 p-4 rounded-lg font-mono text-sm h-96 overflow-y-auto">
-              {logs.length === 0 ? (
-                <p className="text-gray-500">
-                  Логи будут отображаться здесь...
+          {/* Test Cards Info */}
+          <div className="mt-8 bg-white rounded-lg shadow-lg p-8">
+            <h3 className="text-lg font-semibold text-dark mb-4">
+              Тестовые карты для оплаты
+            </h3>
+            <div className="space-y-4">
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <h4 className="font-medium text-dark mb-2">Успешная оплата:</h4>
+                <p className="text-sm text-gray-600">
+                  <strong>Номер:</strong> 4111 1111 1111 1111
                 </p>
-              ) : (
-                logs.map((log, index) => (
-                  <div key={index} className="mb-1">
-                    {log}
-                  </div>
-                ))
-              )}
+                <p className="text-sm text-gray-600">
+                  <strong>Срок действия:</strong> 12/25
+                </p>
+                <p className="text-sm text-gray-600">
+                  <strong>CVV:</strong> 123
+                </p>
+              </div>
+
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <h4 className="font-medium text-dark mb-2">
+                  Отклоненная оплата:
+                </h4>
+                <p className="text-sm text-gray-600">
+                  <strong>Номер:</strong> 4444 4444 4444 4444
+                </p>
+                <p className="text-sm text-gray-600">
+                  <strong>Срок действия:</strong> 12/25
+                </p>
+                <p className="text-sm text-gray-600">
+                  <strong>CVV:</strong> 123
+                </p>
+              </div>
             </div>
           </div>
         </div>
