@@ -197,12 +197,12 @@ export default function GiftCertificatesPage() {
           </p>
 
           {/* Индикатор среды */}
-          {!isProduction && (
+          {/* {!isProduction && (
             <div className="mt-4 inline-block bg-yellow-100 border border-yellow-400 text-yellow-800 px-4 py-2 rounded-lg">
               <span className="font-medium">🧪 ТЕСТОВАЯ СРЕДА</span>
               <span className="text-sm ml-2">(платежи не списываются)</span>
             </div>
-          )}
+          )} */}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
