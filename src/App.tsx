@@ -14,14 +14,17 @@ import PromotionsPage from "./components/PromotionsPage";
 import ContactsPage from "./components/ContactsPage";
 import FAQPage from "./components/FAQPage";
 import AboutClinicPage from "./components/AboutClinicPage";
-import GiftCertificatesPage from "./components/GiftCertificatesPage";
+import DocumentsPage from "./components/DocumentsPage";
+// Временно скрыто - компоненты сертификатов и записи на прием
+// import GiftCertificatesPage from "./components/GiftCertificatesPage";
 import PriceListPage from "./components/PriceListPage";
-import PatientCabinetPage from "./components/PatientCabinetPage";
-import PaymentSuccessPage from "./components/PaymentSuccessPage";
-import PaymentCancelPage from "./components/PaymentCancelPage";
-import PaymentTestPage from "./components/PaymentTestPage";
-import PaymentDiagnosticPage from "./components/PaymentDiagnosticPage";
-import PaymentMonitorPage from "./components/PaymentMonitorPage";
+// Временно скрыто - личный кабинет и платежи
+// import PatientCabinetPage from "./components/PatientCabinetPage";
+// import PaymentSuccessPage from "./components/PaymentSuccessPage";
+// import PaymentCancelPage from "./components/PaymentCancelPage";
+// import PaymentTestPage from "./components/PaymentTestPage";
+// import PaymentDiagnosticPage from "./components/PaymentDiagnosticPage";
+// import PaymentMonitorPage from "./components/PaymentMonitorPage";
 
 function HomePage() {
   return (
@@ -50,6 +53,8 @@ function App() {
             <Route path="/stock" element={<PromotionsPage />} />
             <Route path="/contacts" element={<ContactsPage />} />
             <Route path="/questions" element={<FAQPage />} />
+            <Route path="/documents" element={<DocumentsPage />} />
+            {/* Временно скрыто - маршруты сертификатов и записи на прием
             <Route path="/certificates" element={<GiftCertificatesPage />} />
             <Route
               path="/certificates/success"
@@ -59,7 +64,9 @@ function App() {
               path="/certificates/cancel"
               element={<PaymentCancelPage />}
             />
+            */}
             <Route path="/prices" element={<PriceListPage />} />
+            {/* Временно скрыто - личный кабинет и платежи
             <Route path="/personal-cabinet" element={<PatientCabinetPage />} />
             <Route path="/payment-test" element={<PaymentTestPage />} />
             <Route
@@ -75,6 +82,7 @@ function App() {
               element={<PaymentDiagnosticPage />}
             />
             <Route path="/payment-monitor" element={<PaymentMonitorPage />} />
+            */}
           </Routes>
         </main>
         <Footer />

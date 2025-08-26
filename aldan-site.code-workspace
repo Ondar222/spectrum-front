@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../aldan-backend"
+		}
+	],
+	"settings": {}
+}

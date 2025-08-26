@@ -1,0 +1,121 @@
+import React from "react";
+
+export default function DocumentsPage() {
+  const documents = [
+    {
+      id: 1,
+      title: "Лицензия на медицинскую деятельность",
+      description: "Лицензия на осуществление медицинской деятельности",
+      fileType: "PDF",
+      fileSize: "2.1 MB",
+      downloadUrl: "/documents/license.pdf",
+    },
+    {
+      id: 2,
+      title: "Свидетельство о государственной регистрации",
+      description:
+        "Свидетельство о государственной регистрации юридического лица",
+      fileType: "PDF",
+      fileSize: "1.8 MB",
+      downloadUrl: "/documents/registration.pdf",
+    },
+    {
+      id: 3,
+      title: "Политика конфиденциальности",
+      description: "Политика обработки персональных данных",
+      fileType: "PDF",
+      fileSize: "0.9 MB",
+      downloadUrl: "/documents/privacy.pdf",
+    },
+    {
+      id: 4,
+      title: "Правила внутреннего распорядка",
+      description: "Правила внутреннего трудового распорядка",
+      fileType: "PDF",
+      fileSize: "1.5 MB",
+      downloadUrl: "/documents/rules.pdf",
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-lightTeal py-12">
+      <div className="container mx-auto px-4">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl font-bold text-center mb-8">Документы</h1>
+
+          <div className="bg-white rounded-lg shadow-md p-8">
+            <p className="text-gray-600 text-center mb-8">
+              На этой странице вы можете ознакомиться с основными документами
+              клиники
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {documents.map((doc) => (
+                <div
+                  key={doc.id}
+                  className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-dark mb-2">
+                        {doc.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm mb-3">
+                        {doc.description}
+                      </p>
+                      <div className="flex items-center space-x-4 text-sm text-gray-500">
+                        <span className="flex items-center">
+                          <svg
+                            className="w-4 h-4 mr-1"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                          {doc.fileType}
+                        </span>
+                        <span>{doc.fileSize}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <a
+                    href={doc.downloadUrl}
+                    className="inline-flex items-center px-4 py-2 bg-primary hover:bg-primaryDark text-white text-sm font-medium rounded-md transition-colors"
+                    download
+                  >
+                    <svg
+                      className="w-4 h-4 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
+                    </svg>
+                    Скачать
+                  </a>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 p-4 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-600 text-center">
+                Для получения дополнительных документов или справок обращайтесь
+                в администрацию клиники
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
