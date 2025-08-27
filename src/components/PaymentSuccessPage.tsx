@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import paymentService from "../services/payment";
+import certificateService from "../services/certificates";
 
 interface PaymentSuccessPageProps {
   type?: "certificate" | "appointment";
@@ -31,8 +31,26 @@ export default function PaymentSuccessPage({
       }
 
       try {
-        const status = await paymentService.checkPaymentStatus(orderId);
-        setPaymentStatus(status);
+        const response = await certificateService.checkPaymentStatus(orderId);
+        
+        // Статусы Альфа-Банка:
+        // 0 - заказ зарегистрирован, но не оплачен
+        // 1 - предавторизованная сумма захолдирована
+        // 2 - проведена полная авторизация суммы заказа
+        // 3 - авторизация отменена
+        // 4 - по транзакции была проведена операция возврата
+        // 5 - инициирована авторизация через ACS банка-эмитента
+        // 6 - авторизация отклонена
+        
+        const isPaid = response.orderStatus === 2;
+        const status = isPaid ? 'paid' : 'pending';
+        
+        setPaymentStatus({
+          status,
+          paid: isPaid,
+          amount: response.amount,
+          orderId: response.orderNumber
+        });
       } catch (error) {
         console.error("Ошибка при проверке статуса платежа:", error);
         setError("Не удалось проверить статус платежа");

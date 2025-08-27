@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import paymentService, { CertificatePaymentData } from "../services/payment";
+import certificateService, { CreateCertificateRequest, Customer } from "../services/certificates";
 
 interface CertificateForm {
   recipientName: string;
@@ -62,6 +62,12 @@ export default function GiftCertificatesPage() {
     if (!formData.recipientName.trim()) {
       errors.push("Имя получателя обязательно");
       fieldErrors.recipientName = "Имя получателя обязательно";
+    } else {
+      const recipientNameParts = formData.recipientName.trim().split(' ');
+      if (recipientNameParts.length < 2 || !recipientNameParts[1].trim()) {
+        errors.push("Укажите имя и фамилию получателя");
+        fieldErrors.recipientName = "Укажите имя и фамилию получателя";
+      }
     }
 
     if (!formData.recipientEmail.trim()) {
@@ -75,6 +81,12 @@ export default function GiftCertificatesPage() {
     if (!formData.senderName.trim()) {
       errors.push("Ваше имя обязательно");
       fieldErrors.senderName = "Ваше имя обязательно";
+    } else {
+      const senderNameParts = formData.senderName.trim().split(' ');
+      if (senderNameParts.length < 2 || !senderNameParts[1].trim()) {
+        errors.push("Укажите ваше имя и фамилию");
+        fieldErrors.senderName = "Укажите ваше имя и фамилию";
+      }
     }
 
     if (!formData.senderEmail.trim()) {
@@ -103,32 +115,44 @@ export default function GiftCertificatesPage() {
     setError("");
 
     try {
-      const orderId = paymentService.generateOrderId();
-
-      const paymentData: CertificatePaymentData = {
-        amount: formData.amount,
-        currency: "RUB",
-        description: `Подарочный сертификат на сумму ${formData.amount} ₽`,
-        orderId: orderId,
-        customerEmail: formData.senderEmail,
-        customerName: formData.senderName,
-        returnUrl: `${window.location.origin}/certificates/success?orderId=${orderId}`,
-        cancelUrl: `${window.location.origin}/certificates/cancel?orderId=${orderId}`,
-        recipientName: formData.recipientName,
-        recipientEmail: formData.recipientEmail,
-        senderName: formData.senderName,
-        senderEmail: formData.senderEmail,
-        message: formData.message,
+      // Подготовка данных клиента (получателя)
+      const customerName = certificateService.parseFullName(formData.recipientName);
+      const customer: Customer = {
+        firstName: customerName.firstName,
+        lastName: customerName.lastName,
+        email: formData.recipientEmail,
       };
 
-      const { paymentUrl, orderId: alfaOrderId } =
-        await paymentService.createCertificatePayment(paymentData);
+      // Подготовка данных спонсора (отправителя) - если это подарочный сертификат
+      let sponsor: Customer | undefined;
+      const isSelfCertificate = formData.senderEmail === formData.recipientEmail && 
+                               formData.senderName === formData.recipientName;
+      
+      if (!isSelfCertificate) {
+        const sponsorName = certificateService.parseFullName(formData.senderName);
+        sponsor = {
+          firstName: sponsorName.firstName,
+          lastName: sponsorName.lastName,
+          email: formData.senderEmail,
+        };
+      }
 
-      // Перенаправление на страницу оплаты Альфа-Банка
-      window.location.href = paymentUrl;
+      const requestData: CreateCertificateRequest = {
+        amount: formData.amount,
+        customer,
+        sponsor,
+        greetingText: formData.message || undefined,
+      };
+
+      // Отправка запроса на создание сертификата
+      const response = await certificateService.createCertificate(requestData);
+
+      // Перенаправление на страницу оплаты
+      window.location.href = response.paymentUrl;
     } catch (error) {
       console.error("Ошибка при оформлении сертификата:", error);
-      setError("Произошла ошибка при создании платежа. Попробуйте еще раз.");
+      const errorMessage = error instanceof Error ? error.message : "Произошла ошибка при создании платежа";
+      setError(errorMessage + ". Попробуйте еще раз.");
       setIsSubmitting(false);
     }
   };
@@ -412,7 +436,7 @@ export default function GiftCertificatesPage() {
                     htmlFor="recipientName"
                     className="block text-gray-700 mb-2"
                   >
-                    Имя получателя *
+                    Имя и фамилия получателя *
                   </label>
                   <input
                     type="text"
@@ -420,9 +444,19 @@ export default function GiftCertificatesPage() {
                     name="recipientName"
                     value={formData.recipientName}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"
+                    placeholder="Например: Иван Иванов"
+                    className={`w-full px-4 py-2 border rounded focus:outline-none focus:border-primary ${
+                      fieldErrors.recipientName
+                        ? "border-red-500 focus:border-red-500"
+                        : "border-gray-300"
+                    }`}
                     required
                   />
+                  {fieldErrors.recipientName && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {fieldErrors.recipientName}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label
@@ -462,7 +496,7 @@ export default function GiftCertificatesPage() {
                     htmlFor="senderName"
                     className="block text-gray-700 mb-2"
                   >
-                    Ваше имя *
+                    Ваше имя и фамилия *
                   </label>
                   <input
                     type="text"
@@ -470,9 +504,19 @@ export default function GiftCertificatesPage() {
                     name="senderName"
                     value={formData.senderName}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"
+                    placeholder="Например: Петр Петров"
+                    className={`w-full px-4 py-2 border rounded focus:outline-none focus:border-primary ${
+                      fieldErrors.senderName
+                        ? "border-red-500 focus:border-red-500"
+                        : "border-gray-300"
+                    }`}
                     required
                   />
+                  {fieldErrors.senderName && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {fieldErrors.senderName}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label
@@ -528,7 +572,7 @@ export default function GiftCertificatesPage() {
               >
                 {isSubmitting
                   ? "Обработка..."
-                  : `Оплатить ${paymentService.formatAmount(formData.amount)}`}
+                  : `Оплатить ${certificateService.formatAmount(formData.amount)}`}
               </button>
             </form>
 

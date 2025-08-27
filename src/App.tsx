@@ -18,6 +18,9 @@ import DocumentsPage from "./components/DocumentsPage";
 // Временно скрыто - компоненты сертификатов и записи на прием
 // import GiftCertificatesPage from "./components/GiftCertificatesPage";
 import PriceListPage from "./components/PriceListPage";
+import GiftCertificatesPage from "./components/GiftCertificatesPage";
+import PaymentSuccessPage from "./components/PaymentSuccessPage";
+import PaymentCancelPage from "./components/PaymentCancelPage";
 // Временно скрыто - личный кабинет и платежи
 // import PatientCabinetPage from "./components/PatientCabinetPage";
 // import PaymentSuccessPage from "./components/PaymentSuccessPage";
@@ -54,7 +57,6 @@ function App() {
             <Route path="/contacts" element={<ContactsPage />} />
             <Route path="/questions" element={<FAQPage />} />
             <Route path="/documents" element={<DocumentsPage />} />
-            {/* Временно скрыто - маршруты сертификатов и записи на прием
             <Route path="/certificates" element={<GiftCertificatesPage />} />
             <Route
               path="/certificates/success"
@@ -64,6 +66,9 @@ function App() {
               path="/certificates/cancel"
               element={<PaymentCancelPage />}
             />
+            {/* Временно скрыто - маршруты сертификатов и записи на прием
+            
+            
             */}
             <Route path="/prices" element={<PriceListPage />} />
             {/* Временно скрыто - личный кабинет и платежи
