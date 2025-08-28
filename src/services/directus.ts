@@ -16,9 +16,6 @@ import {
 const DIRECTUS_URL = import.meta.env.VITE_DIRECTUS_URL || 'http://localhost:8055';
 const DIRECTUS_TOKEN = import.meta.env.VITE_DIRECTUS_TOKEN || '';
 
-// Real API configuration for services
-const SERVICES_API_URL = import.meta.env.VITE_SERVICES_API_URL || '';
-
 class DirectusService {
   private baseUrl: string;
   private headers: HeadersInit;
@@ -43,29 +40,6 @@ class DirectusService {
     }
 
     return response.json();
-  }
-
-  // Real services API
-  async getServices(): Promise<ApiService[]> {
-    if (!SERVICES_API_URL) {
-      // Fallback to mock data if API URL is not configured
-      console.warn('SERVICES_API_URL not configured, using mock data');
-      return this.getMockServices();
-    }
-
-    try {
-      const response = await fetch(SERVICES_API_URL);
-      
-      if (!response.ok) {
-        throw new Error(`Services API error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data.data || data;
-    } catch (error) {
-      console.warn('Failed to fetch services from API, using mock data:', error);
-      return this.getMockServices();
-    }
   }
 
   // Mock services for development

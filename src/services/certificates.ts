@@ -41,7 +41,7 @@ class CertificateService {
    */
   async createCertificate(data: CreateCertificateRequest): Promise<CreateCertificateResponse> {
     try {
-      const response = await fetch(`${this.apiUrl}/certificate/create`, {
+      const response = await fetch(`${this.apiUrl}/certificate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
