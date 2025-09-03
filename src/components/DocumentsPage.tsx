@@ -8,7 +8,8 @@ export default function DocumentsPage() {
       description: "Лицензия на осуществление медицинской деятельности",
       fileType: "PDF",
       fileSize: "2.1 MB",
-      downloadUrl: "/documents/license.pdf",
+      downloadUrl:
+        "https://clinicaldan.ru/upload/iblock/f4b/70jj4rxxrs5otk5k73lp87r10e7ea2j0.pdf",
     },
     {
       id: 2,
@@ -17,15 +18,17 @@ export default function DocumentsPage() {
         "Свидетельство о государственной регистрации юридического лица",
       fileType: "PDF",
       fileSize: "1.8 MB",
-      downloadUrl: "/documents/registration.pdf",
+      downloadUrl:
+        "https://clinicaldan.ru/upload/iblock/d01/d01f535a0a6bf5cc9394eb2bf0f38438.jpg",
     },
     {
       id: 3,
-      title: "Политика конфиденциальности",
-      description: "Политика обработки персональных данных",
+      title: "Порядок записи",
+      description: "Порядок записи",
       fileType: "PDF",
       fileSize: "0.9 MB",
-      downloadUrl: "/documents/privacy.pdf",
+      downloadUrl:
+        "https://clinicaldan.ru/upload/iblock/62a/62ab4cdae4befe8c5596fda9b2d6198a.doc",
     },
     {
       id: 4,
@@ -33,7 +36,17 @@ export default function DocumentsPage() {
       description: "Правила внутреннего трудового распорядка",
       fileType: "PDF",
       fileSize: "1.5 MB",
-      downloadUrl: "/documents/rules.pdf",
+      downloadUrl:
+        "https://clinicaldan.ru/upload/iblock/0eb/0eb1b06986fb47255992bcc389ce6f73.docx",
+    },
+    {
+      id: 5,
+      title: "Договор оказания платных медицинских услуг",
+      description: "Правила оказания платных медицинских услуг",
+      fileType: "PDF",
+      fileSize: "1.5 MB",
+      downloadUrl:
+        "https://clinicaldan.ru/upload/iblock/b11/b117be5ed3e4155d214105ea7fa24a07.doc",
     },
   ];
 
