@@ -38,7 +38,7 @@ function HomePage() {
       <ServiceGrid />
       <Advantages />
       <Testimonials />
-      <ContactForm />
+      {/* <ContactForm /> */}
     </>
   );
 }
