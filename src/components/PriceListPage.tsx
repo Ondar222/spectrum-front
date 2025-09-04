@@ -211,52 +211,54 @@ export default function PriceListPage() {
                 <div className="divide-y divide-gray-200">
                   {group.services
                     .map(service => (
-                      <div key={service.id} className="p-6 hover:bg-gray-50 transition-colors">
-                        <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-                          <div className="flex-1">
-                            <div className="flex items-start justify-between mb-2">
-                              <h3 className="text-lg font-semibold text-dark">{service.name}</h3>
-                              {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
-                                <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">
-                                  Срочно
-                                </span>
-                              )}
-                            </div>
-                            {service.altname && service.altname !== service.name && (
-                              <p className="text-gray-600 mb-2 text-sm italic">{service.altname}</p>
+                      <div key={service.id} className="p-6 hover:bg-gray-50 transition-colors min-h-[200px] flex flex-col">
+                        <div className="flex-grow">
+                          <div className="flex items-start justify-between mb-3">
+                            <h3 className="text-lg font-semibold text-dark leading-tight pr-2">{service.name}</h3>
+                            {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
+                              <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium flex-shrink-0">
+                                Срочно
+                              </span>
                             )}
-                            {service.info && (
-                              <p className="text-gray-600 mb-4 text-sm">{service.info}</p>
-                            )}
-                            <div className="flex items-center space-x-4 text-sm text-gray-500">
+                          </div>
+                          {service.altname && service.altname !== service.name && (
+                            <p className="text-gray-600 mb-3 text-sm italic leading-relaxed">{service.altname}</p>
+                          )}
+                          {service.info && (
+                            <p className="text-gray-600 mb-4 text-sm leading-relaxed line-clamp-3">{service.info}</p>
+                          )}
+                          <div className="flex items-center space-x-4 text-sm text-gray-500 mb-4">
+                            <span className="flex items-center">
+                              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              {formatDuration(service.duration)}
+                            </span>
+                            {service.code && (
                               <span className="flex items-center">
                                 <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
-                                {formatDuration(service.duration)}
+                                Код: {service.code}
                               </span>
-                              {service.code && (
-                                <span className="flex items-center">
-                                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                  </svg>
-                                  Код: {service.code}
-                                </span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="mt-auto pt-4 border-t border-gray-200">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="text-2xl font-bold text-primary mb-1">
+                                {formatPrice(getServicePrice(service))}
+                              </div>
+                              {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
+                                <div className="text-sm text-gray-500">
+                                  Обычно: {formatPrice(service.base_cost)}
+                                </div>
                               )}
                             </div>
-                          </div>
-                          <div className="mt-4 md:mt-0 md:ml-6 text-right">
-                            <div className="text-2xl font-bold text-primary mb-2">
-                              {formatPrice(getServicePrice(service))}
-                            </div>
-                            {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
-                              <div className="text-sm text-gray-500 mb-2">
-                                Обычно: {formatPrice(service.base_cost)}
-                              </div>
-                            )}
                             <button 
                               onClick={() => handleAppointmentClick(service)}
-                              className="bg-primary hover:bg-primaryDark text-white px-6 py-2 rounded-md font-medium transition-colors"
+                              className="bg-primary hover:bg-primaryDark text-white px-6 py-2 rounded-lg font-medium transition-colors"
                             >
                               Записаться
                             </button>

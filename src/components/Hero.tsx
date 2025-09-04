@@ -9,7 +9,7 @@ const slides = [
       "Современная медицинская клиника с высококвалифицированными специалистами. Мы предоставляем полный спектр медицинских услуг с использованием передовых технологий и индивидуальным подходом к каждому пациенту.",
     buttonText: "ПОДРОБНЕЕ",
     buttonLink: "/about",
-    image: "/bg-hero.jpg",
+    image: "https://avatars.mds.yandex.net/get-altay/2366463/2a000001704cc02d17401370e2a58f0d1f5f/XXXL",
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const slides = [
       "Современные программы комплексного обследования организма позволяют выявить заболевания на ранних стадиях и предотвратить их развитие. Индивидуальный подход к каждому пациенту.",
     buttonText: "ПОДРОБНЕЕ",
     buttonLink: "/services",
-    image: "/bg-hero2.jpg",
+    image: "https://avatars.mds.yandex.net/get-altay/2366463/2a000001704cc02d17401370e2a58f0d1f5f/XXXL",
   },
 ];
 
@@ -58,15 +58,16 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative h-[600px] md:h-[500px] overflow-hidden">
+    <section className="relative h-[700px] md:h-[600px] overflow-hidden">
       {/* Slides container */}
       <div
         className="h-full relative"
         style={{
           transition: "background-image 0.6s ease-in-out",
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${slides[currentSlide].image})`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3)), url(${slides[currentSlide].image})`,
           backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundPosition: "center 30%",
+          backgroundAttachment: "fixed",
         }}
       >
         {slides.map((slide, index) => (
@@ -79,7 +80,7 @@ export default function Hero() {
             }`}
           >
             <div className="container mx-auto h-full flex items-center">
-              <div className="max-w-2xl text-white px-4 md:px-6 py-12 bg-dark/30 backdrop-blur-sm rounded-lg">
+              <div className="max-w-3xl text-white px-6 md:px-8 py-16 bg-black/40 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl">
                 <h2
                   className="text-2xl md:text-3xl font-medium mb-2 animate-fadeInUp opacity-0"
                   style={{

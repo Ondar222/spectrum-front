@@ -51,3 +51,4 @@ API token not configured, using mock data for testing
 
 - Подробная документация API: https://newapi.archimed-soft.ru/docs/methods
 - Файл с инструкциями: `API_SETUP.md`
+

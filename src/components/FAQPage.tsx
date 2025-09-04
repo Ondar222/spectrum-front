@@ -137,16 +137,16 @@ export default function FAQPage() {
           {filteredFAQ.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
+              className="bg-white rounded-lg shadow-md overflow-hidden min-h-[120px] flex flex-col"
             >
-              <div className="p-6">
-                <div className="flex items-center mb-2">
-                  <span className="bg-teal/10 text-teal px-3 py-1 rounded-full text-sm">
+              <div className="p-6 flex flex-col flex-grow">
+                <div className="flex items-center mb-3">
+                  <span className="bg-teal/10 text-teal px-3 py-1 rounded-full text-sm font-medium">
                     {item.category}
                   </span>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{item.question}</h3>
-                <p className="text-gray-600 whitespace-pre-line">{item.answer}</p>
+                <h3 className="text-xl font-semibold mb-3 leading-tight text-gray-900">{item.question}</h3>
+                <p className="text-gray-600 whitespace-pre-line leading-relaxed flex-grow">{item.answer}</p>
               </div>
             </div>
           ))}

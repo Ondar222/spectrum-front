@@ -135,11 +135,11 @@ export default function ReviewsPage() {
           {/* Reviews list */}
           <div className="space-y-6">
             {filteredReviews.map((review) => (
-              <div key={review.id} className="bg-white rounded-lg shadow-md p-6">
+              <div key={review.id} className="bg-white rounded-lg shadow-md p-6 min-h-[200px] flex flex-col">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-lg font-medium text-gray-900">{review.patientName}</h3>
-                    <p className="text-sm text-gray-500">{review.date}</p>
+                    <h3 className="text-lg font-medium text-gray-900 leading-tight">{review.patientName}</h3>
+                    <p className="text-sm text-gray-500 mt-1">{review.date}</p>
                   </div>
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
@@ -159,9 +159,9 @@ export default function ReviewsPage() {
                   <span className="text-sm text-gray-500 mx-2">•</span>
                   <span className="text-sm text-gray-500">{review.service}</span>
                 </div>
-                <p className="text-gray-600 mb-4">{review.text}</p>
+                <p className="text-gray-600 mb-4 leading-relaxed flex-grow">{review.text}</p>
                 {review.photos && review.photos.length > 0 && (
-                  <div className="flex space-x-2">
+                  <div className="flex space-x-2 mt-auto">
                     {review.photos.map((photo, index) => (
                       <img
                         key={index}

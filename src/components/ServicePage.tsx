@@ -139,19 +139,21 @@ const ServicePage: React.FC = () => {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {(showAllServices ? filteredServices : filteredServices.slice(0, 3)).map((service) => (
-              <div key={service.id} className="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                <h3 className="text-xl font-semibold mb-2">{service.name}</h3>
-                {service.altname && service.altname !== service.name && (
-                  <p className="text-gray-600 mb-2 text-sm italic">{service.altname}</p>
-                )}
-                {service.info && (
-                  <p className="text-gray-600 mb-4 text-sm">{service.info}</p>
-                )}
-                <div className="flex justify-between items-center">
-                  <span className="text-primary font-bold">{getServicePrice(service).toLocaleString('ru-RU')} ₽</span>
+              <div key={service.id} className="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
+                <div className="flex-grow">
+                  <h3 className="text-xl font-semibold mb-3 text-gray-900 leading-tight">{service.name}</h3>
+                  {service.altname && service.altname !== service.name && (
+                    <p className="text-gray-600 mb-3 text-sm italic leading-relaxed">{service.altname}</p>
+                  )}
+                  {service.info && (
+                    <p className="text-gray-600 mb-4 text-sm leading-relaxed line-clamp-4">{service.info}</p>
+                  )}
+                </div>
+                <div className="flex justify-between items-center mt-auto pt-4">
+                  <span className="text-primary font-bold text-lg">{getServicePrice(service).toLocaleString('ru-RU')} ₽</span>
                   <button 
                     onClick={() => handleAppointmentClick(service)}
-                    className="px-4 py-2 bg-primary text-white rounded hover:bg-primaryDark transition-colors"
+                    className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primaryDark transition-colors font-medium"
                   >
                     Записаться
                   </button>
@@ -180,7 +182,7 @@ const ServicePage: React.FC = () => {
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {filteredDoctors.map((doctor) => (
-                <div key={doctor.id} className="bg-white rounded-lg shadow-md overflow-hidden text-center">
+                <div key={doctor.id} className="bg-white rounded-lg shadow-md overflow-hidden text-center flex flex-col h-full">
                   <div className="w-full h-64 bg-gray-100 flex items-center justify-center">
                     {doctor.photo ? (
                       <img
@@ -192,18 +194,20 @@ const ServicePage: React.FC = () => {
                       <div className="text-gray-400">Фото отсутствует</div>
                     )}
                   </div>
-                  <div className="p-4">
-                    <h3 className="text-xl font-semibold">{getDoctorInitials(doctor)}</h3>
-                    <p className="text-gray-600">{doctor.type}</p>
+                  <div className="p-6 flex flex-col flex-grow">
+                    <h3 className="text-xl font-semibold mb-2 text-gray-900">{getDoctorInitials(doctor)}</h3>
+                    <p className="text-gray-600 mb-3 leading-relaxed">{doctor.type}</p>
                     {doctor.branch && (
-                      <p className="text-gray-500 text-sm mt-2">{doctor.branch}</p>
+                      <p className="text-gray-500 text-sm mb-4 leading-relaxed">{doctor.branch}</p>
                     )}
-                    <Link 
-                      to={`/doctors/${doctor.id}`}
-                      className="mt-4 inline-block px-4 py-2 bg-primary text-white rounded hover:bg-primaryDark transition-colors"
-                    >
-                      Подробнее
-                    </Link>
+                    <div className="mt-auto">
+                      <Link 
+                        to={`/doctors/${doctor.id}`}
+                        className="inline-block px-6 py-2 bg-primary text-white rounded-lg hover:bg-primaryDark transition-colors font-medium"
+                      >
+                        Подробнее
+                      </Link>
+                    </div>
                   </div>
                 </div>
               ))}

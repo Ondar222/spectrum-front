@@ -44,13 +44,21 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="py-12">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">Отзывы пациентов</h2>
+    <section 
+      className="py-16 relative"
+      style={{
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url('https://avatars.mds.yandex.net/get-altay/2366463/2a000001704cc02d17401370e2a58f0d1f5f/XXXL')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center 30%',
+        backgroundAttachment: 'fixed',
+      }}
+    >
+      <div className="container mx-auto px-4 relative z-10">
+        <h2 className="text-4xl font-bold text-center mb-16 text-white">Отзывы пациентов</h2>
 
         <div className="max-w-4xl mx-auto relative">
           {/* Testimonial card */}
-          <div className="bg-white rounded-lg shadow-lg p-8">
+          <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-10 border border-white/20">
             <div className="flex justify-center mb-6">
               <svg className="text-teal h-12 w-12" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
@@ -69,7 +77,7 @@ export default function Testimonials() {
 
           {/* Navigation buttons */}
           <button
-            className="absolute top-1/2 -left-4 -translate-y-1/2 bg-white p-2 rounded-full shadow-md text-gray-500 hover:text-teal"
+            className="absolute top-1/2 -left-4 -translate-y-1/2 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-xl text-gray-600 hover:text-primary hover:bg-white transition-all duration-300 transform hover:scale-110"
             onClick={goToPrevTestimonial}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -78,7 +86,7 @@ export default function Testimonials() {
           </button>
 
           <button
-            className="absolute top-1/2 -right-4 -translate-y-1/2 bg-white p-2 rounded-full shadow-md text-gray-500 hover:text-teal"
+            className="absolute top-1/2 -right-4 -translate-y-1/2 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-xl text-gray-600 hover:text-primary hover:bg-white transition-all duration-300 transform hover:scale-110"
             onClick={goToNextTestimonial}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -87,12 +95,14 @@ export default function Testimonials() {
           </button>
 
           {/* Indicators */}
-          <div className="flex justify-center mt-6 space-x-2">
+          <div className="flex justify-center mt-8 space-x-3">
             {testimonials.map((testimonial) => (
               <button
                 key={`testimonial-indicator-${testimonial.id}`}
-                className={`w-3 h-3 rounded-full ${
-                  testimonials.indexOf(testimonial) === activeTestimonialIndex ? 'bg-teal' : 'bg-gray-300'
+                className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                  testimonials.indexOf(testimonial) === activeTestimonialIndex 
+                    ? 'bg-primary scale-125' 
+                    : 'bg-white/60 hover:bg-white/80'
                 }`}
                 onClick={() => setActiveTestimonialIndex(testimonials.indexOf(testimonial))}
               />
@@ -101,10 +111,10 @@ export default function Testimonials() {
         </div>
 
         {/* View all reviews button */}
-        <div className="text-center mt-10">
+        <div className="text-center mt-12">
           <a
             href="/reviews/"
-            className="inline-block border border-teal text-teal hover:bg-teal hover:text-white transition-colors duration-300 font-medium py-2 px-6 rounded"
+            className="inline-block bg-white/90 backdrop-blur-sm border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300 font-semibold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             Все отзывы
           </a>

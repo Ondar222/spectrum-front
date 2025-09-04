@@ -110,7 +110,7 @@ export default function PromotionsPage() {
           {/* Promotions grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredPromotions.map((promo) => (
-              <div key={promo.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div key={promo.id} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
                 <div className="relative">
                   <img
                     src={promo.image}
@@ -121,16 +121,18 @@ export default function PromotionsPage() {
                     {promo.discount}
                   </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{promo.title}</h3>
-                  <p className="text-gray-600 mb-4">{promo.description}</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-500">
-                      Действует до: {promo.validUntil}
-                    </span>
-                    <button className="bg-teal text-white px-4 py-2 rounded-md font-medium hover:bg-teal/90 transition-colors">
-                      Записаться
-                    </button>
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3 leading-tight">{promo.title}</h3>
+                  <p className="text-gray-600 mb-4 leading-relaxed flex-grow">{promo.description}</p>
+                  <div className="mt-auto pt-4 border-t border-gray-200">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-500">
+                        Действует до: {promo.validUntil}
+                      </span>
+                      <button className="bg-teal text-white px-6 py-2 rounded-lg font-medium hover:bg-teal/90 transition-colors">
+                        Записаться
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

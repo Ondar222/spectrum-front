@@ -195,7 +195,7 @@ export default function DoctorsPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredDoctors?.map((doctor: ArchimedDoctor) => (
-                <div key={'doctor-' + doctor.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                <div key={'doctor-' + doctor.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full">
                   <div className="h-48 bg-gradient-to-br from-primary to-primaryDark flex items-center justify-center">
                     {doctor.photo ? (
                       <img
@@ -212,55 +212,55 @@ export default function DoctorsPage() {
                     )}
                   </div>
 
-                  <div className="p-6">
+                  <div className="p-6 flex flex-col flex-grow">
                     <h3 className="text-xl font-semibold text-dark mb-2">
                       {getDoctorInitials(doctor)}
                     </h3>
-                    <p className="text-primary font-medium mb-2">{doctor.type}</p>
+                    <p className="text-primary font-medium mb-3">{doctor.type}</p>
 
-                    <div className="space-y-2 text-sm text-gray-600 mb-4">
+                    <div className="space-y-2 text-sm text-gray-600 mb-4 flex-grow">
                       <div className="flex items-center">
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
-                        {doctor.branch}
+                        <span className="leading-relaxed">{doctor.branch}</span>
                       </div>
                       <div className="flex items-center">
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        {doctor.category}
+                        <span className="leading-relaxed">{doctor.category}</span>
                       </div>
                       {doctor.scientific_degree && doctor.scientific_degree !== 'Без степени' && (
                         <div className="flex items-center">
-                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                           </svg>
-                          {doctor.scientific_degree}
+                          <span className="leading-relaxed">{doctor.scientific_degree}</span>
                         </div>
                       )}
                       <div className="flex items-center">
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        Прием: {doctor.max_time} мин
+                        <span className="leading-relaxed">Прием: {doctor.max_time} мин</span>
                       </div>
                     </div>
 
                     {doctor.info && (
-                      <p className="text-gray-600 text-sm mb-4">{doctor.info}</p>
+                      <p className="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-2">{doctor.info}</p>
                     )}
 
-                    <div className="flex space-x-2">
+                    <div className="flex space-x-2 mt-auto">
                       <button 
                         onClick={() => handleAppointmentClick(doctor)}
-                        className="flex-1 bg-primary hover:bg-primaryDark text-white px-4 py-2 rounded-md font-medium transition-colors"
+                        className="flex-1 bg-primary hover:bg-primaryDark text-white px-4 py-2 rounded-lg font-medium transition-colors"
                       >
                         Записаться
                       </button>
                       <Link 
                         to={`/doctors/${doctor.id}`}
-                        className="px-4 py-2 border border-primary text-primary hover:bg-primary hover:text-white rounded-md font-medium transition-colors"
+                        className="px-4 py-2 border border-primary text-primary hover:bg-primary hover:text-white rounded-lg font-medium transition-colors"
                       >
                         Подробнее
                       </Link>

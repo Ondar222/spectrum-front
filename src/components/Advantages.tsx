@@ -46,22 +46,30 @@ const advantages: Advantage[] = [
 
 export default function Advantages() {
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12 text-dark">Наши преимущества</h2>
+    <section 
+      className="py-16 relative"
+      style={{
+        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9)), url('https://avatars.mds.yandex.net/get-altay/2366463/2a000001704cc02d17401370e2a58f0d1f5f/XXXL')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center 30%',
+        backgroundAttachment: 'fixed',
+      }}
+    >
+      <div className="container mx-auto px-4 relative z-10">
+        <h2 className="text-4xl font-bold text-center mb-16 text-dark">Наши преимущества</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {advantages.map((advantage) => (
             <div
               key={advantage.id}
-              className="rounded-lg overflow-hidden shadow-lg bg-white hover:shadow-xl transition-shadow duration-300"
+              className="rounded-xl overflow-hidden shadow-xl bg-white/90 backdrop-blur-sm hover:shadow-2xl hover:bg-white transition-all duration-300 transform hover:-translate-y-2"
             >
-              <div className={`${advantage.color} p-6 text-white flex justify-center`}>
+              <div className={`${advantage.color} p-8 text-white flex justify-center`}>
                 {advantage.icon}
               </div>
-              <div className="p-6 bg-white">
+              <div className="p-8 bg-white/80 backdrop-blur-sm">
                 <h3 className="text-xl font-semibold mb-4 text-dark">{advantage.title}</h3>
-                <p className="text-gray-600">{advantage.description}</p>
+                <p className="text-gray-700 leading-relaxed">{advantage.description}</p>
               </div>
             </div>
           ))}

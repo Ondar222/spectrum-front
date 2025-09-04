@@ -7,18 +7,35 @@ export default function ContactForm() {
     phone: '',
     email: '',
     message: '',
+    agreeToTerms: false,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    setFormData((prev) => ({ 
+      ...prev, 
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value 
+    }));
+    
+    // Очищаем ошибку валидации при изменении формы
+    if (validationError) {
+      setValidationError(null);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.agreeToTerms) {
+      setValidationError('Пожалуйста, согласитесь с условиями обработки персональных данных');
+      return;
+    }
+    
+    setValidationError(null);
     setIsSubmitting(true);
 
     // Simulate form submission
@@ -30,6 +47,7 @@ export default function ContactForm() {
         phone: '',
         email: '',
         message: '',
+        agreeToTerms: false,
       });
 
       // Reset form after 3 seconds
@@ -40,9 +58,17 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
+    <section 
+      className="py-16 relative"
+      style={{
+        backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9)), url('https://avatars.mds.yandex.net/get-altay/2366463/2a000001704cc02d17401370e2a58f0d1f5f/XXXL')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center 30%',
+        backgroundAttachment: 'fixed',
+      }}
+    >
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="max-w-4xl mx-auto bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-10 border border-white/20">
           <h2 className="text-2xl font-bold text-center mb-6 text-dark">Есть вопросы? Задавайте!</h2>
           <p className="text-center text-gray-600 mb-8">
             Оставьте свои контактные данные, и мы свяжемся с вами в ближайшее время.
@@ -53,6 +79,12 @@ export default function ContactForm() {
               <p className="text-center">Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.</p>
             </div>
           ) : null}
+
+          {validationError && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+              <p className="text-center">{validationError}</p>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -109,6 +141,34 @@ export default function ContactForm() {
                 placeholder="Введите ваше сообщение"
                 required
               ></textarea>
+            </div>
+
+            <div className="mb-6">
+              <label className={`flex items-start space-x-3 ${!formData.agreeToTerms && validationError ? 'text-red-600' : ''}`}>
+                <input
+                  type="checkbox"
+                  name="agreeToTerms"
+                  checked={formData.agreeToTerms}
+                  onChange={handleChange}
+                  className={`mt-1 h-4 w-4 text-primary focus:ring-primary rounded ${
+                    !formData.agreeToTerms && validationError 
+                      ? 'border-red-300 focus:ring-red-500' 
+                      : 'border-gray-300'
+                  }`}
+                  required
+                />
+                <span className="text-sm text-gray-700">
+                  Я согласен с условиями обработки персональных данных и даю согласие на их обработку в соответствии с{' '}
+                  <a 
+                    href="/privacy-policy" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    Политикой конфиденциальности
+                  </a>
+                </span>
+              </label>
             </div>
 
             <div className="text-center">
