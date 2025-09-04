@@ -11,6 +11,7 @@ const ServicePage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [services, setServices] = useState<ApiService[]>([]);
   const [doctors, setDoctors] = useState<ArchimedDoctor[]>([]);
+  const [showAllServices, setShowAllServices] = useState(false);
 
   const direction = useMemo(() => (slug ? getDirectionBySlug(slug) : undefined), [slug]);
 
@@ -101,7 +102,7 @@ const ServicePage: React.FC = () => {
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredServices.map((service) => (
+            {(showAllServices ? filteredServices : filteredServices.slice(0, 3)).map((service) => (
               <div key={service.id} className="bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 <h3 className="text-xl font-semibold mb-2">{service.name}</h3>
                 {service.altname && service.altname !== service.name && (
@@ -119,6 +120,16 @@ const ServicePage: React.FC = () => {
               </div>
             ))}
           </div>
+          {filteredServices.length > 3 && (
+            <div className="text-center mt-8">
+              <button
+                onClick={() => setShowAllServices(s => !s)}
+                className="px-6 py-2 border border-primary text-primary rounded hover:bg-primary hover:text-white transition-colors"
+              >
+                {showAllServices ? 'Скрыть' : 'Показать ещё'}
+              </button>
+            </div>
+          )}
         </div>
       </section>
 

@@ -39,11 +39,18 @@ export default function DoctorsPage() {
     loadData();
   }, []);
 
-  const normalize = (value: string | number | null | undefined) => (value?.toString()?.toLowerCase() || '');
+  const normalize = (value: string | number | null | undefined) => (value?.toString() || '');
+  const normalizeRu = (s: string) => s
+    .toLowerCase()
+    .replace(/ё/g, 'е')
+    .replace(/[^a-zа-я0-9]+/g, ' ') // убрать лишние символы
+    .trim();
+  const searchWords = normalizeRu(normalize(searchTerm)).split(/\s+/).filter(Boolean);
 
   const filteredDoctors = doctors?.filter((doctor: ArchimedDoctor) => {
-    const matchesBranch = selectedBranch === 'all' || normalize(doctor?.branch_id) === selectedBranch;
-    const matchesCategory = selectedCategory === 'all' || normalize(doctor?.category_id) === selectedCategory;
+    const matchesBranch = selectedBranch === 'all' || String(doctor?.branch_id) === selectedBranch;
+    const matchesCategory = selectedCategory === 'all' || String(doctor?.category_id) === selectedCategory;
+
     const haystack = [
       doctor?.name,
       doctor?.name1,
@@ -52,8 +59,9 @@ export default function DoctorsPage() {
       doctor?.branch,
       doctor?.category,
       ...(doctor?.types || []).map(t => t.name),
-    ].map(normalize).join(' ');
-    const matchesSearch = normalize(searchTerm).length === 0 || haystack.includes(normalize(searchTerm));
+    ].map(v => normalizeRu(normalize(v))).join(' ');
+
+    const matchesSearch = searchWords.length === 0 || searchWords.every(w => haystack.includes(w));
 
     return matchesBranch && matchesCategory && matchesSearch;
   });
