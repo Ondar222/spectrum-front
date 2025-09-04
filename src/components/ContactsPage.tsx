@@ -18,12 +18,12 @@ export default function ContactsPage() {
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">Адрес</h3>
                   <p className="text-gray-600 leading-relaxed">
-                    г. Москва, ул. Примерная, д. 123
+                    г. Кызыл, ул. Ленина д.60
                   </p>
                 </div>
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">Телефон</h3>
-                  <p className="text-gray-600 leading-relaxed">8 (831) 411-11-22</p>
+                  <p className="text-gray-600 leading-relaxed"> 8 (923) 317-60-60</p>
                 </div>
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">Email</h3>
@@ -31,8 +31,8 @@ export default function ContactsPage() {
                 </div>
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">Режим работы</h3>
-                  <p className="text-gray-600 leading-relaxed">Пн-Пт: 9:00 - 20:00</p>
-                  <p className="text-gray-600 leading-relaxed">Сб-Вс: 10:00 - 18:00</p>
+                  <p className="text-gray-600 leading-relaxed">Пн-Пт: 08:00 - 22:00</p>
+                  <p className="text-gray-600 leading-relaxed">Сб-Вс: 09:00 - 18:00</p>
                 </div>
               </div>
             </div>
