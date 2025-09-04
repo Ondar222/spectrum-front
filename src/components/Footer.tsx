@@ -119,8 +119,8 @@ export default function Footer() {
                     />
                   </svg>
                 </div>
-                <a href="tel:+7XXXXXXXXXX" className="hover:text-primary transition-colors">
-                  +7 (XXX) XXX-XX-XX
+                <a href="tel:+79233176060" className="hover:text-primary transition-colors">
+                +7 (923) 317-60-60
                 </a>
               </p>
               <p className="flex items-center text-gray-200 group">
@@ -165,8 +165,8 @@ export default function Footer() {
                   </svg>
                 </div>
                 <div>
-                  <div>ПН-ПТ: 8.00 - 20.00</div>
-                  <div className="text-sm text-gray-300">СБ: 9.00 - 16.00</div>
+                  <div>ПН-ПТ: 08:00 - 22:00</div>
+                  <div className="text-sm text-gray-300">СБ: 09:00 - 18:00</div>
                 </div>
               </p>
             </div>

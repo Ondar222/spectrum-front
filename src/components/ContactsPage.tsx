@@ -27,7 +27,7 @@ export default function ContactsPage() {
                 </div>
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">Email</h3>
-                  <p className="text-gray-600 leading-relaxed">info@spectre-clinic.ru</p>
+                  <p className="text-gray-600 leading-relaxed">info@aldan-clinic.ru</p>
                 </div>
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">Режим работы</h3>

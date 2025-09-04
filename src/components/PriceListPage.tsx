@@ -288,7 +288,7 @@ export default function PriceListPage() {
             <div>
               <h3 className="text-lg font-semibold text-dark mb-3">Запись на прием</h3>
               <ul className="space-y-2 text-gray-600">
-                <li>• По телефону: +7 (XXX) XXX-XX-XX</li>
+                <li>• По телефону: +7 (923) 317-60-60</li>
                 <li>• Через форму на сайте</li>
                 <li>• В личном кабинете пациента</li>
                 <li>• При личном обращении в клинику</li>
