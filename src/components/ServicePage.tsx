@@ -16,6 +16,22 @@ const ServicePage: React.FC = () => {
   const direction = useMemo(() => (slug ? getDirectionBySlug(slug) : undefined), [slug]);
 
   useEffect(() => {
+    // Всегда поднимаем страницу вверх при смене направления
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+
+    // Мгновенно показываем данные из кэша, если они есть
+    const cachedServices = archimedService.getServicesCache();
+    const cachedDoctors = archimedService.getDoctorsCache();
+    if (cachedServices?.length) setServices(cachedServices);
+    if (cachedDoctors?.length) setDoctors(cachedDoctors);
+
+    // Подтягиваем актуальные данные только если кэша нет
+    const needFetch = (cachedServices?.length || 0) === 0 || (cachedDoctors?.length || 0) === 0;
+    if (!needFetch) {
+      setIsLoading(false);
+      return;
+    }
+
     const load = async () => {
       try {
         setIsLoading(true);
@@ -24,7 +40,6 @@ const ServicePage: React.FC = () => {
           archimedService.getServices(),
           archimedService.getDoctors(),
         ]);
-
         setServices(allServices);
         setDoctors(allDoctors);
       } catch (e) {
