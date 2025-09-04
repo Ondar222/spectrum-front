@@ -112,7 +112,7 @@ export default function AboutClinicPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
               <h3 className="font-semibold mb-2 text-dark">Адрес</h3>
-              <p className="text-gray-600">г. Москва, ул. Медицинская, 123</p>
+              <p className="text-gray-600">г. Кызыл, ул. Ленина д.60</p>
             </div>
             <div className="text-center">
               <svg className="w-8 h-8 text-primary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
