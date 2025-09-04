@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 // Define service types
@@ -11,7 +11,7 @@ interface Service {
   link: string;
 }
 
-// Define our services with icons and colors
+// Define our services with icons and colors (now 19, paginated as carousel)
 const services: Service[] = [
   {
     id: 1,
@@ -138,8 +138,9 @@ const services: Service[] = [
     id: 11,
     title: 'Стоматология',
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 22c0 0-4-4-4-10 0-5 2-7 4-7s4 2 4 7c0 6-4 10-4 10z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M14 9c0-2-1-3-2-3s-2 1-2 3" />
       </svg>
     ),
     color: 'bg-primary',
@@ -158,19 +159,62 @@ const services: Service[] = [
     hoverColor: 'hover:bg-primaryDark',
     link: '/services/endoscopy',
   },
+  {
+    id: 13,
+    title: 'Ультразвуковая диагностика',
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7-5 7 5v9a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+    ),
+    color: 'bg-primary',
+    hoverColor: 'hover:bg-primaryDark',
+    link: '/services/ultrasound',
+  },
+  { id: 14, title: 'Функциональная диагностика', icon: (<svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 12h4l3-5 4 10 3-5h4"/></svg>), color: 'bg-primary', hoverColor: 'hover:bg-primaryDark', link: '/services/functional-diagnostics' },
+  { id: 15, title: 'Косметология', icon: (<svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 3l6 6-6 6-3-3 6-6"/><path strokeLinecap="round" strokeLinejoin="round" d="M15 15l2 2"/></svg>), color: 'bg-primary', hoverColor: 'hover:bg-primaryDark', link: '/services/cosmetology' },
+  { id: 16, title: 'Сосудистая хирургия и флебология', icon: (<svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 12c4-6 12-6 16 0"/><path strokeLinecap="round" strokeLinejoin="round" d="M8 16c2-3 6-3 8 0"/></svg>), color: 'bg-primary', hoverColor: 'hover:bg-primaryDark', link: '/services/vascular-surgery-phlebology' },
+  { id: 17, title: 'Пульмонология', icon: (<svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 12c0-4 3-6 6-6s6 2 6 6-3 6-6 6-6-2-6-6z"/></svg>), color: 'bg-primary', hoverColor: 'hover:bg-primaryDark', link: '/services/pulmonology' },
+  { id: 18, title: 'Гастроэнтерология', icon: (<svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M8 9c3-3 5-1 8-4M8 15c3 3 5 1 8 4"/></svg>), color: 'bg-primary', hoverColor: 'hover:bg-primaryDark', link: '/services/gastroenterology' },
+  { id: 19, title: 'Гематология', icon: (<svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6c-3 4-3 8 0 12 3-4 3-8 0-12z"/></svg>), color: 'bg-primary', hoverColor: 'hover:bg-primaryDark', link: '/services/hematology' },
+  { id: 20, title: 'Травматология и ортопедия', icon: (<svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6l7 6-7 6-7-6 7-6z"/></svg>), color: 'bg-primary', hoverColor: 'hover:bg-primaryDark', link: '/services/traumatology-orthopedics' },
+  { id: 21, title: 'Онкология', icon: (<svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><circle cx="12" cy="12" r="4"/><path strokeLinecap="round" strokeLinejoin="round" d="M4 12a8 8 0 0116 0"/></svg>), color: 'bg-primary', hoverColor: 'hover:bg-primaryDark', link: '/services/oncology' },
+  { id: 22, title: 'Ревматология', icon: (<svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M8 12l4 4 4-4M12 8v8"/></svg>), color: 'bg-primary', hoverColor: 'hover:bg-primaryDark', link: '/services/rheumatology' },
+  { id: 23, title: 'Отоларингология', icon: (<svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M7 10h10M9 14h6"/></svg>), color: 'bg-primary', hoverColor: 'hover:bg-primaryDark', link: '/services/otolaryngology' },
+  { id: 24, title: 'Эндокринология', icon: (<svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M10 8h4v8h-4z"/></svg>), color: 'bg-primary', hoverColor: 'hover:bg-primaryDark', link: '/services/endocrinology' },
+  { id: 25, title: 'Нефрология', icon: (<svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 6c-2 2-2 4 0 6 2-2 2-4 0-6z"/></svg>), color: 'bg-primary', hoverColor: 'hover:bg-primaryDark', link: '/services/nephrology' },
+  { id: 26, title: 'Проктология', icon: (<svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 12h12"/></svg>), color: 'bg-primary', hoverColor: 'hover:bg-primaryDark', link: '/services/proctology' },
 ];
 
 export default function ServiceGrid() {
+  const [page, setPage] = React.useState(0);
+  // responsive page size
+  const getPageSize = () => {
+    if (typeof window === 'undefined') return 8;
+    const w = window.innerWidth;
+    if (w < 640) return 4; // 2x2
+    if (w < 1024) return 6; // 3x2
+    return 8; // 4x2
+  };
+  const [pageSize, setPageSize] = React.useState(getPageSize());
+  React.useEffect(() => {
+    const onResize = () => setPageSize(getPageSize());
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  const totalPages = Math.ceil(services.length / pageSize);
+  const start = page * pageSize;
+  const visible = services.slice(start, start + pageSize);
+
   return (
     <section className="py-12 bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-4 text-dark">Наши услуги</h2>
+        <h2 className="text-3xl font-bold text-center mb-4 text-dark">Наши направления</h2>
         <p className="text-gray-600 text-center max-w-3xl mx-auto mb-12">
           Клиника Алдан предлагает широкий спектр медицинских услуг. Выберите интересующее вас направление.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {services.map((service, index) => (
+          {visible.map((service, index) => (
             <Link
               key={service.id}
               to={service.link}
@@ -197,6 +241,26 @@ export default function ServiceGrid() {
             </Link>
           ))}
         </div>
+
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-3 mt-8">
+            <button
+              onClick={() => setPage(p => Math.max(0, p - 1))}
+              className="px-3 py-2 border border-primary text-primary rounded disabled:opacity-40"
+              disabled={page === 0}
+            >
+              ←
+            </button>
+            <div className="text-sm text-gray-600">{page + 1} / {totalPages}</div>
+            <button
+              onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
+              className="px-3 py-2 border border-primary text-primary rounded disabled:opacity-40"
+              disabled={page >= totalPages - 1}
+            >
+              →
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
