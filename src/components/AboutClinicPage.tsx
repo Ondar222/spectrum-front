@@ -57,7 +57,7 @@ export default function AboutClinicPage() {
           {/* Right Column */}
           <div className="space-y-8">
             <div className="bg-white rounded-lg shadow-lg p-8">
-              <h2 className="text-2xl font-semibold mb-4 text-dark">Наши услуги</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-dark">Наши направления</h2>
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <h3 className="font-semibold mb-2 text-dark">Диагностика</h3>
