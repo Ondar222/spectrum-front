@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ApiService, ServiceGroup } from '../types/cms';
+import { ApiService, ServiceGroup, ArchimedDoctor } from '../types/cms';
 import archimedService from '../services/archimed';
 import ErrorComponent from './ErrorComponent';
+import AppointmentModal from './AppointmentModal';
 
 export default function PriceListPage() {
   const [serviceGroups, setServiceGroups] = useState<ServiceGroup[]>([]);
@@ -9,6 +10,13 @@ export default function PriceListPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [appointmentModal, setAppointmentModal] = useState<{
+    isOpen: boolean;
+    service?: ApiService;
+    doctor?: ArchimedDoctor;
+  }>({
+    isOpen: false
+  });
 
   useEffect(() => {
     const loadServices = async () => {
@@ -86,6 +94,19 @@ export default function PriceListPage() {
   const getServicePrice = (service: ApiService) => {
     // Приоритет: cito_cost > base_cost
     return service.cito_cost > 0 ? service.cito_cost : service.base_cost;
+  };
+
+  const handleAppointmentClick = (service?: ApiService, doctor?: ArchimedDoctor) => {
+    setAppointmentModal({
+      isOpen: true,
+      service,
+      doctor
+    });
+  };
+
+  const handleAppointmentSuccess = () => {
+    // Можно добавить уведомление об успешной записи
+    console.log('Appointment created successfully');
   };
 
   if (isLoading) {
@@ -233,7 +254,10 @@ export default function PriceListPage() {
                                 Обычно: {formatPrice(service.base_cost)}
                               </div>
                             )}
-                            <button className="bg-primary hover:bg-primaryDark text-white px-6 py-2 rounded-md font-medium transition-colors">
+                            <button 
+                              onClick={() => handleAppointmentClick(service)}
+                              className="bg-primary hover:bg-primaryDark text-white px-6 py-2 rounded-md font-medium transition-colors"
+                            >
                               Записаться
                             </button>
                           </div>
@@ -270,6 +294,15 @@ export default function PriceListPage() {
             </div>
           </div>
         </div>
+
+        {/* Модальное окно записи на прием */}
+        <AppointmentModal
+          isOpen={appointmentModal.isOpen}
+          onClose={() => setAppointmentModal({ isOpen: false })}
+          service={appointmentModal.service}
+          doctor={appointmentModal.doctor}
+          onSuccess={handleAppointmentSuccess}
+        />
       </div>
     </div>
   );

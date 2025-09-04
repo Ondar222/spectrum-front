@@ -107,6 +107,39 @@ export interface ArchimedScientificDegree {
   name: string;
 }
 
+// Appointment types
+export interface AppointmentData {
+  patientName: string;
+  patientPhone: string;
+  patientEmail?: string;
+  preferredDate?: string;
+  preferredTime?: string;
+  comments?: string;
+  serviceId?: number;
+  doctorId?: number;
+}
+
+export interface ArchimedAppointment {
+  id: number;
+  patient_name: string;
+  patient_phone: string;
+  patient_email?: string;
+  preferred_date?: string;
+  preferred_time?: string;
+  comments?: string;
+  service_id?: number;
+  doctor_id?: number;
+  status_id: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AppointmentStatus {
+  id: number;
+  name: string;
+  description?: string;
+}
+
 export interface Review {
   id: string;
   patient_name: string;

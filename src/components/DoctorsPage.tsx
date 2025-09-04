@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { ArchimedDoctor, ArchimedBranch, ArchimedCategory } from '../types/cms';
 import archimedService from '../services/archimed';
 import ErrorComponent from './ErrorComponent';
+import AppointmentModal from './AppointmentModal';
 
 export default function DoctorsPage() {
   const [doctors, setDoctors] = useState<ArchimedDoctor[]>([]);
@@ -12,6 +14,13 @@ export default function DoctorsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [appointmentModal, setAppointmentModal] = useState<{
+    isOpen: boolean;
+    service?: any;
+    doctor?: ArchimedDoctor;
+  }>({
+    isOpen: false
+  });
 
   useEffect(() => {
     const loadData = async () => {
@@ -72,6 +81,18 @@ export default function DoctorsPage() {
 
   const getDoctorInitials = (doctor: ArchimedDoctor) => {
     return `${doctor?.name} ${doctor?.name1?.charAt(0)}. ${doctor?.name2?.charAt(0)}.`;
+  };
+
+  const handleAppointmentClick = (doctor?: ArchimedDoctor) => {
+    setAppointmentModal({
+      isOpen: true,
+      doctor
+    });
+  };
+
+  const handleAppointmentSuccess = () => {
+    // Можно добавить уведомление об успешной записи
+    console.log('Appointment created successfully');
   };
 
   if (isLoading) {
@@ -231,12 +252,18 @@ export default function DoctorsPage() {
                     )}
 
                     <div className="flex space-x-2">
-                      {/* <button className="flex-1 bg-primary hover:bg-primaryDark text-white px-4 py-2 rounded-md font-medium transition-colors">
+                      <button 
+                        onClick={() => handleAppointmentClick(doctor)}
+                        className="flex-1 bg-primary hover:bg-primaryDark text-white px-4 py-2 rounded-md font-medium transition-colors"
+                      >
                         Записаться
-                      </button> */}
-                      <button className="px-4 py-2 border border-primary text-primary hover:bg-primary hover:text-white rounded-md font-medium transition-colors">
-                        Подробнее
                       </button>
+                      <Link 
+                        to={`/doctors/${doctor.id}`}
+                        className="px-4 py-2 border border-primary text-primary hover:bg-primary hover:text-white rounded-md font-medium transition-colors"
+                      >
+                        Подробнее
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -244,6 +271,15 @@ export default function DoctorsPage() {
             </div>
           )}
         </div>
+
+        {/* Модальное окно записи на прием */}
+        <AppointmentModal
+          isOpen={appointmentModal.isOpen}
+          onClose={() => setAppointmentModal({ isOpen: false })}
+          service={appointmentModal.service}
+          doctor={appointmentModal.doctor}
+          onSuccess={handleAppointmentSuccess}
+        />
       </div>
     </div>
   );

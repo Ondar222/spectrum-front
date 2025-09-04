@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import archimedService from '../services/archimed';
 import { ApiService, ArchimedDoctor } from '../types/cms';
 import { getDirectionBySlug, keywordMatch } from '../services/directions';
+import AppointmentModal from './AppointmentModal';
 
 const ServicePage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -12,6 +13,13 @@ const ServicePage: React.FC = () => {
   const [services, setServices] = useState<ApiService[]>([]);
   const [doctors, setDoctors] = useState<ArchimedDoctor[]>([]);
   const [showAllServices, setShowAllServices] = useState(false);
+  const [appointmentModal, setAppointmentModal] = useState<{
+    isOpen: boolean;
+    service?: ApiService;
+    doctor?: ArchimedDoctor;
+  }>({
+    isOpen: false
+  });
 
   const direction = useMemo(() => (slug ? getDirectionBySlug(slug) : undefined), [slug]);
 
@@ -94,6 +102,19 @@ const ServicePage: React.FC = () => {
     return `${doctor?.name} ${doctor?.name1?.charAt(0)}. ${doctor?.name2?.charAt(0)}.`;
   };
 
+  const handleAppointmentClick = (service?: ApiService, doctor?: ArchimedDoctor) => {
+    setAppointmentModal({
+      isOpen: true,
+      service,
+      doctor
+    });
+  };
+
+  const handleAppointmentSuccess = () => {
+    // Можно добавить уведомление об успешной записи
+    console.log('Appointment created successfully');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Герой-секция направления */}
@@ -128,7 +149,10 @@ const ServicePage: React.FC = () => {
                 )}
                 <div className="flex justify-between items-center">
                   <span className="text-primary font-bold">{getServicePrice(service).toLocaleString('ru-RU')} ₽</span>
-                  <button className="px-4 py-2 bg-primary text-white rounded hover:bg-primaryDark transition-colors">
+                  <button 
+                    onClick={() => handleAppointmentClick(service)}
+                    className="px-4 py-2 bg-primary text-white rounded hover:bg-primaryDark transition-colors"
+                  >
                     Записаться
                   </button>
                 </div>
@@ -175,7 +199,7 @@ const ServicePage: React.FC = () => {
                       <p className="text-gray-500 text-sm mt-2">{doctor.branch}</p>
                     )}
                     <Link 
-                      to={`/doctors`}
+                      to={`/doctors/${doctor.id}`}
                       className="mt-4 inline-block px-4 py-2 bg-primary text-white rounded hover:bg-primaryDark transition-colors"
                     >
                       Подробнее
@@ -197,11 +221,23 @@ const ServicePage: React.FC = () => {
           <p className="text-white/90 mb-8 max-w-2xl mx-auto">
             Оставьте заявку и наш администратор свяжется с вами для уточнения деталей записи
           </p>
-          <button className="px-8 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-gray-100 transition-colors">
+          <button 
+            onClick={() => handleAppointmentClick()}
+            className="px-8 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-gray-100 transition-colors"
+          >
             Записаться онлайн
           </button>
         </div>
       </section>
+
+      {/* Модальное окно записи на прием */}
+      <AppointmentModal
+        isOpen={appointmentModal.isOpen}
+        onClose={() => setAppointmentModal({ isOpen: false })}
+        service={appointmentModal.service}
+        doctor={appointmentModal.doctor}
+        onSuccess={handleAppointmentSuccess}
+      />
     </div>
   );
 };
