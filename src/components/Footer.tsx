@@ -160,6 +160,10 @@ export default function Footer() {
               Политика конфиденциальности
             </a>{" "}
             |{" "}
+            <a href="/cookie-policy" className="hover:text-primary">
+              Политика cookie
+            </a>{" "}
+            |{" "}
             <a href="/terms" className="hover:text-primary">
               Условия пользования
             </a>
@@ -174,24 +178,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Cookie notice */}
-      <div className="bg-gray-800 py-3 px-4 text-gray-300 text-xs flex justify-between items-center">
-        <p>
-          Сайт использует cookies для хранения данных. Продолжая использовать
-          сайт, вы даете согласие на работу с этими файлами.
-        </p>
-        <div className="flex space-x-2">
-          <button className="px-3 py-1 bg-primary hover:bg-primaryDark text-white rounded text-xs transition-colors">
-            OK
-          </button>
-          <a
-            href="/privacy"
-            className="px-3 py-1 border border-gray-600 hover:border-primary text-white rounded text-xs transition-colors"
-          >
-            Подробнее
-          </a>
-        </div>
-      </div>
+      {/* Cookie notice - будет заменено нашим CookieNotification компонентом */}
     </footer>
   );
 }

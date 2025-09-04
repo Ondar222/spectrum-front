@@ -24,6 +24,8 @@ import PaymentCancelPage from "./components/PaymentCancelPage";
 import ServicePage from "./components/ServicePage";
 import archimedService from "./services/archimed";
 import ScrollToTop from "./components/ScrollToTop";
+import CookieNotification from "./components/CookieNotification";
+import CookiePolicyPage from "./components/CookiePolicyPage";
 // Временно скрыто - личный кабинет и платежи
 // import PatientCabinetPage from "./components/PatientCabinetPage";
 // import PaymentSuccessPage from "./components/PaymentSuccessPage";
@@ -49,6 +51,17 @@ function App() {
     // Prefetch doctors and services for instant navigation to directions
     archimedService.prefetchAll();
   }, []);
+
+  const handleCookieAccept = () => {
+    // Здесь можно добавить логику для инициализации аналитики и других сервисов
+    console.log('Cookies accepted');
+  };
+
+  const handleCookieDecline = () => {
+    // Здесь можно добавить логику для отключения аналитики
+    console.log('Cookies declined');
+  };
+
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
@@ -80,6 +93,7 @@ function App() {
             */}
             <Route path="/prices" element={<PriceListPage />} />
             <Route path="/services/:slug" element={<ServicePage />} />
+            <Route path="/cookie-policy" element={<CookiePolicyPage />} />
             {/* Временно скрыто - личный кабинет и платежи
             <Route path="/personal-cabinet" element={<PatientCabinetPage />} />
             <Route path="/payment-test" element={<PaymentTestPage />} />
@@ -100,6 +114,10 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <CookieNotification 
+          onAccept={handleCookieAccept}
+          onDecline={handleCookieDecline}
+        />
       </div>
     </Router>
   );
