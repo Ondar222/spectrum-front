@@ -47,14 +47,27 @@ export default function PriceListPage() {
     loadServices();
   }, []);
 
-  const filteredGroups = serviceGroups.filter(group => {
-    const matchesGroup = selectedGroup === 'all' || group.id.toString() === selectedGroup;
-    const hasMatchingServices = group.services.some(service => 
-      service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      service.altname.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    return matchesGroup && hasMatchingServices;
-  });
+  const safeLower = (v?: string) => (v || '').toLowerCase();
+  const search = safeLower(searchTerm.trim());
+
+  const filteredGroups = serviceGroups
+    .map(group => {
+      const filteredServices = group.services.filter(service => {
+        if (search === '') return true;
+        return (
+          safeLower(service.name).includes(search) ||
+          safeLower(service.altname).includes(search) ||
+          safeLower(service.info).includes(search) ||
+          safeLower(service.code).includes(search)
+        );
+      });
+      return { ...group, services: filteredServices } as ServiceGroup;
+    })
+    .filter(group => {
+      const matchesGroup = selectedGroup === 'all' || group.id.toString() === selectedGroup;
+      const hasServices = search === '' ? true : group.services.length > 0;
+      return matchesGroup && hasServices;
+    });
 
   const formatPrice = (price: number) => {
     return price.toLocaleString('ru-RU') + ' ₽';
@@ -176,10 +189,6 @@ export default function PriceListPage() {
                 {/* Services in Group */}
                 <div className="divide-y divide-gray-200">
                   {group.services
-                    .filter(service => 
-                      service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                      service.altname.toLowerCase().includes(searchTerm.toLowerCase())
-                    )
                     .map(service => (
                       <div key={service.id} className="p-6 hover:bg-gray-50 transition-colors">
                         <div className="flex flex-col md:flex-row md:items-center md:justify-between">

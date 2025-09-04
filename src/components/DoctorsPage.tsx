@@ -22,7 +22,7 @@ export default function DoctorsPage() {
         const [doctorsData, branchesData, categoriesData] = await Promise.all([
           archimedService.getDoctors(),
           archimedService.getBranches(),
-          archimedService.getCategories(),
+          archimedService.getCategories().catch(() => [] as unknown as ArchimedCategory[]),
         ]);
 
         setDoctors(doctorsData);
