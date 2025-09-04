@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const slides = [
   {
@@ -18,7 +19,7 @@ const slides = [
     description:
       "Современные программы комплексного обследования организма позволяют выявить заболевания на ранних стадиях и предотвратить их развитие. Индивидуальный подход к каждому пациенту.",
     buttonText: "ПОДРОБНЕЕ",
-    buttonLink: "/services",
+    buttonLink: "/prices",
     image: "https://clinicaldan.ru/upload/iblock/37e/37ee47227d019ba56cb6a41102fea374.jpg",
   },
 ];
@@ -108,8 +109,8 @@ export default function Hero() {
                 >
                   {slide.description}
                 </p>
-                <a
-                  href={slide.buttonLink}
+                <Link
+                  to={slide.buttonLink}
                   className="bg-primary hover:bg-primaryDark transition-colors text-white py-3 px-8 inline-block font-medium rounded-md animate-fadeInUp opacity-0 shadow-lg"
                   style={{
                     animationDelay: "0.7s",
@@ -117,7 +118,7 @@ export default function Hero() {
                   }}
                 >
                   {slide.buttonText}
-                </a>
+                </Link>
               </div>
             </div>
           </div>

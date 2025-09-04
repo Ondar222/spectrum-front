@@ -171,3 +171,4 @@ backgroundAttachment: fixed
 - `transition-colors` - плавные переходы цветов
 - `group-hover:scale-125` - масштабирование при наведении
 - `hover:text-primary` - изменение цвета ссылок
+
