@@ -9,7 +9,7 @@ const slides = [
       "Современная медицинская клиника с высококвалифицированными специалистами. Мы предоставляем полный спектр медицинских услуг с использованием передовых технологий и индивидуальным подходом к каждому пациенту.",
     buttonText: "ПОДРОБНЕЕ",
     buttonLink: "/about",
-    image: "https://avatars.mds.yandex.net/get-altay/2366463/2a000001704cc02d17401370e2a58f0d1f5f/XXXL",
+    image: "https://clinicaldan.ru/upload/iblock/37e/37ee47227d019ba56cb6a41102fea374.jpg",
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const slides = [
       "Современные программы комплексного обследования организма позволяют выявить заболевания на ранних стадиях и предотвратить их развитие. Индивидуальный подход к каждому пациенту.",
     buttonText: "ПОДРОБНЕЕ",
     buttonLink: "/services",
-    image: "https://avatars.mds.yandex.net/get-altay/2366463/2a000001704cc02d17401370e2a58f0d1f5f/XXXL",
+    image: "https://clinicaldan.ru/upload/iblock/37e/37ee47227d019ba56cb6a41102fea374.jpg",
   },
 ];
 
