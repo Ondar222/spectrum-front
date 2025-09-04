@@ -48,6 +48,51 @@ export default function DocumentsPage() {
       downloadUrl:
         "https://clinicaldan.ru/upload/iblock/b11/b117be5ed3e4155d214105ea7fa24a07.doc",
     },
+    {
+      id: 6,
+      title: "ПРАВИЛА ВНУТРЕННЕГО РАСПОРЯДКА ДЛЯ ПАЦИЕНТОВ МЕДИЦИНСКОГО ЦЕНТРА ООО «АЛДАН»",
+      description: "ПРАВИЛА ВНУТРЕННЕГО РАСПОРЯДКА ДЛЯ ПАЦИЕНТОВ МЕДИЦИНСКОГО ЦЕНТРА ООО «АЛДАН»",
+      fileType: "PDF",
+      fileSize: "1.5 MB",
+      downloadUrl:
+        "/documents/document1.docx",
+    },
+    {
+      id: 7,
+      title: "Порядок записи на первичный прием (консультацию, обследование)",
+      description: "Порядок записи на первичный прием (консультацию, обследование)",
+      fileType: "PDF",
+      fileSize: "1.5 MB",
+      downloadUrl:
+        "/documents/document2.docx",
+    },
+    {
+      id: 8,
+      title: "Выписка из реестра",
+      description: "Выписка из реестра",
+      fileType: "PDF",
+      fileSize: "1.5 MB",
+      downloadUrl:
+        "/documents/document3.pdf",
+    },
+    {
+      id: 9,
+      title: "Свидетельство о государственной регистрации юридического лица",
+      description: "Свидетельство о государственной регистрации юридического лица",
+      fileType: "PDF",
+      fileSize: "1.5 MB",
+      downloadUrl:
+        "/documents/document4.jpg",
+    },
+    {
+      id: 10,
+      title: "Договор оказания платных медицинских услуг № ___",
+      description: "Договор оказания платных медицинских услуг № ___",
+      fileType: "PDF",
+      fileSize: "1.5 MB",
+      downloadUrl:
+        "/documents/document5.doc",
+    },
   ];
 
   return (
