@@ -23,6 +23,7 @@ import PaymentSuccessPage from "./components/PaymentSuccessPage";
 import PaymentCancelPage from "./components/PaymentCancelPage";
 import ServicePage from "./components/ServicePage";
 import archimedService from "./services/archimed";
+import ScrollToTop from "./components/ScrollToTop";
 // Временно скрыто - личный кабинет и платежи
 // import PatientCabinetPage from "./components/PatientCabinetPage";
 // import PaymentSuccessPage from "./components/PaymentSuccessPage";
@@ -51,6 +52,7 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
+        <ScrollToTop />
         <Header />
         <main className="flex-grow">
           <Routes>
