@@ -19,15 +19,15 @@ export default function DoctorsPage() {
         setIsLoading(true);
         setError(null);
 
-        const [doctorsData, branchesData] = await Promise.all([
+        const [doctorsData, branchesData, categoriesData] = await Promise.all([
           archimedService.getDoctors(),
           archimedService.getBranches(),
-          // archimedService.getCategories()
+          archimedService.getCategories(),
         ]);
 
         setDoctors(doctorsData);
         setBranches(branchesData);
-        // setCategories(categoriesData);
+        setCategories(categoriesData);
       } catch (err) {
         console.error('Ошибка загрузки данных:', err);
         setError('Не удалось загрузить данные о врачах. Попробуйте позже.');
@@ -39,13 +39,23 @@ export default function DoctorsPage() {
     loadData();
   }, []);
 
-  const filteredDoctors = doctors?.filter((doctor: ArchimedDoctor) => {
-    const matchesBranch = selectedBranch === 'all' || doctor?.branch_id?.toString() === selectedBranch;
-    // const matchesCategory = selectedCategory === 'all' || doctor.category_id.toString() === selectedCategory;
-    const matchesSearch =
-      `${doctor.name} ${doctor.name1} ${doctor.name2}`.toLowerCase().includes(searchTerm.toLowerCase())
+  const normalize = (value: string | number | null | undefined) => (value?.toString()?.toLowerCase() || '');
 
-    return matchesBranch && matchesSearch;
+  const filteredDoctors = doctors?.filter((doctor: ArchimedDoctor) => {
+    const matchesBranch = selectedBranch === 'all' || normalize(doctor?.branch_id) === selectedBranch;
+    const matchesCategory = selectedCategory === 'all' || normalize(doctor?.category_id) === selectedCategory;
+    const haystack = [
+      doctor?.name,
+      doctor?.name1,
+      doctor?.name2,
+      doctor?.type,
+      doctor?.branch,
+      doctor?.category,
+      ...(doctor?.types || []).map(t => t.name),
+    ].map(normalize).join(' ');
+    const matchesSearch = normalize(searchTerm).length === 0 || haystack.includes(normalize(searchTerm));
+
+    return matchesBranch && matchesCategory && matchesSearch;
   });
 
   const getDoctorFullName = (doctor: ArchimedDoctor) => {

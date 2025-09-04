@@ -21,6 +21,8 @@ import PriceListPage from "./components/PriceListPage";
 import GiftCertificatesPage from "./components/GiftCertificatesPage";
 import PaymentSuccessPage from "./components/PaymentSuccessPage";
 import PaymentCancelPage from "./components/PaymentCancelPage";
+import ServicePage from "./components/ServicePage";
+import archimedService from "./services/archimed";
 // Временно скрыто - личный кабинет и платежи
 // import PatientCabinetPage from "./components/PatientCabinetPage";
 // import PaymentSuccessPage from "./components/PaymentSuccessPage";
@@ -42,6 +44,10 @@ function HomePage() {
 }
 
 function App() {
+  useEffect(() => {
+    // Prefetch doctors and services for instant navigation to directions
+    archimedService.prefetchAll();
+  }, []);
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
@@ -71,6 +77,7 @@ function App() {
             
             */}
             <Route path="/prices" element={<PriceListPage />} />
+            <Route path="/services/:slug" element={<ServicePage />} />
             {/* Временно скрыто - личный кабинет и платежи
             <Route path="/personal-cabinet" element={<PatientCabinetPage />} />
             <Route path="/payment-test" element={<PaymentTestPage />} />

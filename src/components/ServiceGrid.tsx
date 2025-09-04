@@ -1,4 +1,5 @@
 import type React from 'react';
+import { Link } from 'react-router-dom';
 
 // Define service types
 interface Service {
@@ -170,9 +171,9 @@ export default function ServiceGrid() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
-            <a
+            <Link
               key={service.id}
-              href={service.link}
+              to={service.link}
               className={`${service.color} ${service.hoverColor} text-white p-6 flex flex-col items-center text-center rounded-lg shadow-md overflow-hidden group relative transition-all duration-300 ease-in-out opacity-0 animate-fadeInUp`}
               style={{ "--delay": `${index * 0.05}s` } as React.CSSProperties}
             >
@@ -193,7 +194,7 @@ export default function ServiceGrid() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

@@ -1,10 +1,10 @@
-import { 
-  ArchimedDoctor, 
-  ArchimedZone, 
-  ArchimedBranch, 
-  ArchimedCategory, 
+import {
+  ArchimedDoctor,
+  ArchimedZone,
+  ArchimedBranch,
+  ArchimedCategory,
   ArchimedScientificDegree,
-  ApiService 
+  ApiService
 } from '../types/cms';
 
 // Archimed API configuration
@@ -14,6 +14,8 @@ const ARCHIMED_API_TOKEN = import.meta.env.VITE_ARCHIMED_API_TOKEN || '';
 class ArchimedService {
   private baseUrl: string;
   private headers: HeadersInit;
+  private servicesCache: ApiService[] = [];
+  private doctorsCache: ArchimedDoctor[] = [];
 
   constructor() {
     this.baseUrl = ARCHIMED_API_URL;
@@ -43,8 +45,12 @@ class ArchimedService {
 
   // Doctors
   async getDoctors(): Promise<ArchimedDoctor[]> {
+    if (this.doctorsCache.length > 0) {
+      return this.doctorsCache;
+    }
     const data = await this.request<{ data: ArchimedDoctor[] }>('/doctors');
-    return data.data;
+    this.doctorsCache = data.data || [];
+    return this.doctorsCache;
   }
 
   async getDoctor(id: number): Promise<ArchimedDoctor> {
@@ -63,8 +69,12 @@ class ArchimedService {
 
   // Services (from Archimed)
   async getServices(): Promise<ApiService[]> {
+    if (this.servicesCache.length > 0) {
+      return this.servicesCache;
+    }
     const data = await this.request<{ data: ApiService[] }>('/services');
-    return data.data;
+    this.servicesCache = data.data || [];
+    return this.servicesCache;
   }
 
   async getServicesByGroup(groupId: number): Promise<ApiService[]> {
@@ -96,7 +106,22 @@ class ArchimedService {
     return data.data;
   }
 
+  // Cache helpers
+  getServicesCache(): ApiService[] {
+    return this.servicesCache;
+  }
 
+  getDoctorsCache(): ArchimedDoctor[] {
+    return this.doctorsCache;
+  }
+
+  async prefetchAll(): Promise<void> {
+    try {
+      await Promise.all([this.getServices(), this.getDoctors()]);
+    } catch {
+      // ignore prefetch errors
+    }
+  }
 }
 
 export const archimedService = new ArchimedService();
