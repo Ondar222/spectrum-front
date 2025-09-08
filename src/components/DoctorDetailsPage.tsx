@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import type React from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import archimedService from '../services/archimed';
-import { ArchimedDoctor } from '../types/cms';
+import type { ArchimedDoctor } from '../types/cms';
 import AppointmentModal from './AppointmentModal';
 
 const DoctorDetailsPage: React.FC = () => {
@@ -31,7 +32,7 @@ const DoctorDetailsPage: React.FC = () => {
         
         // Сначала проверяем кэш
         const cachedDoctors = archimedService.getDoctorsCache();
-        const cachedDoctor = cachedDoctors.find(d => d.id === parseInt(id));
+        const cachedDoctor = cachedDoctors.find(d => d.id === Number.parseInt(id));
         
         if (cachedDoctor) {
           setDoctor(cachedDoctor);
@@ -40,7 +41,7 @@ const DoctorDetailsPage: React.FC = () => {
         }
 
         // Если в кэше нет, загружаем с API
-        const doctorData = await archimedService.getDoctor(parseInt(id));
+        const doctorData = await archimedService.getDoctor(Number.parseInt(id));
         setDoctor(doctorData);
       } catch (e) {
         console.error('Error loading doctor:', e);

@@ -1,4 +1,4 @@
-import { 
+import type { 
   Doctor, 
   Service, 
   Review, 

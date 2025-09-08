@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { ApiService, ArchimedDoctor, AppointmentData } from '../types/cms';
+import type React from 'react';
+import { useState } from 'react';
+import type { ApiService, ArchimedDoctor, AppointmentData } from '../types/cms';
 import archimedService from '../services/archimed';
 
 interface AppointmentModalProps {

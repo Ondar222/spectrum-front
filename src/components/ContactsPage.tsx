@@ -45,7 +45,8 @@ export default function ContactsPage() {
                   width="100%"
                   height="100%"
                   className="rounded-lg"
-                ></iframe>
+                  title="Карта расположения клиники"
+                />
               </div>
             </div>
           </div>

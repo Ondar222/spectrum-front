@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from 'react';
 import { useCookieConsent } from '../hooks/useCookieConsent';
 
 const CookieSettings: React.FC = () => {

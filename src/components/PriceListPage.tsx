@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ApiService, ServiceGroup, ArchimedDoctor } from '../types/cms';
+import type { ApiService, ServiceGroup, ArchimedDoctor } from '../types/cms';
 import archimedService from '../services/archimed';
 import ErrorComponent from './ErrorComponent';
 import AppointmentModal from './AppointmentModal';

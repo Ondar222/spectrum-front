@@ -1,8 +1,9 @@
 // components/ServicePage.tsx
-import React, { useEffect, useMemo, useState } from 'react';
+import type React from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import archimedService from '../services/archimed';
-import { ApiService, ArchimedDoctor } from '../types/cms';
+import type { ApiService, ArchimedDoctor } from '../types/cms';
 import { getDirectionBySlug, keywordMatch } from '../services/directions';
 import AppointmentModal from './AppointmentModal';
 

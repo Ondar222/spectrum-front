@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import certificateService, { CreateCertificateRequest, Customer } from "../services/certificates";
+import type React from "react";
+import { useState } from "react";
+import certificateService, { type CreateCertificateRequest, type Customer } from "../services/certificates";
 
 interface CertificateForm {
   recipientName: string;
@@ -8,6 +9,7 @@ interface CertificateForm {
   senderEmail: string;
   amount: number;
   message: string;
+  agreeToSiteConsent: boolean;
 }
 
 export default function GiftCertificatesPage() {
@@ -43,7 +45,7 @@ export default function GiftCertificatesPage() {
     const { name, value, type } = e.target as HTMLInputElement;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "amount" ? parseInt(value) : (type === 'checkbox' ? (e.target as HTMLInputElement).checked : value),
+      [name]: name === "amount" ? Number.parseInt(value) : (type === 'checkbox' ? (e.target as HTMLInputElement).checked : value),
     }));
 
     // Очищаем ошибку поля при изменении

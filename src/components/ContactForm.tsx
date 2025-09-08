@@ -176,7 +176,7 @@ export default function ContactForm() {
                     rel="noopener noreferrer"
                     className="text-primary hover:underline"
                   >
-                    утверждено
+                    политикой конфиденциальности
                   </a>
                 </span>
               </label>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArchimedDoctor, ArchimedBranch, ArchimedCategory } from '../types/cms';
+import type { ArchimedDoctor, ArchimedBranch, ArchimedCategory } from '../types/cms';
 import archimedService from '../services/archimed';
 import ErrorComponent from './ErrorComponent';
 import AppointmentModal from './AppointmentModal';
@@ -16,7 +16,7 @@ export default function DoctorsPage() {
   const [error, setError] = useState<string | null>(null);
   const [appointmentModal, setAppointmentModal] = useState<{
     isOpen: boolean;
-    service?: any;
+    service?: import('../types/cms').ApiService;
     doctor?: ArchimedDoctor;
   }>({
     isOpen: false
@@ -100,7 +100,7 @@ export default function DoctorsPage() {
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto" />
             <p className="mt-4 text-gray-600">Загрузка информации о врачах...</p>
           </div>
         </div>
@@ -195,11 +195,11 @@ export default function DoctorsPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredDoctors?.map((doctor: ArchimedDoctor) => (
-                <div key={'doctor-' + doctor.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full">
+                <div key={`doctor-${doctor.id}`} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full">
                   <div className="h-48 bg-gradient-to-br from-primary to-primaryDark flex items-center justify-center">
                     {doctor.photo ? (
                       <img
-                        src={new Image().src = `data:image/png;base64,${doctor.photo}`}
+                        src={`data:image/png;base64,${doctor.photo}`}
                         alt={getDoctorFullName(doctor)}
                         className="w-32 h-32 rounded-full object-cover border-4 border-white"
                       />

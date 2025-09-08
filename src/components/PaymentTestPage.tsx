@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import paymentService from "../services/payment";
 
 interface TestPaymentData {
@@ -32,7 +33,7 @@ export default function PaymentTestPage() {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "amount" ? parseInt(value) : value,
+      [name]: name === "amount" ? Number.parseInt(value) : value,
     }));
   };
 

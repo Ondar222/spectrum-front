@@ -1,4 +1,4 @@
-import { ServiceDirection, Doctor } from "../types/services";
+import type { ServiceDirection, Doctor } from "../types/services";
 
 export const servicesData: ServiceDirection[] = [
     {

@@ -7,7 +7,7 @@ export default function Footer() {
     <footer 
       className="relative text-white overflow-hidden"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url(https://clinicaldan.ru/upload/iblock/37e/37ee47227d019ba56cb6a41102fea374.jpg)`,
+        backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url(https://clinicaldan.ru/upload/iblock/37e/37ee47227d019ba56cb6a41102fea374.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center 30%",
         backgroundAttachment: "fixed",
@@ -37,25 +37,25 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <a href="/online/" className="text-gray-200 hover:text-primary transition-colors flex items-center group">
-                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform"></span>
+                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform" />
                   ONLINE консультации
                 </a>
               </li>
               <li>
                 <a href="/documents/utverzhdeno.pdf" target="_blank" rel="noopener noreferrer" className="text-gray-200 hover:text-primary transition-colors flex items-center group">
-                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform"></span>
+                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform" />
                   Политикой конфиденциальности
                 </a>
               </li>
               <li>
                 <a href="/prices" className="text-gray-200 hover:text-primary transition-colors flex items-center group">
-                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform"></span>
+                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform" />
                   Прайс-лист
                 </a>
               </li>
               <li>
                 <a href="/documents/согласие_на_персданные_на_сайт.docx" target="_blank" rel="noopener noreferrer" className="text-gray-200 hover:text-primary transition-colors flex items-center group">
-                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform"></span>
+                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform" />
                   Согласие на обработку персональных данных
                 </a>
               </li>
@@ -67,7 +67,7 @@ export default function Footer() {
                   href="/services/"
                   className="text-gray-200 hover:text-primary transition-colors flex items-center group"
                 >
-                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform"></span>
+                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform" />
                   Услуги
                 </a>
               </li>
@@ -76,7 +76,7 @@ export default function Footer() {
                   href="/doctors/"
                   className="text-gray-200 hover:text-primary transition-colors flex items-center group"
                 >
-                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform"></span>
+                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform" />
                   Врачи
                 </a>
               </li>
@@ -85,7 +85,7 @@ export default function Footer() {
                   href="/reviews/"
                   className="text-gray-200 hover:text-primary transition-colors flex items-center group"
                 >
-                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform"></span>
+                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform" />
                   Отзывы
                 </a>
               </li>

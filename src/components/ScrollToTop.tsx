@@ -7,7 +7,7 @@ export default function ScrollToTop() {
   useEffect(() => {
     // Scroll to top on any route change
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-  }, [location.pathname, location.search, location.hash]);
+  }, [location.pathname]);
 
   return null;
 }
