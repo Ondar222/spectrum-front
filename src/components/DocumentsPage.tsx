@@ -93,6 +93,22 @@ export default function DocumentsPage() {
       downloadUrl:
         "/documents/document5.doc",
     },
+    {
+      id: 11,
+      title: "Политика конфиденциальности",
+      description: "Политика конфиденциальности клиники",
+      fileType: "PDF",
+      fileSize: "—",
+      downloadUrl: "/documents/utverzhdeno.pdf",
+    },
+    {
+      id: 12,
+      title: "Согласие на обработку персональных данных на сайте",
+      description: "Согласие на обработку персональных данных, размещенных на сайте",
+      fileType: "DOCX",
+      fileSize: "—",
+      downloadUrl: "/documents/согласие_на_персданные_на_сайт.docx",
+    },
   ];
 
   return (

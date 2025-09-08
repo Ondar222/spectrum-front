@@ -42,9 +42,21 @@ export default function Footer() {
                 </a>
               </li>
               <li>
+                <a href="/documents/utverzhdeno.pdf" target="_blank" rel="noopener noreferrer" className="text-gray-200 hover:text-primary transition-colors flex items-center group">
+                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform"></span>
+                  Политикой конфиденциальности
+                </a>
+              </li>
+              <li>
                 <a href="/prices" className="text-gray-200 hover:text-primary transition-colors flex items-center group">
                   <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform"></span>
                   Прайс-лист
+                </a>
+              </li>
+              <li>
+                <a href="/documents/согласие_на_персданные_на_сайт.docx" target="_blank" rel="noopener noreferrer" className="text-gray-200 hover:text-primary transition-colors flex items-center group">
+                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform"></span>
+                  Согласие на обработку персональных данных
                 </a>
               </li>
               {/* Временно скрыто - раздел сертификатов
@@ -178,7 +190,7 @@ export default function Footer() {
           <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4 border border-white/10">
             <p className="text-gray-200">
               {currentYear} © Клиника Алдан. Все права защищены. |{" "}
-              <a href="/privacy" className="text-primary hover:text-primary/80 transition-colors">
+              <a href="/documents/utverzhdeno.pdf" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-colors">
                 Политика конфиденциальности
               </a>{" "}
               |{" "}

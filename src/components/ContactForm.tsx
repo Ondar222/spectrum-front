@@ -8,6 +8,7 @@ export default function ContactForm() {
     email: '',
     message: '',
     agreeToTerms: false,
+    agreeToSiteConsent: false,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,8 +31,8 @@ export default function ContactForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.agreeToTerms) {
-      setValidationError('Пожалуйста, согласитесь с условиями обработки персональных данных');
+    if (!formData.agreeToTerms || !formData.agreeToSiteConsent) {
+      setValidationError('Пожалуйста, примите обязательные согласия');
       return;
     }
     
@@ -48,6 +49,7 @@ export default function ContactForm() {
         email: '',
         message: '',
         agreeToTerms: false,
+        agreeToSiteConsent: false,
       });
 
       // Reset form after 3 seconds
@@ -158,17 +160,30 @@ export default function ContactForm() {
                   required
                 />
                 <span className="text-sm text-gray-700">
-                  Я согласен с условиями обработки персональных данных и даю согласие на их обработку в соответствии с{' '}
-                  <a 
-                    href="/privacy-policy" 
-                    target="_blank" 
+                Я согласен с условиями обработки персональных данных на сайте согласно{' '}
+                  <a
+                    href="/documents/согласие_на_персданные_на_сайт.docx"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="text-primary hover:underline"
                   >
-                    Политикой конфиденциальности
+                    согласию
+                  </a>
+                  {' '}и{' '}
+                  <a
+                    href="/documents/utverzhdeno.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    утверждено
                   </a>
                 </span>
               </label>
+            </div>
+
+            <div className="mb-6">
+            
             </div>
 
             <div className="text-center">
@@ -183,6 +198,16 @@ export default function ContactForm() {
               </button>
             </div>
           </form>
+          {/* <div className="mt-4 text-center">
+            <a
+              href="/documents/utverzhdeno.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-primary hover:underline"
+            >
+              Скачать документ «утверждено» (PDF)
+            </a>
+          </div> */}
         </div>
       </div>
     </section>

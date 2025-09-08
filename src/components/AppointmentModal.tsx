@@ -23,21 +23,28 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
     patientEmail: '',
     preferredDate: '',
     preferredTime: '',
-    comments: ''
+    comments: '',
+    agreeToSiteConsent: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target as HTMLInputElement;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!formData.agreeToSiteConsent) {
+      setSubmitStatus('error');
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
@@ -65,7 +72,8 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
           patientEmail: '',
           preferredDate: '',
           preferredTime: '',
-          comments: ''
+          comments: '',
+          agreeToSiteConsent: false,
         });
         setSubmitStatus('idle');
       }, 2000);
@@ -220,21 +228,38 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                 />
               </div>
 
+              <div>
+                <label className={`flex items-start space-x-3 ${!formData.agreeToSiteConsent && submitStatus === 'error' ? 'text-red-600' : ''}`}>
+                  <input
+                    type="checkbox"
+                    name="agreeToSiteConsent"
+                    checked={formData.agreeToSiteConsent}
+                    onChange={handleInputChange}
+                    className={`mt-1 h-4 w-4 text-primary focus:ring-primary rounded ${
+                      !formData.agreeToSiteConsent && submitStatus === 'error'
+                        ? 'border-red-300 focus:ring-red-500'
+                        : 'border-gray-300'
+                    }`}
+                    required
+                  />
+                  <span className="text-sm text-gray-700">
+                    Я согласен с условиями обработки персональных данных на сайте согласно{' '}
+                    <a
+                      href="/documents/согласие_на_персданные_на_сайт.docx"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline"
+                    >
+                      согласию (DOCX)
+                    </a>
+                  </span>
+                </label>
+              </div>
+
               {submitStatus === 'error' && (
                 <div className="p-3 bg-red-50 border border-red-200 rounded-md">
                   <p className="text-red-600 text-sm font-medium">
-                    Ошибка при отправке заявки
-                  </p>
-                  <p className="text-red-500 text-xs mt-1">
-                    Возможные причины:
-                  </p>
-                  <ul className="text-red-500 text-xs mt-1 ml-4 list-disc">
-                    <li>API не настроен (проверьте переменные окружения)</li>
-                    <li>Неправильный API токен</li>
-                    <li>Сервер API недоступен</li>
-                  </ul>
-                  <p className="text-red-500 text-xs mt-2">
-                    Подробности в консоли браузера (F12)
+                    Пожалуйста, примите обязательные согласия
                   </p>
                 </div>
               )}
@@ -254,6 +279,17 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                 >
                   {isSubmitting ? 'Отправка...' : 'Записаться'}
                 </button>
+              </div>
+              <div className="pt-2 text-xs text-gray-600">
+                Нажимая «Записаться», вы подтверждаете согласие с{' '}
+                <a
+                  href="/documents/utverzhdeno.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  документом «утверждено» (PDF)
+                </a>.
               </div>
             </form>
           )}

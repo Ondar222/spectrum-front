@@ -18,6 +18,7 @@ export default function GiftCertificatesPage() {
     senderEmail: "",
     amount: 1000,
     message: "",
+    agreeToSiteConsent: false,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,10 +40,10 @@ export default function GiftCertificatesPage() {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target as HTMLInputElement;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "amount" ? parseInt(value) : value,
+      [name]: name === "amount" ? parseInt(value) : (type === 'checkbox' ? (e.target as HTMLInputElement).checked : value),
     }));
 
     // Очищаем ошибку поля при изменении
@@ -106,7 +107,7 @@ export default function GiftCertificatesPage() {
 
     // Валидация формы
     const validation = validateForm();
-    if (!validation.isValid) {
+    if (!validation.isValid || !formData.agreeToSiteConsent) {
       setError(validation.errors.join(", "));
       return;
     }
@@ -562,6 +563,34 @@ export default function GiftCertificatesPage() {
                 />
               </div>
 
+              <div>
+                <label className={`flex items-start space-x-3 ${!formData.agreeToSiteConsent && error ? 'text-red-600' : ''}`}>
+                  <input
+                    type="checkbox"
+                    name="agreeToSiteConsent"
+                    checked={formData.agreeToSiteConsent}
+                    onChange={handleChange}
+                    className={`mt-1 h-4 w-4 text-primary focus:ring-primary rounded ${
+                      !formData.agreeToSiteConsent && error
+                        ? 'border-red-300 focus:ring-red-500'
+                        : 'border-gray-300'
+                    }`}
+                    required
+                  />
+                  <span className="text-sm text-gray-700">
+                    Я согласен с условиями обработки персональных данных на сайте согласно{' '}
+                    <a
+                      href="/documents/согласие_на_персданные_на_сайт.docx"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:underline"
+                    >
+                      согласию (DOCX)
+                    </a>
+                  </span>
+                </label>
+              </div>
+
               {/* Submit Button */}
               <button
                 type="submit"
@@ -575,6 +604,18 @@ export default function GiftCertificatesPage() {
                   : `Оплатить ${certificateService.formatAmount(formData.amount)}`}
               </button>
             </form>
+
+            <div className="mt-4 text-sm text-gray-600">
+              Оформляя сертификат, вы подтверждаете согласие с{' '}
+              <a
+                href="/documents/utverzhdeno.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                документом «утверждено» (PDF)
+              </a>.
+            </div>
 
             <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
               <p className="text-sm text-yellow-800">
