@@ -63,6 +63,14 @@ export default function Header() {
             <ul className="flex space-x-8">
               <li>
                 <Link
+                  to="/"
+                  className="text-dark hover:text-primary transition-colors"
+                >
+                  Главная
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/about"
                   className="text-dark hover:text-primary transition-colors"
                 >
@@ -209,6 +217,14 @@ export default function Header() {
 
         <nav className="p-4">
           <ul className="space-y-4">
+            <li>
+              <Link
+                to="/"
+                className="block py-2 text-dark hover:text-primary transition-colors"
+              >
+                Главная
+              </Link>
+            </li>
             <li>
               <Link
                 to="/about"

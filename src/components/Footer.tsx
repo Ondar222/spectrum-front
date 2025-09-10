@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
 
   return (
     <footer 
@@ -131,9 +130,54 @@ export default function Footer() {
                     />
                   </svg>
                 </div>
-                <a href="tel:+79233176060" className="hover:text-primary transition-colors">
-                +7 (923) 317-60-60
+                <a href="tel:+79233816060" className="hover:text-primary transition-colors">
+                  +7 (923) 381-60-60
                 </a>
+              </p>
+              <p className="flex items-center text-gray-200 group">
+                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/30 transition-colors">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 text-primary"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    />
+                  </svg>
+                </div>
+                <a href="tel:+79233176060" className="hover:text-primary transition-colors">
+                  +7 (923) 317-60-60
+                </a>
+              </p>
+              <p className="flex items-center text-gray-200 group">
+                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/30 transition-colors">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 text-primary"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <a href="tel:+79233816060" className="hover:text-primary transition-colors">
+                    +7 (923) 381-60-60
+                  </a>
+                  <span className="ml-2 text-sm text-gray-300">(Детская)</span>
+                </div>
               </p>
               <p className="flex items-center text-gray-200 group">
                 <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/30 transition-colors">
@@ -153,10 +197,10 @@ export default function Footer() {
                   </svg>
                 </div>
                 <a
-                  href="mailto:info@aldan-clinic.ru"
+                  href="mailto:clinicaldan@mail.ru"
                   className="hover:text-primary transition-colors"
                 >
-                  info@aldan-clinic.ru
+                  clinicaldan@mail.ru
                 </a>
               </p>
               <p className="flex items-center text-gray-200 group">
@@ -177,38 +221,26 @@ export default function Footer() {
                   </svg>
                 </div>
                 <div>
-                  <div>ПН-ПТ: 08:00 - 22:00</div>
-                  <div className="text-sm text-gray-300">СБ: 09:00 - 18:00</div>
+                  <div>Время работы: Пн-Пт 08:00 - 22:00</div>
+                  <div className="text-sm text-gray-300">Сб-Вс: 09:00 - 18:00</div>
                 </div>
               </p>
             </div>
           </div>
         </div>
 
-        {/* Copyright info */}
-        <div className="pt-8 border-t border-white/20 text-center sm:text-left sm:flex sm:justify-between text-sm">
-          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4 border border-white/10">
+        {/* Copyright & legal info */}
+        <div className="pt-8 border-top border-white/20 text-sm">
+          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4 border border-white/10 space-y-2">
             <p className="text-gray-200">
-              {currentYear} © Клиника Алдан. Все права защищены. |{" "}
-              <a href="/documents/utverzhdeno.pdf" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-colors">
-                Политика конфиденциальности
-              </a>{" "}
-              |{" "}
-              <a href="/cookie-policy" className="text-primary hover:text-primary/80 transition-colors">
-                Политика cookie
-              </a>{" "}
-              |{" "}
-              <a href="/terms" className="text-primary hover:text-primary/80 transition-colors">
-                Условия пользования
-              </a>
+              ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ "АЛДАН" ИНН: 1701049398
+              667000, Республика Тыва, город Кызыл, ул. Ленина, д. 60, офис 1
             </p>
-
-            <a
-              href="/sitemap"
-              className="block sm:inline-block mt-2 sm:mt-0 text-primary hover:text-primary/80 transition-colors"
-            >
-              Карта сайта
-            </a>
+            <p className="text-gray-200">
+              ИМЕЮТСЯ ПРОТИВОПОКАЗАНИЯ, НЕОБХОДИМА КОНСУЛЬТАЦИЯ СПЕЦИАЛИСТА
+            </p>
+            <p className="text-gray-200">© 2025 КЛИНИКА АЛДАН. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</p>
+            <p className="text-gray-200">Разработано Lana Soft</p>
           </div>
         </div>
       </div>

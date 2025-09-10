@@ -18,16 +18,20 @@ export default function ContactsPage() {
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">Адрес</h3>
                   <p className="text-gray-600 leading-relaxed">
-                    г. Кызыл, ул. Ленина д.60
+                    667000, Республика Тыва, город Кызыл, Ленина, 60
                   </p>
                 </div>
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">Телефон</h3>
-                  <p className="text-gray-600 leading-relaxed"> 8 (923) 317-60-60</p>
+                  <div className="text-gray-600 leading-relaxed space-y-1">
+                    <p>+7 (923) 317-60-60</p>
+                    <p>+7 (923) 381-60-60</p>
+                    <p>+7 (923) 317-60-60</p>
+                  </div>
                 </div>
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">Email</h3>
-                  <p className="text-gray-600 leading-relaxed">info@aldan-clinic.ru</p>
+                  <p className="text-gray-600 leading-relaxed">clinicaldan@mail.ru</p>
                 </div>
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">Режим работы</h3>
