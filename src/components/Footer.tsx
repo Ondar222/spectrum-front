@@ -43,7 +43,7 @@ export default function Footer() {
               <li>
                 <a href="/documents/utverzhdeno.pdf" target="_blank" rel="noopener noreferrer" className="text-gray-200 hover:text-primary transition-colors flex items-center group">
                   <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform" />
-                  Политикой конфиденциальности
+                  Политика конфиденциальности
                 </a>
               </li>
               <li>
