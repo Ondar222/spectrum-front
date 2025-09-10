@@ -95,13 +95,27 @@ export default function DoctorsPage() {
     console.log('Appointment created successfully');
   };
 
-  if (isLoading) {
+  // Instant skeleton to make page feel snappy
+  if (isLoading && doctors.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="container mx-auto px-4">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto" />
-            <p className="mt-4 text-gray-600">Загрузка информации о врачах...</p>
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-dark mb-4">Наши специалисты</h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Высококвалифицированные врачи клиники Алдан с многолетним опытом работы.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="bg-white rounded-lg shadow-lg overflow-hidden animate-pulse">
+                <div className="h-48 bg-gray-200" />
+                <div className="p-6 space-y-3">
+                  <div className="h-5 bg-gray-200 rounded w-2/3" />
+                  <div className="h-4 bg-gray-200 rounded w-1/3" />
+                  <div className="h-4 bg-gray-200 rounded w-1/2" />
+                  <div className="h-10 bg-gray-200 rounded" />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

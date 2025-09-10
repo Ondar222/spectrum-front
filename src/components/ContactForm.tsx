@@ -70,7 +70,7 @@ export default function ContactForm() {
       }}
     >
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-4xl mx-auto bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-10 border border-white/20">
+        <div className="max-w-6xl mx-auto bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-10 border border-white/20">
           <h2 className="text-2xl font-bold text-center mb-6 text-dark">Есть вопросы? Задавайте!</h2>
           <p className="text-center text-gray-600 mb-8">
             Оставьте свои контактные данные, и мы свяжемся с вами в ближайшее время.
@@ -88,7 +88,8 @@ export default function ContactForm() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+            <form onSubmit={handleSubmit} className="order-1 lg:order-2 lg:col-span-2 h-full flex flex-col">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div>
                 <label htmlFor="name" className="block text-gray-700 mb-2">Ваше имя</label>
@@ -198,6 +199,17 @@ export default function ContactForm() {
               </button>
             </div>
           </form>
+            <aside className="order-2 lg:order-1 bg-gray-50 border border-gray-200 rounded-xl p-6 h-full">
+              <h3 className="text-xl font-semibold text-dark mb-4">Контакты</h3>
+              <div className="space-y-3 text-gray-700">
+                <div>667000, Республика Тыва, город Кызыл, Ленина, 60</div>
+                <div><a href="tel:+79233176060" className="text-primary hover:underline">+7 (923) 317-60-60</a></div>
+                <div><a href="tel:+79233816060" className="text-primary hover:underline">+7 (923) 381-60-60</a></div>
+                <div><a href="tel:+79233176060" className="text-primary hover:underline">+7 (923) 317-60-60</a></div>
+                <div><a href="mailto:clinicaldan@mail.ru" className="text-primary hover:underline">clinicaldan@mail.ru</a></div>
+              </div>
+            </aside>
+          </div>
           {/* <div className="mt-4 text-center">
             <a
               href="/documents/utverzhdeno.pdf"

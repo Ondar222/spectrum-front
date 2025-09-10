@@ -113,7 +113,7 @@ export default function Footer() {
           <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/10">
             <h3 className="text-lg font-semibold mb-6 text-white">Контакты</h3>
             <div className="space-y-4">
-              <p className="flex items-center text-gray-200 group">
+              <div className="flex items-center text-gray-200 group">
                 <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/30 transition-colors">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -133,8 +133,8 @@ export default function Footer() {
                 <a href="tel:+79233816060" className="hover:text-primary transition-colors">
                   +7 (923) 381-60-60
                 </a>
-              </p>
-              <p className="flex items-center text-gray-200 group">
+              </div>
+              <div className="flex items-center text-gray-200 group">
                 <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/30 transition-colors">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -154,8 +154,8 @@ export default function Footer() {
                 <a href="tel:+79233176060" className="hover:text-primary transition-colors">
                   +7 (923) 317-60-60
                 </a>
-              </p>
-              <p className="flex items-center text-gray-200 group">
+              </div>
+              <div className="flex items-center text-gray-200 group">
                 <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/30 transition-colors">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -178,8 +178,8 @@ export default function Footer() {
                   </a>
                   <span className="ml-2 text-sm text-gray-300">(Детская)</span>
                 </div>
-              </p>
-              <p className="flex items-center text-gray-200 group">
+              </div>
+              <div className="flex items-center text-gray-200 group">
                 <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/30 transition-colors">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -202,8 +202,8 @@ export default function Footer() {
                 >
                   clinicaldan@mail.ru
                 </a>
-              </p>
-              <p className="flex items-center text-gray-200 group">
+              </div>
+              <div className="flex items-center text-gray-200 group">
                 <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/30 transition-colors">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -224,13 +224,13 @@ export default function Footer() {
                   <div>Время работы: Пн-Пт 08:00 - 22:00</div>
                   <div className="text-sm text-gray-300">Сб-Вс: 09:00 - 18:00</div>
                 </div>
-              </p>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Copyright & legal info */}
-        <div className="pt-8 border-top border-white/20 text-sm">
+        <div className="pt-8 border-t border-white/20 text-sm">
           <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4 border border-white/10 space-y-2">
             <p className="text-gray-200">
               ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ "АЛДАН" ИНН: 1701049398

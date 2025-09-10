@@ -13,6 +13,15 @@ import type {
 // Archimed API configuration
 const ARCHIMED_API_URL = import.meta.env.VITE_ARCHIMED_API_URL || 'https://newapi.archimed-soft.ru/api/v5';
 const ARCHIMED_API_TOKEN = import.meta.env.VITE_ARCHIMED_API_TOKEN || '';
+// Some deployments don't have categories endpoint – disable to avoid 404 requests
+const ARCHIMED_CATEGORIES_ENABLED = false;
+
+// Local cache settings
+const DOCTORS_CACHE_KEY = 'archimed_doctors_v1';
+const SERVICES_CACHE_KEY = 'archimed_services_v1';
+const DOCTORS_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24h
+const SERVICES_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24h
+const DEFAULT_REQUEST_TIMEOUT_MS = 20000; // 20s
 
 class ArchimedService {
   private baseUrl: string;
@@ -26,41 +35,96 @@ class ArchimedService {
       'Content-Type': 'application/json',
       ...(ARCHIMED_API_TOKEN && { 'Authorization': `Bearer ${ARCHIMED_API_TOKEN}` }),
     };
+
+    // Warm caches from localStorage on startup for instant UI
+    try {
+      const doctorsFromStorage = this.readFromStorage<ArchimedDoctor[]>(DOCTORS_CACHE_KEY, DOCTORS_CACHE_TTL_MS);
+      if (doctorsFromStorage) this.doctorsCache = doctorsFromStorage;
+      const servicesFromStorage = this.readFromStorage<ApiService[]>(SERVICES_CACHE_KEY, SERVICES_CACHE_TTL_MS);
+      if (servicesFromStorage) this.servicesCache = servicesFromStorage;
+    } catch {
+      // ignore storage errors
+    }
   }
 
-  private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  private async request<T>(endpoint: string, options?: RequestInit & { timeoutMs?: number; suppressErrorLog?: boolean }): Promise<T> {
     if (!this.baseUrl) {
       throw new Error('ARCHIMED_API_URL not configured');
     }
 
     const url = `${this.baseUrl}${endpoint}`;
-    console.log('Making API request to:', url);
-    console.log('Request options:', { headers: this.headers, ...options });
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort('timeout'), options?.timeoutMs ?? DEFAULT_REQUEST_TIMEOUT_MS);
 
-    const response = await fetch(url, {
-      headers: this.headers,
-      ...options,
-    });
-
-    console.log('API response status:', response.status);
-    console.log('API response headers:', response.headers);
+    let response: Response;
+    try {
+      response = await fetch(url, {
+        headers: this.headers,
+        signal: controller.signal,
+        ...options,
+      });
+    } catch (e) {
+      window.clearTimeout(timeout);
+      if ((e as Error)?.name === 'AbortError') {
+        throw new Error('Request timeout');
+      }
+      throw e;
+    } finally {
+      window.clearTimeout(timeout);
+    }
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('API error response:', errorText);
+      if (!options?.suppressErrorLog) {
+        console.error('API error response:', errorText);
+      }
       throw new Error(`Archimed API error: ${response.status} - ${errorText}`);
     }
 
     return response.json();
   }
 
+  private readFromStorage<T>(key: string, ttlMs: number): T | null {
+    try {
+      if (typeof window === 'undefined') return null;
+      const raw = window.localStorage.getItem(key);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw) as { data: T; timestamp: number };
+      if (!parsed || !parsed.data || !parsed.timestamp) return null;
+      const isFresh = Date.now() - parsed.timestamp < ttlMs;
+      return isFresh ? parsed.data : parsed.data; // return stale data too; we'll revalidate
+    } catch {
+      return null;
+    }
+  }
+
+  private writeToStorage<T>(key: string, data: T): void {
+    try {
+      if (typeof window === 'undefined') return;
+      const payload = JSON.stringify({ data, timestamp: Date.now() });
+      window.localStorage.setItem(key, payload);
+    } catch {
+      // ignore storage errors
+    }
+  }
+
   // Doctors
   async getDoctors(): Promise<ArchimedDoctor[]> {
     if (this.doctorsCache.length > 0) {
+      // Revalidate in background for freshness
+      this.refreshDoctors();
+      return this.doctorsCache;
+    }
+    const fromStorage = this.readFromStorage<ArchimedDoctor[]>(DOCTORS_CACHE_KEY, DOCTORS_CACHE_TTL_MS);
+    if (fromStorage && fromStorage.length > 0) {
+      this.doctorsCache = fromStorage;
+      // refresh in background
+      this.refreshDoctors();
       return this.doctorsCache;
     }
     const data = await this.request<{ data: ArchimedDoctor[] }>('/doctors');
     this.doctorsCache = data.data || [];
+    this.writeToStorage(DOCTORS_CACHE_KEY, this.doctorsCache);
     return this.doctorsCache;
   }
 
@@ -81,10 +145,18 @@ class ArchimedService {
   // Services (from Archimed)
   async getServices(): Promise<ApiService[]> {
     if (this.servicesCache.length > 0) {
+      this.refreshServices();
+      return this.servicesCache;
+    }
+    const fromStorage = this.readFromStorage<ApiService[]>(SERVICES_CACHE_KEY, SERVICES_CACHE_TTL_MS);
+    if (fromStorage && fromStorage.length > 0) {
+      this.servicesCache = fromStorage;
+      this.refreshServices();
       return this.servicesCache;
     }
     const data = await this.request<{ data: ApiService[] }>('/services');
     this.servicesCache = data.data || [];
+    this.writeToStorage(SERVICES_CACHE_KEY, this.servicesCache);
     return this.servicesCache;
   }
 
@@ -107,8 +179,18 @@ class ArchimedService {
 
   // Categories
   async getCategories(): Promise<ArchimedCategory[]> {
-    const data = await this.request<{ data: ArchimedCategory[] }>('/categories');
-    return data.data;
+    if (!ARCHIMED_CATEGORIES_ENABLED) {
+      return [] as ArchimedCategory[];
+    }
+    try {
+      const data = await this.request<{ data: ArchimedCategory[] }>(
+        '/categories',
+        { suppressErrorLog: true }
+      );
+      return data.data;
+    } catch {
+      return [] as ArchimedCategory[];
+    }
   }
 
   // Scientific Degrees
@@ -124,6 +206,37 @@ class ArchimedService {
 
   getDoctorsCache(): ArchimedDoctor[] {
     return this.doctorsCache;
+  }
+
+  // Background refreshers (stale-while-revalidate)
+  private async refreshDoctors(): Promise<void> {
+    try {
+      const data = await this.request<{ data: ArchimedDoctor[] }>(
+        '/doctors',
+        { timeoutMs: DEFAULT_REQUEST_TIMEOUT_MS }
+      );
+      if (Array.isArray(data?.data) && data.data.length > 0) {
+        this.doctorsCache = data.data;
+        this.writeToStorage(DOCTORS_CACHE_KEY, this.doctorsCache);
+      }
+    } catch {
+      // keep stale cache on failure
+    }
+  }
+
+  private async refreshServices(): Promise<void> {
+    try {
+      const data = await this.request<{ data: ApiService[] }>(
+        '/services',
+        { timeoutMs: DEFAULT_REQUEST_TIMEOUT_MS }
+      );
+      if (Array.isArray(data?.data) && data.data.length > 0) {
+        this.servicesCache = data.data;
+        this.writeToStorage(SERVICES_CACHE_KEY, this.servicesCache);
+      }
+    } catch {
+      // keep stale cache on failure
+    }
   }
 
   // Appointments
@@ -234,7 +347,9 @@ class ArchimedService {
 
   async prefetchAll(): Promise<void> {
     try {
-      await Promise.all([this.getServices(), this.getDoctors()]);
+      // Warm caches quickly (from storage if available)
+      void this.getServices();
+      void this.getDoctors();
     } catch {
       // ignore prefetch errors
     }

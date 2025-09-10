@@ -109,13 +109,30 @@ export default function PriceListPage() {
     console.log('Appointment created successfully');
   };
 
-  if (isLoading) {
+  // Show instant skeleton to avoid perceived lag
+  if (isLoading && serviceGroups.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="container mx-auto px-4">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-            <p className="mt-4 text-gray-600">Загрузка прайс-листа...</p>
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-dark mb-4">Прайс-лист клиники</h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Актуальные цены на все услуги клиники Алдан.</p>
+          </div>
+          <div className="grid gap-6">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="bg-white rounded-lg shadow-lg overflow-hidden animate-pulse">
+                <div className="bg-primary/70 h-14" />
+                <div className="divide-y divide-gray-100">
+                  {Array.from({ length: 3 }).map((__, j) => (
+                    <div key={j} className="p-6 space-y-3">
+                      <div className="h-5 bg-gray-200 rounded w-2/3" />
+                      <div className="h-4 bg-gray-200 rounded w-1/3" />
+                      <div className="h-8 bg-gray-200 rounded w-24" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
