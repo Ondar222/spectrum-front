@@ -587,7 +587,7 @@ export default function GiftCertificatesPage() {
                       rel="noopener noreferrer"
                       className="text-primary hover:underline"
                     >
-                      согласию (DOCX)
+                     согласию на обработку персональных данных
                     </a>
                   </span>
                 </label>

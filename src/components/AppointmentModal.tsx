@@ -251,7 +251,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                       rel="noopener noreferrer"
                       className="text-primary hover:underline"
                     >
-                      согласию (DOCX)
+                      согласию на обработку персональных данных
                     </a>
                   </span>
                 </label>
@@ -282,14 +282,14 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                 </button>
               </div>
               <div className="pt-2 text-xs text-gray-600">
-                Нажимая «Записаться», вы подтверждаете согласие с{' '}
+                Нажимая «Записаться», вы подтверждаете согласие {' '}
                 <a
                   href="/documents/utverzhdeno.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary hover:underline"
                 >
-                  документом «утверждено» (PDF)
+                  Политики защиты и обработки персональных данных
                 </a>.
               </div>
             </form>
