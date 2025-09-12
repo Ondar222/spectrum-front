@@ -202,7 +202,20 @@ export default function ContactForm() {
             <aside className="order-2 lg:order-1 bg-gray-50 border border-gray-200 rounded-xl p-6 h-full">
               <h3 className="text-xl font-semibold text-dark mb-4">Контакты</h3>
               <div className="space-y-3 text-gray-700">
-                <div>667000, Республика Тыва, город Кызыл, Ленина, 60</div>
+                <div className="flex items-center gap-2">
+                  <a
+                    href="https://yandex.ru/maps/?text=667000%2C%20Республика%20Тыва%2C%20город%20Кызыл%2C%20Ленина%2C%2060"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-primary hover:underline"
+                    aria-label="Открыть адрес на карте"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-1">
+                      <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
+                    </svg>
+                    667000, Республика Тыва, город Кызыл, Ленина, 60
+                  </a>
+                </div>
                 <div><a href="tel:+79233176060" className="text-primary hover:underline">+7 (923) 317-60-60</a></div>
                 <div><a href="tel:+79233816060" className="text-primary hover:underline">+7 (923) 381-60-60</a></div>
                 <div><a href="tel:+79233176060" className="text-primary hover:underline">+7 (923) 317-60-60</a></div>

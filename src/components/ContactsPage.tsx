@@ -17,8 +17,19 @@ export default function ContactsPage() {
               <div className="space-y-6 flex-grow">
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">Адрес</h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    667000, Республика Тыва, город Кызыл, Ленина, 60
+                  <p className="text-gray-600 leading-relaxed flex items-center gap-2">
+                    <a
+                      href="https://yandex.ru/maps/?text=667000%2C%20Республика%20Тыва%2C%20город%20Кызыл%2C%20Ленина%2C%2060"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-primary hover:underline"
+                      aria-label="Открыть адрес на карте"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-1">
+                        <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
+                      </svg>
+                      667000, Республика Тыва, город Кызыл, Ленина, 60
+                    </a>
                   </p>
                 </div>
                 <div>

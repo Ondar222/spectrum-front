@@ -112,7 +112,17 @@ export default function AboutClinicPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
               <h3 className="font-semibold mb-2 text-dark">Адрес</h3>
-              <p className="text-gray-600">г. Кызыл, ул. Ленина д.60</p>
+              <a
+                href="https://yandex.ru/maps/?text=%D0%B3.%20%D0%9A%D1%8B%D0%B7%D1%8B%D0%BB%2C%20%D1%83%D0%BB.%20%D0%9B%D0%B5%D0%BD%D0%B8%D0%BD%D0%B0%20%D0%B4.60"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:underline inline-flex items-center"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-1 text-primary">
+                  <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
+                </svg>
+                г. Кызыл, ул. Ленина д.60
+              </a>
             </div>
             <div className="text-center">
               <svg className="w-8 h-8 text-primary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
