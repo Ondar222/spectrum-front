@@ -43,9 +43,9 @@ export default function ContactsPage() {
 
             <div className="bg-white rounded-lg shadow-md p-6 flex flex-col h-full">
               <h2 className="text-2xl font-semibold mb-6 text-gray-900">Как добраться</h2>
-              <div className="aspect-w-16 aspect-h-9 flex-grow">
+              <div className="flex-grow" style={{ height: "520px" }}>
                 <iframe
-                  src="https://yandex.ru/map-widget/v1/?um=constructor%3Ad2e4685aaf3109b93382144c62e33c664310acfba9a40f0943bec22ae4f9d8f5&amp;source=constructor"
+                  src="https://yandex.ru/map-widget/v1/?um=constructor%3Ad2e4685aaf3109b93382144c62e33c664310acfba9a40f0943bec22ae4f9d8f5&amp;source=constructor&amp;z=17"
                   width="100%"
                   height="100%"
                   className="rounded-lg"

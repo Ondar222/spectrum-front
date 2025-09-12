@@ -62,21 +62,26 @@ export default function Header() {
         {/* Top bar */}
 
         {/* Main header */}
-        <div className="py-4 flex items-center justify-between">
-          {/* Logo: show image on mobile, text on desktop for accessibility */}
-          <Link to="/" className="text-2xl font-semibold text-primary flex items-center">
+        <div className="py-2 md:py-1 flex items-center justify-between">
+          {/* Logo: favicon on mobile, full logo image on desktop */}
+          <Link to="/" className="text-2xl font-semibold text-primary flex items-center" aria-label="Клиника Алдан">
             <img
               src="/favicon.png"
               alt="Клиника Алдан"
               className="md:hidden h-8 w-8 object-contain"
               loading="eager"
             />
-            <span className="hidden md:inline">КЛИНИКА АЛДАН</span>
+            <img
+              src="/aldan.png"
+              alt="Клиника Алдан"
+              className="hidden md:block h-10 lg:h-24 xl:h-28 object-contain"
+              loading="eager"
+            />
           </Link>
 
           {/* Desktop navigation */}
           <nav className="hidden md:flex">
-            <ul className="flex space-x-8">
+            <ul className="flex space-x-6">
               <li>
                 <Link
                   to="/"
