@@ -37,7 +37,7 @@ export default function ContactsPage() {
                   <div className="text-gray-600 leading-relaxed space-y-1">
                     <p>+7 (923) 317-60-60</p>
                     <p>+7 (923) 381-60-60</p>
-                    <p>+7 (923) 317-60-60</p>
+      
                   </div>
                 </div>
                 <div>
