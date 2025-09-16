@@ -48,7 +48,7 @@ export default function Header() {
   }, [isMenuOpen]);
 
   return (
-    <header className="bg-white shadow-md relative z-40">
+    <header className="bg-white shadow-md sticky top-0 z-40">
       <div className="container mx-auto px-4">
         {/* Top bar */}
 
