@@ -236,6 +236,7 @@ export default function Header() {
               <Link
                 to="/"
                 className="block py-2 text-dark hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Главная
               </Link>
@@ -244,6 +245,7 @@ export default function Header() {
               <Link
                 to="/about"
                 className="block py-2 text-dark hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
                 О клинике
               </Link>
@@ -252,6 +254,7 @@ export default function Header() {
               <Link
                 to="/doctors"
                 className="block py-2 text-dark hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Врачи
               </Link>
@@ -260,6 +263,7 @@ export default function Header() {
               <Link
                 to="/prices"
                 className="block py-2 text-dark hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Прайс-лист
               </Link>
@@ -268,17 +272,25 @@ export default function Header() {
               <Link
                 to="/stock"
                 className="block py-2 text-dark hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Акции
               </Link>
             </li>
             <li>
-              <Link to="/certificates" className="block py-2 text-dark hover:text-primary transition-colors">Сертификаты</Link>
+              <Link
+                to="/certificates"
+                className="block py-2 text-dark hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Сертификаты
+              </Link>
             </li>
             <li>
               <Link
                 to="/reviews"
                 className="block py-2 text-dark hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Отзывы
               </Link>
@@ -287,6 +299,7 @@ export default function Header() {
               <Link
                 to="/questions"
                 className="block py-2 text-dark hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Вопросы
               </Link>
@@ -295,6 +308,7 @@ export default function Header() {
               <Link
                 to="/documents"
                 className="block py-2 text-dark hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Документы
               </Link>
@@ -303,6 +317,7 @@ export default function Header() {
               <Link
                 to="/contacts"
                 className="block py-2 text-dark hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Контакты
               </Link>
