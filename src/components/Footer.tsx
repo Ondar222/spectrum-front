@@ -172,12 +172,12 @@ export default function Footer() {
                     />
                   </svg>
                 </div>
-                <div>
+                {/* <div>
                   <a href="tel:+79233816060" className="hover:text-primary transition-colors">
                     +7 (923) 381-60-60
                   </a>
                   <span className="ml-2 text-sm text-gray-300">(Детская)</span>
-                </div>
+                </div> */}
               </div>
               <div className="flex items-center text-gray-200 group">
                 <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/30 transition-colors">
