@@ -58,7 +58,7 @@ export default function Header() {
             <img
               src="/Logo.png"
               alt="Клиника Алдан"
-              className="h-24 sm:h-32 md:h-36 lg:h-28 xl:h-36 w-auto object-contain"
+              className="h-32 sm:h-36 md:h-36 lg:h-28 xl:h-36 w-auto object-contain"
               loading="eager"
             />
           </Link>
@@ -206,7 +206,7 @@ export default function Header() {
             onClick={() => setIsMenuOpen(false)}
             aria-label="Клиника Алдан"
           >
-            <img src="/Logo.png" alt="Клиника Алдан" className="h-24 w-auto object-contain" loading="eager" />
+            <img src="/Logo.png" alt="Клиника Алдан" className="h-32 w-auto object-contain" loading="eager" />
           </Link>
           <button
             className="text-gray-500 hover:text-dark"
