@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation();
 
   // Close mobile menu when window is resized to desktop size
   useEffect(() => {
@@ -48,40 +47,25 @@ export default function Header() {
     };
   }, [isMenuOpen]);
 
-  // Close mobile menu on route change
-  useEffect(() => {
-    if (isMenuOpen) {
-      setIsMenuOpen(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
-
   return (
     <header className="bg-white shadow-md relative z-40">
       <div className="container mx-auto px-4">
         {/* Top bar */}
 
         {/* Main header */}
-        <div className="py-2 md:py-1 flex items-center justify-between">
-          {/* Logo: favicon on mobile, full logo image on desktop */}
-          <Link to="/" className="text-2xl font-semibold text-primary flex items-center" aria-label="Клиника Алдан">
+        <div className="py-4 flex items-center justify-between">
+          <Link to="/" className="flex items-center" aria-label="Клиника Алдан">
             <img
-              src="/favicon.png"
+              src="/Logo.png"
               alt="Клиника Алдан"
-              className="md:hidden h-8 w-8 object-contain"
-              loading="eager"
-            />
-            <img
-              src="/aldan.png"
-              alt="Клиника Алдан"
-              className="hidden md:block h-10 lg:h-24 xl:h-28 object-contain"
+              className="h-14 sm:h-16 md:h-20 lg:h-28 xl:h-32 w-auto object-contain"
               loading="eager"
             />
           </Link>
 
           {/* Desktop navigation */}
           <nav className="hidden md:flex">
-            <ul className="flex space-x-6">
+            <ul className="flex space-x-8">
               <li>
                 <Link
                   to="/"
@@ -122,9 +106,14 @@ export default function Header() {
                   Акции
                 </Link>
               </li>
-              {/* Временно скрыто - раздел сертификатов
-              <li><Link to="/certificates" className="text-dark hover:text-primary transition-colors">Сертификаты</Link></li>
-              */}
+              <li>
+                <Link
+                  to="/certificates"
+                  className="text-dark hover:text-primary transition-colors"
+                >
+                  Сертификаты
+                </Link>
+              </li>
               <li>
                 <Link
                   to="/reviews"
@@ -211,10 +200,14 @@ export default function Header() {
         data-mobile-menu
       >
         <div className="p-4 border-b border-gray-100 flex justify-between items-center">
-          <span className="text-xl font-semibold text-primary flex items-center">
-            <img src="/favicon.png" alt="Клиника Алдан" className="h-7 w-7 mr-2" />
-            КЛИНИКА АЛДАН
-          </span>
+          <Link
+            to="/"
+            className="flex items-center"
+            onClick={() => setIsMenuOpen(false)}
+            aria-label="Клиника Алдан"
+          >
+            <img src="/Logo.png" alt="Клиника Алдан" className="h-14 w-auto object-contain" loading="eager" />
+          </Link>
           <button
             className="text-gray-500 hover:text-dark"
             onClick={() => setIsMenuOpen(false)}
@@ -243,7 +236,6 @@ export default function Header() {
               <Link
                 to="/"
                 className="block py-2 text-dark hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
               >
                 Главная
               </Link>
@@ -252,7 +244,6 @@ export default function Header() {
               <Link
                 to="/about"
                 className="block py-2 text-dark hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
               >
                 О клинике
               </Link>
@@ -261,7 +252,6 @@ export default function Header() {
               <Link
                 to="/doctors"
                 className="block py-2 text-dark hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
               >
                 Врачи
               </Link>
@@ -270,7 +260,6 @@ export default function Header() {
               <Link
                 to="/prices"
                 className="block py-2 text-dark hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
               >
                 Прайс-лист
               </Link>
@@ -279,19 +268,17 @@ export default function Header() {
               <Link
                 to="/stock"
                 className="block py-2 text-dark hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
               >
                 Акции
               </Link>
             </li>
-            {/* Временно скрыто - раздел сертификатов
-            <li><Link to="/certificates" className="block py-2 text-dark hover:text-primary transition-colors">Сертификаты</Link></li>
-            */}
+            <li>
+              <Link to="/certificates" className="block py-2 text-dark hover:text-primary transition-colors">Сертификаты</Link>
+            </li>
             <li>
               <Link
                 to="/reviews"
                 className="block py-2 text-dark hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
               >
                 Отзывы
               </Link>
@@ -300,7 +287,6 @@ export default function Header() {
               <Link
                 to="/questions"
                 className="block py-2 text-dark hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
               >
                 Вопросы
               </Link>
@@ -309,7 +295,6 @@ export default function Header() {
               <Link
                 to="/documents"
                 className="block py-2 text-dark hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
               >
                 Документы
               </Link>
@@ -318,7 +303,6 @@ export default function Header() {
               <Link
                 to="/contacts"
                 className="block py-2 text-dark hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
               >
                 Контакты
               </Link>

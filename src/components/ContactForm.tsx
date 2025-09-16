@@ -218,7 +218,7 @@ export default function ContactForm() {
                 </div>
                 <div><a href="tel:+79233176060" className="text-primary hover:underline">+7 (923) 317-60-60</a></div>
                 <div><a href="tel:+79233816060" className="text-primary hover:underline">+7 (923) 381-60-60</a></div>
-                <div><a href="tel:+79233176060" className="text-primary hover:underline">+7 (923) 317-60-60</a></div>
+             
                 <div><a href="mailto:clinicaldan@mail.ru" className="text-primary hover:underline">clinicaldan@mail.ru</a></div>
               </div>
             </aside>
