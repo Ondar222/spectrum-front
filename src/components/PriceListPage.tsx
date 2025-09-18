@@ -7,6 +7,8 @@ import AppointmentModal from './AppointmentModal';
 export default function PriceListPage() {
   const [serviceGroups, setServiceGroups] = useState<ServiceGroup[]>([]);
   const [selectedGroup, setSelectedGroup] = useState<string>('all');
+  const [selectedType, setSelectedType] = useState<'all' | 'lab' | 'other'>('all');
+  const [gynFilter, setGynFilter] = useState<'all' | 'consult' | 'analysis' | 'ultrasound' | 'laser' | 'other'>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -58,24 +60,71 @@ export default function PriceListPage() {
   const safeLower = (v?: string) => (v || '').toLowerCase();
   const search = safeLower(searchTerm.trim());
 
-  const filteredGroups = serviceGroups
-    .map(group => {
-      const filteredServices = group.services.filter(service => {
-        if (search === '') return true;
-        return (
-          safeLower(service.name).includes(search) ||
-          safeLower(service.altname).includes(search) ||
-          safeLower(service.info).includes(search) ||
-          safeLower(service.code).includes(search)
-        );
-      });
-      return { ...group, services: filteredServices } as ServiceGroup;
-    })
-    .filter(group => {
-      const matchesGroup = selectedGroup === 'all' || group.id.toString() === selectedGroup;
-      const hasServices = search === '' ? true : group.services.length > 0;
-      return matchesGroup && hasServices;
+  // Helpers for derived categorization
+  const isAnalysis = (s: ApiService) => {
+    const text = safeLower([s.name, s.altname, s.info, s.group_name].join(' '));
+    const keywords = ['анализ', 'лаборатор', 'пцр', 'мазок', 'морфолог', 'биохим', 'кров', 'моч', 'антител', 'igg', 'igm', 'hbs', 'hbv', 'hcv', 'urea', 'glucose', 'кал', 'гистолог'];
+    return keywords.some(k => text.includes(k));
+  };
+
+  const isGynecologyGroup = (g: ServiceGroup) => safeLower(g.name).includes('гинеколог');
+
+  const getGynSubcategory = (s: ApiService): 'consult' | 'analysis' | 'ultrasound' | 'laser' | 'other' => {
+    const t = safeLower([s.name, s.altname, s.info].join(' '));
+    if (t.includes('консульт')) return 'consult';
+    if (t.includes('узи')) return 'ultrasound';
+    if (t.includes('лазер')) return 'laser';
+    if (isAnalysis(s)) return 'analysis';
+    return 'other';
+  };
+
+  const gynWeight = (s: ApiService) => {
+    const t = safeLower([s.name, s.altname].join(' '));
+    if (t.includes('первич') && t.includes('консульт')) return 0;
+    if (t.includes('повтор') && t.includes('консульт')) return 1;
+    switch (getGynSubcategory(s)) {
+      case 'consult': return 2;
+      case 'ultrasound': return 3;
+      case 'laser': return 4;
+      case 'analysis': return 5;
+      default: return 9;
+    }
+  };
+
+  // Build list depending on selectedType
+  let filteredGroups: ServiceGroup[] = [];
+
+  if (selectedType === 'lab') {
+    // Collect all analysis services into a single virtual group
+    const allServices = serviceGroups.flatMap(g => g.services);
+    const services = allServices.filter(s => {
+      const passesSearch = search === '' || safeLower([s.name, s.altname, s.info, s.code].join(' ')).includes(search);
+      return isAnalysis(s) && passesSearch;
     });
+    filteredGroups = services.length ? [{ id: -1, name: 'Лабораторная диагностика', services }] : [];
+  } else {
+    filteredGroups = serviceGroups
+      .map(group => {
+        const filteredServices = group.services.filter(service => {
+          const matchesType = selectedType === 'all' ? true : !isAnalysis(service);
+          if (!matchesType) return false;
+          if (selectedGroup !== 'all' && group.id.toString() !== selectedGroup) return false;
+          if (search === '') return true;
+          return (
+            safeLower(service.name).includes(search) ||
+            safeLower(service.altname).includes(search) ||
+            safeLower(service.info).includes(search) ||
+            safeLower(service.code).includes(search)
+          );
+        });
+        // Special ordering inside gynecology
+        const outputServices = isGynecologyGroup(group)
+          ? [...filteredServices].sort((a, b) => gynWeight(a) - gynWeight(b))
+          : filteredServices;
+        return { ...group, services: outputServices } as ServiceGroup;
+      })
+      .filter(group => group.services.length > 0);
+  }
 
   const formatPrice = (price: number) => {
     return price.toLocaleString('ru-RU') + ' ₽';
@@ -199,6 +248,26 @@ export default function PriceListPage() {
                 ))}
               </select>
             </div>
+            {/* Type Filter */}
+            <div>
+              <label className="block text-gray-700 mb-2 font-medium">Тип</label>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { key: 'all', label: 'Все' },
+                  { key: 'lab', label: 'Лабораторная диагностика' },
+                  { key: 'other', label: 'Другие услуги' },
+                ].map(opt => (
+                  <button
+                    key={opt.key}
+                    type="button"
+                    onClick={() => setSelectedType(opt.key as any)}
+                    className={`px-3 py-2 rounded-md text-sm border ${selectedType===opt.key ? 'bg-primary text-white border-primary' : 'bg-white text-gray-700 border-gray-300 hover:border-primary'}`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -226,7 +295,29 @@ export default function PriceListPage() {
 
                 {/* Services in Group */}
                 <div className="divide-y divide-gray-200">
+                  {isGynecologyGroup(group) && (
+                    <div className="px-6 py-4 bg-gray-50 border-b border-gray-200 flex flex-wrap gap-2">
+                      {[
+                        { key: 'all', label: 'Все' },
+                        { key: 'consult', label: 'Консультации' },
+                        { key: 'analysis', label: 'Гинекологические анализы' },
+                        { key: 'ultrasound', label: 'Виды УЗИ' },
+                        { key: 'laser', label: 'Лазерная гинекология' },
+                        { key: 'other', label: 'Прочее' },
+                      ].map(opt => (
+                        <button
+                          key={opt.key}
+                          type="button"
+                          onClick={() => setGynFilter(opt.key as any)}
+                          className={`px-3 py-1.5 rounded-md text-sm border ${gynFilter===opt.key ? 'bg-primary text-white border-primary' : 'bg-white text-gray-700 border-gray-300 hover:border-primary'}`}
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                   {group.services
+                    .filter(service => !isGynecologyGroup(group) || gynFilter==='all' || getGynSubcategory(service)===gynFilter)
                     .map(service => (
                       <div key={service.id} className="p-6 hover:bg-gray-50 transition-colors min-h-[200px] flex flex-col">
                         <div className="flex-grow">
