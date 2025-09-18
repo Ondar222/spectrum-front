@@ -615,7 +615,7 @@ export default function GiftCertificatesPage() {
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"
               >
-                документом «утверждено» (PDF)
+             Политики защиты и обработки персональных данных
               </a>.
             </div>
 
