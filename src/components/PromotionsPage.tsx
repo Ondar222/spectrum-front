@@ -23,7 +23,7 @@ export default function PromotionsPage() {
       description: "Полное медицинское обследование организма, включая консультации специалистов, лабораторные анализы и инструментальные исследования. Идеально для тех, кто заботится о своем здоровье.",
       discount: "30%",
       validUntil: "30.04.2024",
-      image: "/images/promo1.jpg",
+      image: "https://www.smdoctor.ru/upload/iblock/640/yvu31jxvb5werj4ou3uyan7pbvkbcgpf.jpg",
       category: "Диагностика",
       isActive: true
     },
@@ -33,7 +33,7 @@ export default function PromotionsPage() {
       description: "Установка зубных имплантов премиум-класса по специальной цене. В стоимость включены все необходимые материалы и послеоперационное наблюдение.",
       discount: "25%",
       validUntil: "15.05.2024",
-      image: "/images/promo2.jpg",
+      image: "https://implantolog-fedorov.ru/upload/resize_cache/webp/uf/480/implantacija-zubov.webp",
       category: "Стоматология",
       isActive: true
     },
@@ -43,7 +43,7 @@ export default function PromotionsPage() {
       description: "Лазерная коррекция зрения по технологии LASIK со скидкой. Включает предоперационное обследование, саму операцию и послеоперационное наблюдение.",
       discount: "20%",
       validUntil: "31.05.2024",
-      image: "/images/promo3.jpg",
+      image: "https://kyzler.ru/upload/resize_cache/sprint.editor/181/1000_1000_1/g0q8sh98tvxb5rbrs0si83mj6h35w919.png",
       category: "Офтальмология",
       isActive: true
     },
@@ -53,7 +53,7 @@ export default function PromotionsPage() {
       description: "Специальные цены на пластические операции. Консультация хирурга в подарок. Рассрочка платежа на 12 месяцев без процентов.",
       discount: "15%",
       validUntil: "30.06.2024",
-      image: "/images/promo4.jpg",
+      image: "https://www.ckbran.ru/upload/medialibrary/699/78l0ly19kpqjqvju1lrd6no2seklfio6.jpeg",
       category: "Хирургия",
       isActive: true
     },
@@ -63,7 +63,7 @@ export default function PromotionsPage() {
       description: "Специальное предложение для всей семьи. При покупке карты на 3 и более человек - дополнительная скидка 10% на все услуги клиники в течение года.",
       discount: "10%",
       validUntil: "31.12.2024",
-      image: "/images/promo5.jpg",
+      image: "https://st44.stblizko.ru/images/apress/companies/pages/images/001/543/627_medium.jpeg",
       category: "Терапия",
       isActive: true
     },
@@ -73,7 +73,7 @@ export default function PromotionsPage() {
       description: "Бесплатные консультации ведущих специалистов клиники. Специальные цены на диагностические процедуры. Подарки и скидки для всех посетителей.",
       discount: "Бесплатно",
       validUntil: "15.04.2024",
-      image: "/images/promo6.jpg",
+      image: "https://школа319.рф/wp-content/uploads/2023/01/%D0%B4%D0%B5%D0%BD%D1%8C-%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D1%82%D1%8B%D1%85-%D0%B4%D0%B2%D0%B5%D1%80%D0%B5%D0%B9_-3-1024x388.jpg",
       category: "Диагностика",
       isActive: true
     }
