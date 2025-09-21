@@ -127,11 +127,28 @@ const DoctorDetailsPage: React.FC = () => {
               <div className="md:col-span-1">
                 <div className="w-full h-80 bg-gray-100 rounded-lg overflow-hidden">
                   {doctor.photo ? (
-                    <img
-                      src={`data:image/png;base64,${doctor.photo}`}
-                      alt={getDoctorFullName(doctor)}
-                      className="w-full h-full object-cover"
-                    />
+                    <>
+                      <img
+                        src={doctor.photo.startsWith('data:') ? doctor.photo : doctor.photo}
+                        alt={getDoctorFullName(doctor)}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
+                          if (nextElement) {
+                            nextElement.style.display = 'flex';
+                          }
+                        }}
+                      />
+                      <div className="w-full h-full flex items-center justify-center text-gray-400" style={{display: 'none'}}>
+                        <div className="text-center">
+                          <svg className="w-16 h-16 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                          </svg>
+                          <p className="text-sm">Фото недоступно</p>
+                        </div>
+                      </div>
+                    </>
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-gray-400">
                       <div className="text-center">

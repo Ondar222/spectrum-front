@@ -247,7 +247,7 @@ export const doctors: Doctor[] = [
     {
         id: 3,
         name: "Сидорова Мария Игоревна",
-        photo: "/doctor-placeholder.jpg",
+        photo: "https://www.zdravitsa.ru/upload/services/terapevtPRO.jpg",
         experience: 10,
         specializationTitles: ["Хирург"],
         specializations: [3],

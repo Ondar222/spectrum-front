@@ -219,11 +219,25 @@ export default function DoctorsPage() {
                 <div key={`doctor-${doctor.id}`} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full">
                   <div className="h-40 sm:h-48 bg-gradient-to-br from-primary to-primaryDark flex items-center justify-center">
                     {doctor.photo ? (
-                      <img
-                        src={`data:image/png;base64,${doctor.photo}`}
-                        alt={getDoctorFullName(doctor)}
-                        className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-3 sm:border-4 border-white"
-                      />
+                      <>
+                        <img
+                          src={doctor.photo.startsWith('data:') ? doctor.photo : doctor.photo}
+                          alt={getDoctorFullName(doctor)}
+                          className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-3 sm:border-4 border-white"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
+                            if (nextElement) {
+                              nextElement.style.display = 'flex';
+                            }
+                          }}
+                        />
+                        <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-white bg-opacity-20 flex items-center justify-center" style={{display: 'none'}}>
+                          <svg className="w-12 h-12 sm:w-16 sm:h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                          </svg>
+                        </div>
+                      </>
                     ) : (
                       <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
                         <svg className="w-12 h-12 sm:w-16 sm:h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
