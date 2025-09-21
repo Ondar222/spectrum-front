@@ -142,7 +142,7 @@
   <div className="space-y-6 flex-grow">
     <div>
       <h3 className="font-medium text-gray-700 mb-2">Адрес</h3>
-      <p className="text-gray-600 leading-relaxed">г. Москва, ул. Примерная, д. 123</p>
+      <p className="text-gray-600 leading-relaxed">г. Кызыл, ул. Кочетова, д. 60</p>
     </div>
     {/* Остальные контакты */}
   </div>
