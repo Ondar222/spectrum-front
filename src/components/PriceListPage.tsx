@@ -19,6 +19,8 @@ export default function PriceListPage() {
   }>({
     isOpen: false
   });
+  const [currentPage, setCurrentPage] = useState<{ [groupId: number]: number }>({});
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     const loadServices = async () => {
@@ -158,6 +160,33 @@ export default function PriceListPage() {
     console.log('Appointment created successfully');
   };
 
+  // Функции для пагинации
+  const getCurrentPage = (groupId: number) => currentPage[groupId] || 1;
+  
+  const setPage = (groupId: number, page: number) => {
+    setCurrentPage(prev => ({ ...prev, [groupId]: page }));
+  };
+
+  const getPaginatedServices = (services: ApiService[], groupId: number) => {
+    const page = getCurrentPage(groupId);
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return services.slice(startIndex, endIndex);
+  };
+
+  const getTotalPages = (services: ApiService[]) => {
+    return Math.ceil(services.length / itemsPerPage);
+  };
+
+  const resetPagination = () => {
+    setCurrentPage({});
+  };
+
+  // Сброс пагинации при изменении фильтров
+  useEffect(() => {
+    resetPagination();
+  }, [selectedGroup, selectedType, gynFilter, searchTerm]);
+
   // Show instant skeleton to avoid perceived lag
   if (isLoading && serviceGroups.length === 0) {
     return (
@@ -288,8 +317,21 @@ export default function PriceListPage() {
                 <div className="bg-primary text-white px-6 py-4">
                   <h2 className="text-xl font-semibold">{group.name}</h2>
                   <p className="text-primaryLight text-sm mt-1">
-                    {group.services.length} {group.services.length === 1 ? 'услуга' : 
-                     group.services.length < 5 ? 'услуги' : 'услуг'}
+                    {(() => {
+                      const filteredServices = group.services.filter(service => 
+                        !isGynecologyGroup(group) || gynFilter==='all' || getGynSubcategory(service)===gynFilter
+                      );
+                      const totalPages = getTotalPages(filteredServices);
+                      const currentPage = getCurrentPage(group.id);
+                      
+                      if (totalPages > 1) {
+                        return `${filteredServices.length} ${filteredServices.length === 1 ? 'услуга' : 
+                               filteredServices.length < 5 ? 'услуги' : 'услуг'} (страница ${currentPage} из ${totalPages})`;
+                      }
+                      
+                      return `${filteredServices.length} ${filteredServices.length === 1 ? 'услуга' : 
+                             filteredServices.length < 5 ? 'услуги' : 'услуг'}`;
+                    })()}
                   </p>
                 </div>
 
@@ -316,64 +358,176 @@ export default function PriceListPage() {
                       ))}
                     </div>
                   )}
-                  {group.services
-                    .filter(service => !isGynecologyGroup(group) || gynFilter==='all' || getGynSubcategory(service)===gynFilter)
-                    .map(service => (
-                      <div key={service.id} className="p-6 hover:bg-gray-50 transition-colors min-h-[200px] flex flex-col">
-                        <div className="flex-grow">
-                          <div className="flex items-start justify-between mb-3">
-                            <h3 className="text-lg font-semibold text-dark leading-tight pr-2">{service.name}</h3>
-                            {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
-                              <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium flex-shrink-0">
-                                Срочно
-                              </span>
-                            )}
-                          </div>
-                          {service.altname && service.altname !== service.name && (
-                            <p className="text-gray-600 mb-3 text-sm italic leading-relaxed">{service.altname}</p>
-                          )}
-                          {service.info && (
-                            <p className="text-gray-600 mb-4 text-sm leading-relaxed line-clamp-3">{service.info}</p>
-                          )}
-                          <div className="flex items-center space-x-4 text-sm text-gray-500 mb-4">
-                            <span className="flex items-center">
-                              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                              {formatDuration(service.duration)}
-                            </span>
-                            {service.code && (
-                              <span className="flex items-center">
-                                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                Код: {service.code}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="mt-auto pt-4 border-t border-gray-200">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="text-2xl font-bold text-primary mb-1">
-                                {formatPrice(getServicePrice(service))}
+                  {(() => {
+                    const filteredServices = group.services.filter(service => 
+                      !isGynecologyGroup(group) || gynFilter==='all' || getGynSubcategory(service)===gynFilter
+                    );
+                    const paginatedServices = getPaginatedServices(filteredServices, group.id);
+                    const totalPages = getTotalPages(filteredServices);
+                    
+                    return (
+                      <>
+                        {paginatedServices.map(service => (
+                          <div key={service.id} className="p-6 hover:bg-gray-50 transition-colors min-h-[200px] flex flex-col">
+                            <div className="flex-grow">
+                              <div className="flex items-start justify-between mb-3">
+                                <h3 className="text-lg font-semibold text-dark leading-tight pr-2">{service.name}</h3>
+                                {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
+                                  <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium flex-shrink-0">
+                                    Срочно
+                                  </span>
+                                )}
                               </div>
-                              {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
-                                <div className="text-sm text-gray-500">
-                                  Обычно: {formatPrice(service.base_cost)}
-                                </div>
+                              {service.altname && service.altname !== service.name && (
+                                <p className="text-gray-600 mb-3 text-sm italic leading-relaxed">{service.altname}</p>
                               )}
+                              {service.info && (
+                                <p className="text-gray-600 mb-4 text-sm leading-relaxed line-clamp-3">{service.info}</p>
+                              )}
+                              <div className="flex items-center space-x-4 text-sm text-gray-500 mb-4">
+                                <span className="flex items-center">
+                                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                  {formatDuration(service.duration)}
+                                </span>
+                                {service.code && (
+                                  <span className="flex items-center">
+                                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    Код: {service.code}
+                                  </span>
+                                )}
+                              </div>
                             </div>
-                            <button 
-                              onClick={() => handleAppointmentClick(service)}
-                              className="bg-primary hover:bg-primaryDark text-white px-6 py-2 rounded-lg font-medium transition-colors"
-                            >
-                              Записаться
-                            </button>
+                            <div className="mt-auto pt-4 border-t border-gray-200">
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <div className="text-2xl font-bold text-primary mb-1">
+                                    {formatPrice(getServicePrice(service))}
+                                  </div>
+                                  {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
+                                    <div className="text-sm text-gray-500">
+                                      Обычно: {formatPrice(service.base_cost)}
+                                    </div>
+                                  )}
+                                </div>
+                                <button 
+                                  onClick={() => handleAppointmentClick(service)}
+                                  className="bg-primary hover:bg-primaryDark text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                                >
+                                  Записаться
+                                </button>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    ))}
+                        ))}
+                        
+                        {/* Пагинация - показываем если больше 10 услуг */}
+                        {totalPages > 1 && (
+                          <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
+                            <div className="flex items-center justify-between">
+                              <div className="text-sm text-gray-600">
+                                Показано {((getCurrentPage(group.id) - 1) * itemsPerPage) + 1}-{Math.min(getCurrentPage(group.id) * itemsPerPage, filteredServices.length)} из {filteredServices.length}
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <button
+                                  onClick={() => setPage(group.id, getCurrentPage(group.id) - 1)}
+                                  disabled={getCurrentPage(group.id) === 1}
+                                  className="px-4 py-2 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+                                >
+                                  ← Назад
+                                </button>
+                                
+                                {/* Номера страниц для десктопа */}
+                                <div className="hidden md:flex items-center space-x-1">
+                                  {(() => {
+                                    const current = getCurrentPage(group.id);
+                                    const total = totalPages;
+                                    const pages = [];
+                                    
+                                    // Показываем максимум 5 страниц
+                                    let start = Math.max(1, current - 2);
+                                    let end = Math.min(total, start + 4);
+                                    
+                                    // Корректируем start если end достиг максимума
+                                    if (end - start < 4) {
+                                      start = Math.max(1, end - 4);
+                                    }
+                                    
+                                    // Первая страница
+                                    if (start > 1) {
+                                      pages.push(
+                                        <button
+                                          key={1}
+                                          onClick={() => setPage(group.id, 1)}
+                                          className="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 transition-colors"
+                                        >
+                                          1
+                                        </button>
+                                      );
+                                      if (start > 2) {
+                                        pages.push(<span key="ellipsis1" className="px-2 text-gray-500">...</span>);
+                                      }
+                                    }
+                                    
+                                    // Страницы в диапазоне
+                                    for (let i = start; i <= end; i++) {
+                                      pages.push(
+                                        <button
+                                          key={i}
+                                          onClick={() => setPage(group.id, i)}
+                                          className={`px-3 py-1 text-sm border rounded transition-colors ${
+                                            i === current
+                                              ? 'bg-primary text-white border-primary'
+                                              : 'border-gray-300 hover:bg-gray-100'
+                                          }`}
+                                        >
+                                          {i}
+                                        </button>
+                                      );
+                                    }
+                                    
+                                    // Последняя страница
+                                    if (end < total) {
+                                      if (end < total - 1) {
+                                        pages.push(<span key="ellipsis2" className="px-2 text-gray-500">...</span>);
+                                      }
+                                      pages.push(
+                                        <button
+                                          key={total}
+                                          onClick={() => setPage(group.id, total)}
+                                          className="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 transition-colors"
+                                        >
+                                          {total}
+                                        </button>
+                                      );
+                                    }
+                                    
+                                    return pages;
+                                  })()}
+                                </div>
+                                
+                                {/* Простой индикатор для мобильных */}
+                                <span className="md:hidden px-3 py-1 text-sm bg-primary text-white rounded">
+                                  {getCurrentPage(group.id)} из {totalPages}
+                                </span>
+                                
+                                <button
+                                  onClick={() => setPage(group.id, getCurrentPage(group.id) + 1)}
+                                  disabled={getCurrentPage(group.id) === totalPages}
+                                  className="px-4 py-2 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+                                >
+                                  Вперед →
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
                 </div>
               </div>
             ))
