@@ -36,17 +36,20 @@ const StaffDashboard: React.FC = () => {
     loadData();
   }, []);
 
-  const getDoctorName = (doctorId: number) => {
+  const getDoctorName = (doctorId?: number) => {
+    if (!doctorId) return 'Неизвестный врач';
     const doctor = doctors.find(d => d.id === doctorId);
     return doctor ? `${doctor.name} ${doctor.name1} ${doctor.name2}` : 'Неизвестный врач';
   };
 
-  const getServiceName = (serviceId: number) => {
+  const getServiceName = (serviceId?: number) => {
+    if (!serviceId) return 'Неизвестная услуга';
     const service = services.find(s => s.id === serviceId);
     return service ? service.name : 'Неизвестная услуга';
   };
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return 'Не указано';
     return new Date(dateString).toLocaleDateString('ru-RU', {
       year: 'numeric',
       month: 'long',
@@ -54,12 +57,14 @@ const StaffDashboard: React.FC = () => {
     });
   };
 
-  const formatTime = (timeString: string) => {
+  const formatTime = (timeString?: string) => {
+    if (!timeString) return 'Не указано';
     return timeString.substring(0, 5); // HH:MM format
   };
 
   const filteredAppointments = appointments.filter(appointment => {
     if (!selectedDate) return true;
+    if (!appointment.preferred_date) return false;
     const appointmentDate = new Date(appointment.preferred_date).toISOString().split('T')[0];
     return appointmentDate === selectedDate;
   });

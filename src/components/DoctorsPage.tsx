@@ -28,6 +28,8 @@ export default function DoctorsPage() {
         setIsLoading(true);
         setError(null);
 
+        console.log('Начинаем загрузку данных...');
+        
         const [doctorsData, branchesData, categoriesData] = await Promise.all([
           archimedService.getDoctors(),
           archimedService.getBranches(),
@@ -37,10 +39,11 @@ export default function DoctorsPage() {
         console.log('Loaded doctors:', doctorsData);
         console.log('Loaded branches:', branchesData);
         console.log('Loaded categories:', categoriesData);
+        console.log('Doctors count:', doctorsData?.length || 0);
 
-        setDoctors(doctorsData);
-        setBranches(branchesData);
-        setCategories(categoriesData);
+        setDoctors(doctorsData || []);
+        setBranches(branchesData || []);
+        setCategories(categoriesData || []);
       } catch (err) {
         console.error('Ошибка загрузки данных:', err);
         setError('Не удалось загрузить данные о врачах. Попробуйте позже.');

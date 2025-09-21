@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест врачей</title>
+</head>
+<body>
+    <h1>Тест загрузки врачей</h1>
+    <div id="output"></div>
+    
+    <script type="module">
+        import archimedService from './src/services/archimed.js';
+        
+        async function testDoctors() {
+            const output = document.getElementById('output');
+            output.innerHTML = '<p>Загружаем врачей...</p>';
+            
+            try {
+                const doctors = await archimedService.getDoctors();
+                console.log('Врачи загружены:', doctors);
+                output.innerHTML = `
+                    <h2>Загружено врачей: ${doctors.length}</h2>
+                    <ul>
+                        ${doctors.map(doctor => `
+                            <li>
+                                <strong>${doctor.name} ${doctor.name1} ${doctor.name2}</strong> - 
+                                ${doctor.type} (${doctor.branch})
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+            } catch (error) {
+                console.error('Ошибка загрузки врачей:', error);
+                output.innerHTML = `<p style="color: red;">Ошибка: ${error.message}</p>`;
+            }
+        }
+        
+        testDoctors();
+    </script>
+</body>
+</html>

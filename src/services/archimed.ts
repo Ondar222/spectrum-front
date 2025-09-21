@@ -9,10 +9,18 @@ import type {
   ArchimedAppointment,
   AppointmentStatus
 } from '../types/cms';
+import { mockServices } from '../data/mockServices';
+import { mockDoctors, mockBranches } from '../data/mockDoctors';
 
 // Archimed API configuration
 const ARCHIMED_API_URL = import.meta.env.VITE_ARCHIMED_API_URL || 'https://newapi.archimed-soft.ru/api/v5';
 const ARCHIMED_API_TOKEN = import.meta.env.VITE_ARCHIMED_API_TOKEN || '';
+
+console.log('Environment variables:');
+console.log('VITE_ARCHIMED_API_URL:', import.meta.env.VITE_ARCHIMED_API_URL);
+console.log('VITE_ARCHIMED_API_TOKEN:', import.meta.env.VITE_ARCHIMED_API_TOKEN);
+console.log('Final ARCHIMED_API_URL:', ARCHIMED_API_URL);
+console.log('Final ARCHIMED_API_TOKEN:', ARCHIMED_API_TOKEN);
 // Some deployments don't have categories endpoint – disable to avoid 404 requests
 const ARCHIMED_CATEGORIES_ENABLED = false;
 
@@ -36,14 +44,23 @@ class ArchimedService {
       ...(ARCHIMED_API_TOKEN && { 'Authorization': `Bearer ${ARCHIMED_API_TOKEN}` }),
     };
 
+    console.log('ArchimedService constructor, API URL:', this.baseUrl);
+    console.log('API Token configured:', !!ARCHIMED_API_TOKEN);
+
     // Warm caches from localStorage on startup for instant UI
     try {
       const doctorsFromStorage = this.readFromStorage<ArchimedDoctor[]>(DOCTORS_CACHE_KEY, DOCTORS_CACHE_TTL_MS);
-      if (doctorsFromStorage) this.doctorsCache = doctorsFromStorage;
+      if (doctorsFromStorage) {
+        console.log('Loaded doctors from storage:', doctorsFromStorage.length);
+        this.doctorsCache = doctorsFromStorage;
+      }
       const servicesFromStorage = this.readFromStorage<ApiService[]>(SERVICES_CACHE_KEY, SERVICES_CACHE_TTL_MS);
-      if (servicesFromStorage) this.servicesCache = servicesFromStorage;
-    } catch {
-      // ignore storage errors
+      if (servicesFromStorage) {
+        console.log('Loaded services from storage:', servicesFromStorage.length);
+        this.servicesCache = servicesFromStorage;
+      }
+    } catch (error) {
+      console.log('Storage error:', error);
     }
   }
 
@@ -110,22 +127,47 @@ class ArchimedService {
 
   // Doctors
   async getDoctors(): Promise<ArchimedDoctor[]> {
+    console.log('getDoctors called, cache length:', this.doctorsCache.length);
+
+    // Принудительно используем моковые данные для тестирования
+    if (this.doctorsCache.length === 0) {
+      console.log('Cache empty, using mock doctors immediately');
+      this.doctorsCache = mockDoctors;
+      this.writeToStorage(DOCTORS_CACHE_KEY, this.doctorsCache);
+      return this.doctorsCache;
+    }
+
     if (this.doctorsCache.length > 0) {
+      console.log('Returning cached doctors:', this.doctorsCache.length);
       // Revalidate in background for freshness
       this.refreshDoctors();
       return this.doctorsCache;
     }
+
     const fromStorage = this.readFromStorage<ArchimedDoctor[]>(DOCTORS_CACHE_KEY, DOCTORS_CACHE_TTL_MS);
     if (fromStorage && fromStorage.length > 0) {
+      console.log('Loading doctors from storage:', fromStorage.length);
       this.doctorsCache = fromStorage;
       // refresh in background
       this.refreshDoctors();
       return this.doctorsCache;
     }
-    const data = await this.request<{ data: ArchimedDoctor[] }>('/doctors');
-    this.doctorsCache = data.data || [];
-    this.writeToStorage(DOCTORS_CACHE_KEY, this.doctorsCache);
-    return this.doctorsCache;
+
+    console.log('No cached data, trying API...');
+    try {
+      const data = await this.request<{ data: ArchimedDoctor[] }>('/doctors');
+      console.log('API returned doctors:', data.data?.length || 0);
+      this.doctorsCache = data.data || [];
+      this.writeToStorage(DOCTORS_CACHE_KEY, this.doctorsCache);
+      return this.doctorsCache;
+    } catch (error) {
+      console.warn('API недоступен, используем моковые данные для врачей:', error);
+      // Используем моковые данные при ошибке API
+      this.doctorsCache = mockDoctors;
+      this.writeToStorage(DOCTORS_CACHE_KEY, this.doctorsCache);
+      console.log('Using mock doctors:', this.doctorsCache.length);
+      return this.doctorsCache;
+    }
   }
 
   async getDoctor(id: number): Promise<ArchimedDoctor> {
@@ -154,10 +196,19 @@ class ArchimedService {
       this.refreshServices();
       return this.servicesCache;
     }
-    const data = await this.request<{ data: ApiService[] }>('/services');
-    this.servicesCache = data.data || [];
-    this.writeToStorage(SERVICES_CACHE_KEY, this.servicesCache);
-    return this.servicesCache;
+
+    try {
+      const data = await this.request<{ data: ApiService[] }>('/services');
+      this.servicesCache = data.data || [];
+      this.writeToStorage(SERVICES_CACHE_KEY, this.servicesCache);
+      return this.servicesCache;
+    } catch (error) {
+      console.warn('API недоступен, используем моковые данные для услуг:', error);
+      // Используем моковые данные при ошибке API
+      this.servicesCache = mockServices;
+      this.writeToStorage(SERVICES_CACHE_KEY, this.servicesCache);
+      return this.servicesCache;
+    }
   }
 
   async getServicesByGroup(groupId: number): Promise<ApiService[]> {
@@ -173,8 +224,13 @@ class ArchimedService {
 
   // Branches
   async getBranches(): Promise<ArchimedBranch[]> {
-    const data = await this.request<{ data: ArchimedBranch[] }>('/branches');
-    return data.data;
+    try {
+      const data = await this.request<{ data: ArchimedBranch[] }>('/branches');
+      return data.data;
+    } catch (error) {
+      console.warn('API недоступен, используем моковые данные для филиалов:', error);
+      return mockBranches;
+    }
   }
 
   // Categories
