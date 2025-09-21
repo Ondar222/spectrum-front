@@ -131,7 +131,7 @@ const ServicePage: React.FC = () => {
     });
   }, [doctors, direction]);
 
-  const getServicePrice = (service: ApiService) => {
+  const getServicePrice = (service: ApiService): number => {
     return service.cito_cost > 0 ? service.cito_cost : service.base_cost;
   };
 

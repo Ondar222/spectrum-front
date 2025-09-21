@@ -85,8 +85,8 @@ const LaboratoryDiagnosticsPage: React.FC = () => {
     return groups;
   }, [laboratoryServices]);
 
-  const getServicePrice = (service: ApiService) => {
-    return service.price || 0;
+  const getServicePrice = (service: ApiService): number => {
+    return service.base_cost || 0;
   };
 
   const handleAppointmentClick = (service?: ApiService) => {
