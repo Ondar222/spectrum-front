@@ -129,14 +129,6 @@ class ArchimedService {
   async getDoctors(): Promise<ArchimedDoctor[]> {
     console.log('getDoctors called, cache length:', this.doctorsCache.length);
 
-    // Принудительно используем моковые данные для тестирования
-    if (this.doctorsCache.length === 0) {
-      console.log('Cache empty, using mock doctors immediately');
-      this.doctorsCache = mockDoctors;
-      this.writeToStorage(DOCTORS_CACHE_KEY, this.doctorsCache);
-      return this.doctorsCache;
-    }
-
     if (this.doctorsCache.length > 0) {
       console.log('Returning cached doctors:', this.doctorsCache.length);
       // Revalidate in background for freshness
@@ -155,9 +147,9 @@ class ArchimedService {
 
     console.log('No cached data, trying API...');
     try {
-      const data = await this.request<{ data: ArchimedDoctor[] }>('/doctors');
-      console.log('API returned doctors:', data.data?.length || 0);
-      this.doctorsCache = data.data || [];
+      const response = await this.request<{ data: ArchimedDoctor[]; total: number; page: number; limit: number }>('/doctors');
+      console.log('API returned doctors:', response.data?.length || 0);
+      this.doctorsCache = response.data || [];
       this.writeToStorage(DOCTORS_CACHE_KEY, this.doctorsCache);
       return this.doctorsCache;
     } catch (error) {
@@ -198,8 +190,8 @@ class ArchimedService {
     }
 
     try {
-      const data = await this.request<{ data: ApiService[] }>('/services');
-      this.servicesCache = data.data || [];
+      const response = await this.request<{ data: ApiService[]; total: number; page: number; limit: number }>('/services');
+      this.servicesCache = response.data || [];
       this.writeToStorage(SERVICES_CACHE_KEY, this.servicesCache);
       return this.servicesCache;
     } catch (error) {
@@ -211,22 +203,36 @@ class ArchimedService {
     }
   }
 
+  async getService(id: number): Promise<ApiService> {
+    return this.request<ApiService>(`/services/${id}`);
+  }
+
   async getServicesByGroup(groupId: number): Promise<ApiService[]> {
-    const data = await this.request<{ data: ApiService[] }>(`/services?group_id=${groupId}`);
-    return data.data;
+    try {
+      const response = await this.request<{ data: ApiService[]; total: number; page: number; limit: number }>(`/services?group_id=${groupId}`);
+      return response.data || [];
+    } catch (error) {
+      console.warn('API недоступен для услуг группы, возвращаем пустой массив:', error);
+      return [];
+    }
   }
 
   // Zones
   async getZones(): Promise<ArchimedZone[]> {
-    const data = await this.request<{ data: ArchimedZone[] }>('/zones');
-    return data.data;
+    try {
+      const response = await this.request<{ data: ArchimedZone[]; total: number; page: number; limit: number }>('/zones');
+      return response.data || [];
+    } catch (error) {
+      console.warn('API недоступен для зон, возвращаем пустой массив:', error);
+      return [];
+    }
   }
 
   // Branches
   async getBranches(): Promise<ArchimedBranch[]> {
     try {
-      const data = await this.request<{ data: ArchimedBranch[] }>('/branches');
-      return data.data;
+      const response = await this.request<{ data: ArchimedBranch[]; total: number; page: number; limit: number }>('/branchs');
+      return response.data || [];
     } catch (error) {
       console.warn('API недоступен, используем моковые данные для филиалов:', error);
       return mockBranches;
@@ -239,11 +245,11 @@ class ArchimedService {
       return [] as ArchimedCategory[];
     }
     try {
-      const data = await this.request<{ data: ArchimedCategory[] }>(
+      const response = await this.request<{ data: ArchimedCategory[]; total: number; page: number; limit: number }>(
         '/categories',
         { suppressErrorLog: true }
       );
-      return data.data;
+      return response.data || [];
     } catch {
       return [] as ArchimedCategory[];
     }
@@ -251,8 +257,13 @@ class ArchimedService {
 
   // Scientific Degrees
   async getScientificDegrees(): Promise<ArchimedScientificDegree[]> {
-    const data = await this.request<{ data: ArchimedScientificDegree[] }>('/scientific_degrees');
-    return data.data;
+    try {
+      const response = await this.request<{ data: ArchimedScientificDegree[]; total: number; page: number; limit: number }>('/scientific_degrees');
+      return response.data || [];
+    } catch (error) {
+      console.warn('API недоступен для научных степеней, возвращаем пустой массив:', error);
+      return [];
+    }
   }
 
   // Cache helpers
@@ -267,12 +278,12 @@ class ArchimedService {
   // Background refreshers (stale-while-revalidate)
   private async refreshDoctors(): Promise<void> {
     try {
-      const data = await this.request<{ data: ArchimedDoctor[] }>(
+      const response = await this.request<{ data: ArchimedDoctor[]; total: number; page: number; limit: number }>(
         '/doctors',
         { timeoutMs: DEFAULT_REQUEST_TIMEOUT_MS }
       );
-      if (Array.isArray(data?.data) && data.data.length > 0) {
-        this.doctorsCache = data.data;
+      if (Array.isArray(response?.data) && response.data.length > 0) {
+        this.doctorsCache = response.data;
         this.writeToStorage(DOCTORS_CACHE_KEY, this.doctorsCache);
       }
     } catch {
@@ -282,12 +293,12 @@ class ArchimedService {
 
   private async refreshServices(): Promise<void> {
     try {
-      const data = await this.request<{ data: ApiService[] }>(
+      const response = await this.request<{ data: ApiService[]; total: number; page: number; limit: number }>(
         '/services',
         { timeoutMs: DEFAULT_REQUEST_TIMEOUT_MS }
       );
-      if (Array.isArray(data?.data) && data.data.length > 0) {
-        this.servicesCache = data.data;
+      if (Array.isArray(response?.data) && response.data.length > 0) {
+        this.servicesCache = response.data;
         this.writeToStorage(SERVICES_CACHE_KEY, this.servicesCache);
       }
     } catch {
@@ -344,18 +355,23 @@ class ArchimedService {
     page?: number;
     limit?: number;
   }): Promise<{ data: ArchimedAppointment[]; total: number; page: number; limit: number }> {
-    const params = new URLSearchParams();
+    try {
+      const params = new URLSearchParams();
 
-    if (filters?.doctorId) params.append('doctor_id', filters.doctorId.toString());
-    if (filters?.serviceId) params.append('service_id', filters.serviceId.toString());
-    if (filters?.statusId) params.append('status_id', filters.statusId.toString());
-    if (filters?.page) params.append('page', filters.page.toString());
-    if (filters?.limit) params.append('limit', filters.limit.toString());
+      if (filters?.doctorId) params.append('doctor_id', filters.doctorId.toString());
+      if (filters?.serviceId) params.append('service_id', filters.serviceId.toString());
+      if (filters?.statusId) params.append('status_id', filters.statusId.toString());
+      if (filters?.page) params.append('page', filters.page.toString());
+      if (filters?.limit) params.append('limit', filters.limit.toString());
 
-    const queryString = params.toString();
-    const endpoint = queryString ? `/talons?${queryString}` : '/talons';
+      const queryString = params.toString();
+      const endpoint = queryString ? `/talons?${queryString}` : '/talons';
 
-    return this.request<{ data: ArchimedAppointment[]; total: number; page: number; limit: number }>(endpoint);
+      return await this.request<{ data: ArchimedAppointment[]; total: number; page: number; limit: number }>(endpoint);
+    } catch (error) {
+      console.warn('API недоступен для записей на прием:', error);
+      return { data: [], total: 0, page: 1, limit: 100 };
+    }
   }
 
   async getAppointment(id: number): Promise<ArchimedAppointment> {
@@ -393,12 +409,22 @@ class ArchimedService {
 
   // Appointment Statuses
   async getAppointmentStatuses(): Promise<AppointmentStatus[]> {
-    const data = await this.request<{ data: AppointmentStatus[] }>('/talonstatuses');
-    return data.data;
+    try {
+      const response = await this.request<{ data: AppointmentStatus[]; total: number; page: number; limit: number }>('/talonstatuses');
+      return response.data || [];
+    } catch (error) {
+      console.warn('API недоступен для статусов записей, возвращаем пустой массив:', error);
+      return [];
+    }
   }
 
   async getAppointmentStatus(id: number): Promise<AppointmentStatus> {
-    return this.request<AppointmentStatus>(`/talonstatuses/${id}`);
+    try {
+      return await this.request<AppointmentStatus>(`/talonstatuses/${id}`);
+    } catch (error) {
+      console.warn('API недоступен для статуса записи:', error);
+      throw error;
+    }
   }
 
   async prefetchAll(): Promise<void> {

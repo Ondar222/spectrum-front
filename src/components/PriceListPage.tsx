@@ -20,7 +20,7 @@ export default function PriceListPage() {
     isOpen: false
   });
   const [currentPage, setCurrentPage] = useState<{ [groupId: number]: number }>({});
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(7);
   const [popularServices, setPopularServices] = useState<ApiService[]>([]);
 
   useEffect(() => {
@@ -382,8 +382,10 @@ export default function PriceListPage() {
                       const currentPage = getCurrentPage(group.id);
                       
                       if (totalPages > 1) {
+                        const startItem = ((currentPage - 1) * itemsPerPage) + 1;
+                        const endItem = Math.min(currentPage * itemsPerPage, filteredServices.length);
                         return `${filteredServices.length} ${filteredServices.length === 1 ? 'услуга' : 
-                               filteredServices.length < 5 ? 'услуги' : 'услуг'} (страница ${currentPage} из ${totalPages})`;
+                               filteredServices.length < 5 ? 'услуги' : 'услуг'} (показано ${startItem}-${endItem})`;
                       }
                       
                       return `${filteredServices.length} ${filteredServices.length === 1 ? 'услуга' : 
@@ -481,7 +483,7 @@ export default function PriceListPage() {
                           </div>
                         ))}
                         
-                        {/* Пагинация - показываем если больше 10 услуг */}
+                        {/* Пагинация - показываем если больше 7 услуг */}
                         {totalPages > 1 && (
                           <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
                             <div className="flex items-center justify-between">
