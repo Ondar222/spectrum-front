@@ -12,18 +12,18 @@ export default function Footer() {
         backgroundAttachment: "fixed",
       }}
     >
-      <div className="container mx-auto px-4 py-12 relative z-10">
+      <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 md:py-12 relative z-10">
         {/* Main footer content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8">
           {/* Column 1: Logo and about */}
-          <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/10">
+          <div className="bg-black/30 backdrop-blur-sm rounded-lg sm:rounded-xl p-4 sm:p-6 border border-white/10">
             <a
               href="/"
-              className="text-2xl font-semibold text-white block mb-4 hover:text-primary transition-colors"
+              className="text-lg sm:text-xl md:text-2xl font-semibold text-white block mb-3 sm:mb-4 hover:text-primary transition-colors"
             >
               КЛИНИКА АЛДАН
             </a>
-            <p className="text-gray-200 mb-4 leading-relaxed">
+            <p className="text-gray-200 mb-3 sm:mb-4 leading-relaxed text-sm sm:text-base">
               Современная медицинская клиника с высококвалифицированными
               специалистами. Мы предоставляем полный спектр медицинских услуг с
               использованием передовых технологий.
@@ -31,30 +31,30 @@ export default function Footer() {
           </div>
 
           {/* Column 2: Useful links */}
-          <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-            <h3 className="text-lg font-semibold mb-6 text-white">Полезные ссылки</h3>
-            <ul className="space-y-3">
+          <div className="bg-black/30 backdrop-blur-sm rounded-lg sm:rounded-xl p-4 sm:p-6 border border-white/10">
+            <h3 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-white">Полезные ссылки</h3>
+            <ul className="space-y-2 sm:space-y-3">
               <li>
-                <a href="/online/" className="text-gray-200 hover:text-primary transition-colors flex items-center group">
-                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform" />
+                <a href="/online/" className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base">
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full mr-2 sm:mr-3 group-hover:scale-125 transition-transform flex-shrink-0" />
                   ONLINE консультации
                 </a>
               </li>
               <li>
-                <a href="/documents/utverzhdeno.pdf" target="_blank" rel="noopener noreferrer" className="text-gray-200 hover:text-primary transition-colors flex items-center group">
-                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform" />
+                <a href="/documents/utverzhdeno.pdf" target="_blank" rel="noopener noreferrer" className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base">
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full mr-2 sm:mr-3 group-hover:scale-125 transition-transform flex-shrink-0" />
                   Политика конфиденциальности
                 </a>
               </li>
               <li>
-                <a href="/prices" className="text-gray-200 hover:text-primary transition-colors flex items-center group">
-                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform" />
+                <a href="/prices" className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base">
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full mr-2 sm:mr-3 group-hover:scale-125 transition-transform flex-shrink-0" />
                   Прайс-лист
                 </a>
               </li>
               <li>
-                <a href="/documents/согласие_на_персданные_на_сайт.docx" target="_blank" rel="noopener noreferrer" className="text-gray-200 hover:text-primary transition-colors flex items-center group">
-                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform" />
+                <a href="/documents/согласие_на_персданные_на_сайт.docx" target="_blank" rel="noopener noreferrer" className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base">
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full mr-2 sm:mr-3 group-hover:scale-125 transition-transform flex-shrink-0" />
                   Согласие на обработку персональных данных
                 </a>
               </li>
@@ -64,34 +64,34 @@ export default function Footer() {
               <li>
                 <a
                   href="/services/"
-                  className="text-gray-200 hover:text-primary transition-colors flex items-center group"
+                  className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base"
                 >
-                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform" />
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full mr-2 sm:mr-3 group-hover:scale-125 transition-transform flex-shrink-0" />
                   Услуги
                 </a>
               </li>
               <li>
                 <a
                   href="/doctors/"
-                  className="text-gray-200 hover:text-primary transition-colors flex items-center group"
+                  className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base"
                 >
-                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform" />
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full mr-2 sm:mr-3 group-hover:scale-125 transition-transform flex-shrink-0" />
                   Врачи
                 </a>
               </li>
               <li>
                 <a
                   href="/reviews/"
-                  className="text-gray-200 hover:text-primary transition-colors flex items-center group"
+                  className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base"
                 >
-                  <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform" />
+                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full mr-2 sm:mr-3 group-hover:scale-125 transition-transform flex-shrink-0" />
                   Отзывы
                 </a>
               </li>
               <li>
                 <a
                   href="/documents/"
-                  className="text-gray-200 hover:text-primary transition-colors flex items-center group"
+                  className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base"
                 >
                   <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform"></span>
                   Документы
@@ -100,7 +100,7 @@ export default function Footer() {
               <li>
                 <a
                   href="/contacts/"
-                  className="text-gray-200 hover:text-primary transition-colors flex items-center group"
+                  className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base"
                 >
                   <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform"></span>
                   Контакты
@@ -110,14 +110,14 @@ export default function Footer() {
           </div>
 
           {/* Column 3: Contact information */}
-          <div className="bg-black/30 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-            <h3 className="text-lg font-semibold mb-6 text-white">Контакты</h3>
-            <div className="space-y-4">
+          <div className="bg-black/30 backdrop-blur-sm rounded-lg sm:rounded-xl p-4 sm:p-6 border border-white/10">
+            <h3 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-white">Контакты</h3>
+            <div className="space-y-3 sm:space-y-4">
               <div className="flex items-center text-gray-200 group">
-                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/30 transition-colors">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-full flex items-center justify-center mr-3 sm:mr-4 group-hover:bg-primary/30 transition-colors flex-shrink-0">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-primary"
+                    className="h-4 w-4 sm:h-5 sm:w-5 text-primary"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -130,15 +130,15 @@ export default function Footer() {
                     />
                   </svg>
                 </div>
-                <a href="tel:+79233816060" className="hover:text-primary transition-colors">
+                <a href="tel:+79233816060" className="hover:text-primary transition-colors text-sm sm:text-base">
                   +7 (923) 381-60-60
                 </a>
               </div>
               <div className="flex items-center text-gray-200 group">
-                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/30 transition-colors">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-full flex items-center justify-center mr-3 sm:mr-4 group-hover:bg-primary/30 transition-colors flex-shrink-0">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-primary"
+                    className="h-4 w-4 sm:h-5 sm:w-5 text-primary"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -151,7 +151,7 @@ export default function Footer() {
                     />
                   </svg>
                 </div>
-                <a href="tel:+79233176060" className="hover:text-primary transition-colors">
+                <a href="tel:+79233176060" className="hover:text-primary transition-colors text-sm sm:text-base">
                   +7 (923) 317-60-60
                 </a>
               </div>
@@ -159,7 +159,7 @@ export default function Footer() {
                 {/* <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/30 transition-colors">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-primary"
+                    className="h-4 w-4 sm:h-5 sm:w-5 text-primary"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -173,17 +173,17 @@ export default function Footer() {
                   </svg>
                 </div> */}
                 {/* <div>
-                  <a href="tel:+79233816060" className="hover:text-primary transition-colors">
+                  <a href="tel:+79233816060" className="hover:text-primary transition-colors text-sm sm:text-base">
                     +7 (923) 381-60-60
                   </a>
                   <span className="ml-2 text-sm text-gray-300">(Детская)</span>
                 </div> */}
               </div>
               <div className="flex items-center text-gray-200 group">
-                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/30 transition-colors">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-full flex items-center justify-center mr-3 sm:mr-4 group-hover:bg-primary/30 transition-colors flex-shrink-0">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-primary"
+                    className="h-4 w-4 sm:h-5 sm:w-5 text-primary"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -198,16 +198,16 @@ export default function Footer() {
                 </div>
                 <a
                   href="mailto:clinicaldan@mail.ru"
-                  className="hover:text-primary transition-colors"
+                  className="hover:text-primary transition-colors text-sm sm:text-base"
                 >
                   clinicaldan@mail.ru
                 </a>
               </div>
               <div className="flex items-center text-gray-200 group">
-                <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/30 transition-colors">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-full flex items-center justify-center mr-3 sm:mr-4 group-hover:bg-primary/30 transition-colors flex-shrink-0">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-primary"
+                    className="h-4 w-4 sm:h-5 sm:w-5 text-primary"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -221,8 +221,8 @@ export default function Footer() {
                   </svg>
                 </div>
                 <div>
-                  <div>Время работы: Пн-Пт 08:00 - 22:00</div>
-                  <div className="text-sm text-gray-300">Сб-Вс: 09:00 - 18:00</div>
+                  <div className="text-sm sm:text-base">Время работы: Пн-Пт 08:00 - 22:00</div>
+                  <div className="text-xs sm:text-sm text-gray-300">Сб-Вс: 09:00 - 18:00</div>
                 </div>
               </div>
             </div>
@@ -230,9 +230,9 @@ export default function Footer() {
         </div>
 
         {/* Copyright & legal info */}
-        <div className="pt-8 border-t border-white/20 text-sm">
-          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-4 border border-white/10 space-y-2">
-            <p className="text-gray-200">
+        <div className="pt-6 sm:pt-8 border-t border-white/20 text-sm">
+          <div className="bg-black/20 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/10 space-y-1.5 sm:space-y-2">
+            <p className="text-gray-200 text-xs sm:text-sm">
               ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ "АЛДАН" ИНН: 1701049398
               <a
                 href="https://yandex.ru/maps/?text=667000%2C%20Республика%20Тыва%2C%20город%20Кызыл%2C%20ул.%20Ленина%2C%20д.%2060%2C%20офис%201"
@@ -241,17 +241,17 @@ export default function Footer() {
                 className="inline-flex items-center ml-1 text-primary hover:underline"
                 aria-label="Открыть адрес на карте"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 sm:w-5 sm:h-5 mr-1 flex-shrink-0">
                   <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
                 </svg>
-                667000, Республика Тыва, город Кызыл, ул. Ленина, д. 60, офис 1
+                <span className="text-xs sm:text-sm">667000, Республика Тыва, город Кызыл, ул. Ленина, д. 60, офис 1</span>
               </a>
             </p>
-            <p className="text-gray-200">
+            <p className="text-gray-200 text-xs sm:text-sm">
               ИМЕЮТСЯ ПРОТИВОПОКАЗАНИЯ, НЕОБХОДИМА КОНСУЛЬТАЦИЯ СПЕЦИАЛИСТА
             </p>
-            <p className="text-gray-200">© 2025 КЛИНИКА АЛДАН. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</p>
-            <p className="text-gray-200">Разработано Lana Soft</p>
+            <p className="text-gray-200 text-xs sm:text-sm">© 2025 КЛИНИКА АЛДАН. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</p>
+            <p className="text-gray-200 text-xs sm:text-sm">Разработано Lana Soft</p>
           </div>
         </div>
       </div>

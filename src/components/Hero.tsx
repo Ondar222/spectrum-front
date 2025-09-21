@@ -59,7 +59,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative h-[700px] md:h-[600px] overflow-hidden">
+    <section className="relative h-[400px] sm:h-[450px] md:h-[400px] overflow-hidden">
       {/* Slides container */}
       <div
         className="h-full relative"
@@ -81,9 +81,9 @@ export default function Hero() {
             }`}
           >
             <div className="container mx-auto h-full flex items-center">
-              <div className="max-w-3xl text-white px-6 md:px-8 py-16 bg-black/40 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl">
+              <div className="max-w-3xl text-white px-4 sm:px-6 md:px-8 py-4 sm:py-6 md:py-8 bg-black/40 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 shadow-2xl">
                 <h2
-                  className="text-2xl md:text-3xl font-medium mb-2 animate-fadeInUp opacity-0"
+                  className="text-lg sm:text-xl md:text-2xl font-medium mb-1 animate-fadeInUp opacity-0"
                   style={{
                     animationDelay: "0.1s",
                     animationFillMode: "forwards",
@@ -92,7 +92,7 @@ export default function Hero() {
                   {slide.subtitle}
                 </h2>
                 <h1
-                  className="text-3xl md:text-4xl font-bold mb-4 animate-fadeInUp opacity-0"
+                  className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 animate-fadeInUp opacity-0"
                   style={{
                     animationDelay: "0.3s",
                     animationFillMode: "forwards",
@@ -101,7 +101,7 @@ export default function Hero() {
                   {slide.title}
                 </h1>
                 <p
-                  className="mb-8 animate-fadeInUp opacity-0"
+                  className="text-xs sm:text-sm md:text-base mb-3 sm:mb-4 animate-fadeInUp opacity-0 leading-relaxed"
                   style={{
                     animationDelay: "0.5s",
                     animationFillMode: "forwards",
@@ -111,7 +111,7 @@ export default function Hero() {
                 </p>
                 <Link
                   to={slide.buttonLink}
-                  className="bg-primary hover:bg-primaryDark transition-colors text-white py-3 px-8 inline-block font-medium rounded-md animate-fadeInUp opacity-0 shadow-lg"
+                  className="bg-primary hover:bg-primaryDark transition-colors text-white py-1.5 px-4 sm:py-2 sm:px-6 inline-block font-medium rounded-md animate-fadeInUp opacity-0 shadow-lg text-xs sm:text-sm"
                   style={{
                     animationDelay: "0.7s",
                     animationFillMode: "forwards",
@@ -127,14 +127,14 @@ export default function Hero() {
 
       {/* Navigation arrows */}
       <button
-        className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/30 hover:bg-white/50 p-2 rounded-full text-white transition-colors z-10 backdrop-blur-sm"
+        className="absolute top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-white/30 hover:bg-white/50 p-1.5 sm:p-2 rounded-full text-white transition-colors z-10 backdrop-blur-sm"
         onClick={prevSlide}
         disabled={isAnimating}
         aria-label="Previous slide"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
+          className="h-4 w-4 sm:h-5 sm:w-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -148,14 +148,14 @@ export default function Hero() {
         </svg>
       </button>
       <button
-        className="absolute top-1/2 right-4 -translate-y-1/2 bg-white/30 hover:bg-white/50 p-2 rounded-full text-white transition-colors z-10 backdrop-blur-sm"
+        className="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-white/30 hover:bg-white/50 p-1.5 sm:p-2 rounded-full text-white transition-colors z-10 backdrop-blur-sm"
         onClick={nextSlide}
         disabled={isAnimating}
         aria-label="Next slide"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
+          className="h-4 w-4 sm:h-5 sm:w-5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -170,13 +170,13 @@ export default function Hero() {
       </button>
 
       {/* Slide indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-3 z-10">
+      <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 sm:space-x-3 z-10">
         {slides.map((slide) => (
           <button
             key={`slide-indicator-${slide.id}`}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
               slides.indexOf(slide) === currentSlide
-                ? "bg-primary w-8"
+                ? "bg-primary w-6 sm:w-8"
                 : "bg-white/60 hover:bg-white/80"
             }`}
             onClick={() => handleSlideChange(slides.indexOf(slide))}
