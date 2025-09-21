@@ -254,7 +254,7 @@
             <div class="auth-checkbox">
               <input type="checkbox" id="consent" name="consent" required />
               <label for="consent">Я даю согласие на <a href="#" style="color:#d2002e;text-decoration:underline">обработку персональных данных</a></label>
-            </div>
+          </div>
 
         
 
@@ -453,9 +453,83 @@
         });
       });
         
-      // prevent default submit for now
-      if(loginForm){ loginForm.addEventListener('submit', function(e){ e.preventDefault(); close(); }); }
-      if(registerForm){ registerForm.addEventListener('submit', function(e){ e.preventDefault(); close(); }); }
+      // Handle form submissions
+      if(loginForm){ 
+        loginForm.addEventListener('submit', async function(e){ 
+          e.preventDefault(); 
+          const formData = new FormData(loginForm);
+          const loginData = {
+            email: formData.get('email'),
+            password: formData.get('password')
+          };
+          
+          try {
+            const response = await fetch('http://localhost:3001/api/auth/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(loginData)
+            });
+            
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(errorData.message || 'Ошибка авторизации');
+            }
+            
+            const result = await response.json();
+            localStorage.setItem('auth_token', result.access_token);
+            localStorage.setItem('user_data', JSON.stringify(result.user));
+            alert('Авторизация успешна!');
+            close();
+          } catch (error) {
+            alert('Ошибка авторизации: ' + error.message);
+          }
+        }); 
+      }
+      
+      if(registerForm){ 
+        registerForm.addEventListener('submit', async function(e){ 
+          e.preventDefault(); 
+          const formData = new FormData(registerForm);
+          const registerData = {
+            email: formData.get('email'),
+            password: formData.get('password'),
+            name: formData.get('firstname') + ' ' + formData.get('lastname'),
+            phone: formData.get('phone'),
+            role: 'patient', // Default to patient
+            lastname: formData.get('lastname'),
+            firstname: formData.get('firstname'),
+            middlename: formData.get('middlename'),
+            country: formData.get('country'),
+            region: formData.get('region'),
+            city: formData.get('city')
+          };
+          
+          try {
+            const response = await fetch('http://localhost:3001/api/auth/register', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(registerData)
+            });
+            
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(errorData.message || 'Ошибка регистрации');
+            }
+            
+            const result = await response.json();
+            localStorage.setItem('auth_token', result.access_token);
+            localStorage.setItem('user_data', JSON.stringify(result.user));
+            alert('Регистрация успешна!');
+            close();
+          } catch (error) {
+            alert('Ошибка регистрации: ' + error.message);
+          }
+        }); 
+      }
       }
       
       openBtn.addEventListener('click', function(e){ e.preventDefault(); open(); });

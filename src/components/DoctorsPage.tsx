@@ -34,6 +34,10 @@ export default function DoctorsPage() {
           archimedService.getCategories().catch(() => [] as unknown as ArchimedCategory[]),
         ]);
 
+        console.log('Loaded doctors:', doctorsData);
+        console.log('Loaded branches:', branchesData);
+        console.log('Loaded categories:', categoriesData);
+
         setDoctors(doctorsData);
         setBranches(branchesData);
         setCategories(categoriesData);

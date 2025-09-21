@@ -22,6 +22,7 @@ import GiftCertificatesPage from "./components/GiftCertificatesPage";
 import PaymentSuccessPage from "./components/PaymentSuccessPage";
 import PaymentCancelPage from "./components/PaymentCancelPage";
 import ServicePage from "./components/ServicePage";
+import StaffDashboard from "./components/StaffDashboard";
 import archimedService from "./services/archimed";
 import ScrollToTop from "./components/ScrollToTop";
 import CookieNotification from "./components/CookieNotification";
@@ -93,6 +94,7 @@ function App() {
             */}
             <Route path="/prices" element={<PriceListPage />} />
             <Route path="/services/:slug" element={<ServicePage />} />
+            <Route path="/staff" element={<StaffDashboard />} />
             <Route path="/cookie-policy" element={<CookiePolicyPage />} />
             {/* Временно скрыто - личный кабинет и платежи
             <Route path="/personal-cabinet" element={<PatientCabinetPage />} />

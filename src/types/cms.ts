@@ -223,4 +223,40 @@ export interface DirectusListResponse<T> {
     total_count?: number;
     filter_count?: number;
   };
+}
+
+// User authentication types
+export interface User {
+  id: number;
+  email: string;
+  name: string;
+  phone?: string;
+  role: 'patient' | 'staff';
+  created_at: string;
+  updated_at: string;
+}
+
+export interface LoginData {
+  email: string;
+  password: string;
+}
+
+export interface RegisterData {
+  email: string;
+  password: string;
+  name: string;
+  phone?: string;
+  role: 'patient' | 'staff';
+  lastname?: string;
+  firstname?: string;
+  middlename?: string;
+  country?: string;
+  region?: string;
+  city?: string;
+}
+
+export interface AuthResponse {
+  user: User;
+  token: string;
+  expires_at: string;
 } 

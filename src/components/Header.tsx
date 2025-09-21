@@ -3,6 +3,19 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  // Check if user is logged in
+  useEffect(() => {
+    const userData = localStorage.getItem('user_data');
+    if (userData) {
+      try {
+        setUser(JSON.parse(userData));
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+      }
+    }
+  }, []);
 
   // Close mobile menu when window is resized to desktop size
   useEffect(() => {
@@ -138,6 +151,16 @@ export default function Header() {
                   Документы
                 </Link>
               </li>
+              {user && user.role === 'staff' && (
+                <li>
+                  <Link
+                    to="/staff"
+                    className="text-dark hover:text-primary transition-colors"
+                  >
+                    Панель сотрудника
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link
                   to="/contacts"
@@ -313,6 +336,17 @@ export default function Header() {
                 Документы
               </Link>
             </li>
+            {user && user.role === 'staff' && (
+              <li>
+                <Link
+                  to="/staff"
+                  className="block py-2 text-dark hover:text-primary transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Панель сотрудника
+                </Link>
+              </li>
+            )}
             <li>
               <Link
                 to="/contacts"
