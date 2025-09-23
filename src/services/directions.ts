@@ -21,6 +21,7 @@ export const DIRECTIONS: DirectionConfig[] = [
     { slug: 'neurology', title: 'Неврология', doctorKeywords: ['неврол'], serviceKeywords: ['неврол'] },
     { slug: 'traumatology-orthopedics', title: 'Травматология и ортопедия', doctorKeywords: ['травмат', 'ортоп'], serviceKeywords: ['травмат', 'ортоп'] },
     { slug: 'surgery', title: 'Хирургия', doctorKeywords: ['хирург'], serviceKeywords: ['хирург'] },
+    { slug: 'plastic-surgery', title: 'Пластическая хирургия', doctorKeywords: ['пластич', 'эстетич', 'пластический хирург'], serviceKeywords: ['пластич', 'ринопласт', 'блефаропласт', 'липосак', 'маммопласт'] },
     { slug: 'urology', title: 'Урология', doctorKeywords: ['урол'], serviceKeywords: ['урол'] },
     { slug: 'endocrinology', title: 'Эндокринология', doctorKeywords: ['эндокрин'], serviceKeywords: ['эндокрин', 'тирео'] },
     { slug: 'pediatrics', title: 'Педиатрия', doctorKeywords: ['педиатр'], serviceKeywords: ['педиатр'] },

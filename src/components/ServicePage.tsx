@@ -86,10 +86,28 @@ const ServicePage: React.FC = () => {
     );
   }, [services, direction]);
 
+  // Шаблонные услуги для раздела Пластическая хирургия (если из API ничего не пришло)
+  const plasticFallbackServices: ApiService[] = useMemo(() => ([
+    { id: 90001, kind: 0, code: 'PS-001', name: 'Консультация пластического хирурга', altcode: '', altname: '', barcode: '', info: 'Первичная консультация с осмотром и планированием вмешательства', group_name: 'Пластическая хирургия', group_id: 0, mz_code: '', cito_cost: 0, duration: 0, base_cost: 2500, purchase_price: 0, denomination: 0, unit_id: null, unit: null },
+    { id: 90002, kind: 0, code: 'PS-002', name: 'Блефаропластика', altcode: '', altname: 'Хирургическая коррекция век', barcode: '', info: '', group_name: 'Пластическая хирургия', group_id: 0, mz_code: '', cito_cost: 0, duration: 0, base_cost: 45000, purchase_price: 0, denomination: 0, unit_id: null, unit: null },
+    { id: 90003, kind: 0, code: 'PS-003', name: 'Ринопластика', altcode: '', altname: 'Коррекция формы носа', barcode: '', info: '', group_name: 'Пластическая хирургия', group_id: 0, mz_code: '', cito_cost: 0, duration: 0, base_cost: 120000, purchase_price: 0, denomination: 0, unit_id: null, unit: null },
+    { id: 90004, kind: 0, code: 'PS-004', name: 'Липосакция', altcode: '', altname: 'Удаление локальных жировых отложений', barcode: '', info: '', group_name: 'Пластическая хирургия', group_id: 0, mz_code: '', cito_cost: 0, duration: 0, base_cost: 80000, purchase_price: 0, denomination: 0, unit_id: null, unit: null },
+    { id: 90005, kind: 0, code: 'PS-005', name: 'Маммопластика', altcode: '', altname: 'Коррекция формы и объема груди', barcode: '', info: '', group_name: 'Пластическая хирургия', group_id: 0, mz_code: '', cito_cost: 0, duration: 0, base_cost: 180000, purchase_price: 0, denomination: 0, unit_id: null, unit: null },
+    { id: 90006, kind: 0, code: 'PS-006', name: 'Отопластика', altcode: '', altname: 'Коррекция формы ушей', barcode: '', info: '', group_name: 'Пластическая хирургия', group_id: 0, mz_code: '', cito_cost: 0, duration: 0, base_cost: 60000, purchase_price: 0, denomination: 0, unit_id: null, unit: null },
+  ]), []);
+
+  // Если услуг нет, подставляем шаблонные для пластической хирургии
+  const effectiveServices = useMemo(() => {
+    if (direction?.slug === 'plastic-surgery' && filteredServices.length === 0) {
+      return plasticFallbackServices;
+    }
+    return filteredServices;
+  }, [direction, filteredServices, plasticFallbackServices]);
+
   // Группируем услуги по категориям
   const groupedServices = useMemo(() => {
-    return groupServicesByCategory(filteredServices, direction?.title);
-  }, [filteredServices, direction]);
+    return groupServicesByCategory(effectiveServices, direction?.title);
+  }, [effectiveServices, direction]);
 
   // Получаем доступные категории для текущего направления
   const availableCategories = useMemo(() => {
@@ -107,7 +125,7 @@ const ServicePage: React.FC = () => {
   // Получаем услуги для выбранной категории
   const servicesForCategory = useMemo(() => {
     if (selectedCategory === 'all') {
-      return filteredServices;
+      return effectiveServices;
     }
     
     const categoryServices: ApiService[] = [];
@@ -118,7 +136,7 @@ const ServicePage: React.FC = () => {
     });
     
     return categoryServices;
-  }, [selectedCategory, groupedServices, filteredServices]);
+  }, [selectedCategory, groupedServices, effectiveServices]);
 
   const filteredDoctors = useMemo(() => {
     if (!direction) return [] as ArchimedDoctor[];
