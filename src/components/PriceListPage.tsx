@@ -47,8 +47,24 @@ export default function PriceListPage() {
           
           return groups;
         }, []);
-        
-        setServiceGroups(groupedServices);
+        // Убираем стоматологию и физиотерапию
+        const cleanedGroups = groupedServices.filter(group => {
+          const name = (group.name || '').toLowerCase();
+          return !name.includes('стомат') && !name.includes('физиотерап');
+        });
+
+        // Добавляем виртуальную группу «Пластическая хирургия»
+        const plasticServices: ApiService[] = [
+          { id: 91001, kind: 0, code: 'PS-001', name: 'Консультация пластического хирурга', altcode: '', altname: '', barcode: '', info: 'Первичный прием, осмотр и планирование вмешательства', group_name: 'Пластическая хирургия', group_id: -1001, mz_code: '', cito_cost: 0, duration: 30, base_cost: 2500, purchase_price: 0, denomination: 0, unit_id: null, unit: null },
+          { id: 91002, kind: 0, code: 'PS-002', name: 'Блефаропластика', altcode: '', altname: 'Коррекция век', barcode: '', info: '', group_name: 'Пластическая хирургия', group_id: -1001, mz_code: '', cito_cost: 0, duration: 0, base_cost: 45000, purchase_price: 0, denomination: 0, unit_id: null, unit: null },
+          { id: 91003, kind: 0, code: 'PS-003', name: 'Ринопластика', altcode: '', altname: 'Коррекция формы носа', barcode: '', info: '', group_name: 'Пластическая хирургия', group_id: -1001, mz_code: '', cito_cost: 0, duration: 0, base_cost: 120000, purchase_price: 0, denomination: 0, unit_id: null, unit: null },
+          { id: 91004, kind: 0, code: 'PS-004', name: 'Липосакция', altcode: '', altname: 'Удаление локальных жировых отложений', barcode: '', info: '', group_name: 'Пластическая хирургия', group_id: -1001, mz_code: '', cito_cost: 0, duration: 0, base_cost: 80000, purchase_price: 0, denomination: 0, unit_id: null, unit: null },
+          { id: 91005, kind: 0, code: 'PS-005', name: 'Маммопластика', altcode: '', altname: 'Коррекция формы и объема груди', barcode: '', info: '', group_name: 'Пластическая хирургия', group_id: -1001, mz_code: '', cito_cost: 0, duration: 0, base_cost: 180000, purchase_price: 0, denomination: 0, unit_id: null, unit: null },
+        ];
+
+        cleanedGroups.push({ id: -1001, name: 'Пластическая хирургия', services: plasticServices });
+
+        setServiceGroups(cleanedGroups);
         
         // Определяем популярные услуги (первые 6 с наименьшей стоимостью)
         const popular = services
