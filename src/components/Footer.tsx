@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
 
@@ -17,12 +18,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8">
           {/* Column 1: Logo and about */}
           <div className="bg-black/30 backdrop-blur-sm rounded-lg sm:rounded-xl p-4 sm:p-6 border border-white/10">
-            <a
-              href="/"
+            <Link
+              to="/"
               className="text-lg sm:text-xl md:text-2xl font-semibold text-white block mb-3 sm:mb-4 hover:text-primary transition-colors"
             >
               КЛИНИКА АЛДАН
-            </a>
+            </Link>
             <p className="text-gray-200 mb-3 sm:mb-4 leading-relaxed text-sm sm:text-base">
               Современная медицинская клиника с высококвалифицированными
               специалистами. Мы предоставляем полный спектр медицинских услуг с
@@ -35,10 +36,10 @@ export default function Footer() {
             <h3 className="text-base sm:text-lg font-semibold mb-4 sm:mb-6 text-white">Полезные ссылки</h3>
             <ul className="space-y-2 sm:space-y-3">
               <li>
-                <a href="/online/" className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base">
+                <Link to="/doctors" className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base">
                   <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full mr-2 sm:mr-3 group-hover:scale-125 transition-transform flex-shrink-0" />
                   ONLINE консультации
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="/documents/utverzhdeno.pdf" target="_blank" rel="noopener noreferrer" className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base">
@@ -47,10 +48,10 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/prices" className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base">
+                <Link to="/prices" className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base">
                   <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full mr-2 sm:mr-3 group-hover:scale-125 transition-transform flex-shrink-0" />
                   Прайс-лист
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="/documents/согласие_на_персданные_на_сайт.docx" target="_blank" rel="noopener noreferrer" className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base">
@@ -62,49 +63,49 @@ export default function Footer() {
               <li><a href="/certificates" className="text-gray-400 hover:text-primary">Подарочные сертификаты</a></li>
               */}
               <li>
-                <a
-                  href="/services/"
+                <Link
+                  to="/prices"
                   className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base"
                 >
                   <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full mr-2 sm:mr-3 group-hover:scale-125 transition-transform flex-shrink-0" />
                   Услуги
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/doctors/"
+                <Link
+                  to="/doctors"
                   className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base"
                 >
                   <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full mr-2 sm:mr-3 group-hover:scale-125 transition-transform flex-shrink-0" />
                   Врачи
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/reviews/"
+                <Link
+                  to="/reviews"
                   className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base"
                 >
                   <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full mr-2 sm:mr-3 group-hover:scale-125 transition-transform flex-shrink-0" />
                   Отзывы
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/documents/"
+                <Link
+                  to="/documents"
                   className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base"
                 >
                   <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform"></span>
                   Документы
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/contacts/"
+                <Link
+                  to="/contacts"
                   className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base"
                 >
                   <span className="w-2 h-2 bg-primary rounded-full mr-3 group-hover:scale-125 transition-transform"></span>
                   Контакты
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
