@@ -27,6 +27,7 @@ import archimedService from "./services/archimed";
 import ScrollToTop from "./components/ScrollToTop";
 import CookieNotification from "./components/CookieNotification";
 import CookiePolicyPage from "./components/CookiePolicyPage";
+import FloatingBooking from "./components/FloatingBooking";
 // Временно скрыто - личный кабинет и платежи
 // import PatientCabinetPage from "./components/PatientCabinetPage";
 // import PaymentSuccessPage from "./components/PaymentSuccessPage";
@@ -116,6 +117,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <FloatingBooking />
         <CookieNotification 
           onAccept={handleCookieAccept}
           onDecline={handleCookieDecline}

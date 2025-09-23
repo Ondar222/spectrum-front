@@ -27,7 +27,7 @@ export default function ReviewsPage() {
       doctor: 'Иванов И.И.',
       service: 'Терапия',
       text: 'Очень довольна посещением клиники. Доктор Иванов внимательно выслушал все жалобы, провел тщательный осмотр и назначил эффективное лечение. Персонал вежливый, кабинеты чистые. Рекомендую!',
-      photos: ['/images/review1.jpg', '/images/review2.jpg']
+      // photos: ['/images/review1.jpg', '/images/review2.jpg']
     },
     {
       id: 2,
