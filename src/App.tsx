@@ -7,6 +7,7 @@ import ServiceGrid from "./components/ServiceGrid";
 import Advantages from "./components/Advantages";
 import Testimonials from "./components/Testimonials";
 import ContactForm from "./components/ContactForm";
+import Checkups from "./components/Checkups";
 import DoctorsPage from "./components/DoctorsPage";
 import DoctorDetailsPage from "./components/DoctorDetailsPage";
 import ReviewsPage from "./components/ReviewsPage";
@@ -41,6 +42,7 @@ function HomePage() {
     <>
       <Hero />
       <ServiceGrid />
+      <Checkups />
       <Advantages />
       <Testimonials />
       <ContactForm />

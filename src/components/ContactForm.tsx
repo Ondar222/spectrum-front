@@ -61,7 +61,7 @@ export default function ContactForm() {
 
   return (
     <section 
-      className="py-8 sm:py-12 md:py-16 relative"
+      className="py-6 sm:py-10 md:py-16 relative"
       style={{
         backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9)), url('https://clinicaldan.ru/upload/iblock/37e/37ee47227d019ba56cb6a41102fea374.jpg')`,
         backgroundSize: 'cover',
@@ -70,9 +70,9 @@ export default function ContactForm() {
       }}
     >
       <div className="container mx-auto px-3 sm:px-4 relative z-10">
-        <div className="max-w-6xl mx-auto bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-10 border border-white/20">
-          <h2 className="text-xl sm:text-2xl font-bold text-center mb-4 sm:mb-6 text-dark">Есть вопросы? Задавайте!</h2>
-          <p className="text-center text-gray-600 mb-6 sm:mb-8 text-sm sm:text-base">
+        <div className="max-w-6xl mx-auto bg-white/95 backdrop-blur-sm rounded-lg sm:rounded-2xl shadow-2xl p-3 sm:p-6 md:p-10 border border-white/20">
+          <h2 className="text-lg sm:text-2xl font-bold text-center mb-3 sm:mb-6 text-dark">Есть вопросы? Задавайте!</h2>
+          <p className="text-center text-gray-600 mb-5 sm:mb-8 text-xs sm:text-base">
             Оставьте свои контактные данные, и мы свяжемся с вами в ближайшее время.
           </p>
 
@@ -90,48 +90,48 @@ export default function ContactForm() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 items-stretch">
             <form onSubmit={handleSubmit} className="order-1 lg:order-2 lg:col-span-2 h-full flex flex-col">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6 mb-3 sm:mb-6">
               <div>
-                <label htmlFor="name" className="block text-gray-700 mb-1 sm:mb-2 text-sm sm:text-base">Ваше имя</label>
+                <label htmlFor="name" className="block text-gray-700 mb-1 sm:mb-2 text-xs sm:text-base">Ваше имя</label>
                 <input
                   type="text"
                   id="name"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-1.5 sm:py-2 border border-gray-300 rounded focus:outline-none focus:border-primary text-sm sm:text-base"
                   required
                 />
               </div>
               <div>
-                <label htmlFor="phone" className="block text-gray-700 mb-1 sm:mb-2 text-sm sm:text-base">Номер телефона</label>
+                <label htmlFor="phone" className="block text-gray-700 mb-1 sm:mb-2 text-xs sm:text-base">Номер телефона</label>
                 <input
                   type="tel"
                   id="phone"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-1.5 sm:py-2 border border-gray-300 rounded focus:outline-none focus:border-primary text-sm sm:text-base"
                   required
                 />
               </div>
             </div>
 
             <div className="mb-4 sm:mb-6">
-              <label htmlFor="email" className="block text-gray-700 mb-1 sm:mb-2 text-sm sm:text-base">Email</label>
+              <label htmlFor="email" className="block text-gray-700 mb-1 sm:mb-2 text-xs sm:text-base">Email</label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-3 sm:px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary text-sm sm:text-base"
+                className="w-full px-3 sm:px-4 py-1.5 sm:py-2 border border-gray-300 rounded focus:outline-none focus:border-primary text-sm sm:text-base"
                 required
               />
             </div>
 
             <div className="col-span-2 mb-4 sm:mb-6">
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="message" className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                 Сообщение
               </label>
               <textarea
@@ -160,7 +160,7 @@ export default function ContactForm() {
                   }`}
                   required
                 />
-                <span className="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                <span className="text-[11px] sm:text-sm text-gray-700 leading-relaxed">
                 Я согласен с условиями обработки персональных данных на сайте согласно{' '}
                   <a
                     href="/documents/согласие_на_персданные_на_сайт.docx"
@@ -191,7 +191,7 @@ export default function ContactForm() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`bg-primary hover:bg-primaryDark text-white py-2 sm:py-3 px-6 sm:px-8 rounded-md font-medium transition-colors text-sm sm:text-base ${
+                className={`bg-primary hover:bg-primaryDark text-white py-2 sm:py-3 px-5 sm:px-8 rounded-md font-medium transition-colors text-sm sm:text-base ${
                   isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
               >
