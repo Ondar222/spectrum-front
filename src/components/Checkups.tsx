@@ -23,12 +23,45 @@ const checkups: CheckupItem[] = [
   { title: 'Гастро-чекап «Расширенный»', price: 20000, doc: 'гастро чекапы.docx' },
 ];
 
+// Краткие текстовые описания для отображения во всплывающем окне
+const descriptions: Record<string, string> = {
+  'Чекап «Большой кардиологический»':
+    'Расширенное обследование сердечно-сосудистой системы: консультация кардиолога, ЭКГ, ЭХО-КГ, суточное мониторирование АД/ЭКГ по показаниям, лабораторные маркеры риска.',
+  'Чекап «Средний кардиологический»':
+    'Базовая диагностика сердца: консультация кардиолога, ЭКГ, ЭХО-КГ, ключевые анализы крови.',
+  'Чекап «Малый кардиологический»':
+    'Скрининг сердца: ЭКГ, консультация специалиста, основные лабораторные показатели.',
+  'Чекап «Большой сосудистый»':
+    'Комплексное обследование сосудов: УЗИ сосудов, консультация ангиолога/сосудистого хирурга, лабораторные маркеры.',
+  'Чекап «Малый сосудистый»':
+    'Быстрый скрининг состояния сосудов с ключевыми исследованиями.',
+  'Чекап «Весь организм»':
+    'Полный чек-ап основных систем организма: консультации профильных врачей, инструментальные и лабораторные исследования.',
+  'Чекап «Гинекологический минимум»':
+    'Первичный гинекологический скрининг: консультация, УЗИ по показаниям, базовые анализы.',
+  'Чекап «Гинекологический стандарт»':
+    'Расширенная гинекологическая диагностика с инструментальными и лабораторными исследованиями.',
+  'Чекап «диагностический послеродовой»':
+    'Контрольное обследование после родов: осмотр специалиста, УЗИ по показаниям, анализы.',
+  'Чекап для диагностики ЗНО — МУЖСКОЙ':
+    'Скрининг онкологических рисков для мужчин: консультации, лабораторные маркеры, визуализация по показаниям.',
+  'Чекап для диагностики ЗНО — Женский ОБШИРНЫЙ':
+    'Расширенный женский онкоскрининг: консультации, инструментальная диагностика, расширенные лабораторные панели.',
+  'Чекап для диагностики ЗНО — Женский ЕЖЕГОДНЫЙ':
+    'Ежегодный онкоскрининг для женщин с ключевыми исследованиями.',
+  'Гастро-чекап «Минимум»':
+    'Базовая диагностика ЖКТ: консультация гастроэнтеролога, основные анализы, УЗИ по показаниям.',
+  'Гастро-чекап «Расширенный»':
+    'Расширенное обследование ЖКТ: консультации, лабораторные маркеры, инструментальные исследования по показаниям.'
+};
+
 function formatPrice(value: number): string {
   return new Intl.NumberFormat('ru-RU').format(value) + ' ₽';
 }
 
 export default function Checkups() {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [selected, setSelected] = useState<CheckupItem | null>(null);
 
   // По умолчанию на мобильных скрыто, на десктопе открыто
   useEffect(() => {
@@ -67,23 +100,15 @@ export default function Checkups() {
               </div>
               <div className="text-primary font-bold text-sm sm:text-lg mb-3">{formatPrice(item.price)}</div>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                {item.doc ? (
-                  <a
-                    className="w-full sm:w-auto inline-block text-center px-3 py-1.5 sm:py-2 text-xs sm:text-sm bg-primary text-white rounded-lg hover:bg-primaryDark transition-colors"
-                    href={`/chekaps/${encodeURIComponent(item.doc)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Подробнее
-                  </a>
-                ) : (
-                  <a
-                    className="w-full sm:w-auto inline-block text-center px-3 py-1.5 sm:py-2 text-xs sm:text-sm border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors"
-                    href="/contacts"
-                  >
-                    Узнать подробности
-                  </a>
-                )}
+                <button
+                  type="button"
+                  className="w-full sm:w-auto inline-block text-center px-3 py-1.5 sm:py-2 text-xs sm:text-sm bg-primary text-white rounded-lg hover:bg-primaryDark transition-colors"
+                  onClick={() => setSelected(item)}
+                  aria-haspopup="dialog"
+                  aria-controls="checkup-modal"
+                >
+                  Подробнее
+                </button>
               </div>
             </div>
           ))}
@@ -94,6 +119,52 @@ export default function Checkups() {
           Документы с подробным составом программ доступны в разделе «Чекапы» внизу страниц.
         </div>
       </div>
+      {selected && (
+        <div
+          id="checkup-modal"
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center"
+        >
+          <div className="absolute inset-0 bg-black/40" onClick={() => setSelected(null)} />
+          <div className="relative w-full sm:max-w-2xl bg-white rounded-t-2xl sm:rounded-2xl shadow-xl p-4 sm:p-6 m-0 sm:m-4">
+            <div className="flex items-start justify-between gap-4 mb-3">
+              <div>
+                <h3 className="text-base sm:text-xl font-semibold text-dark mb-1">{selected.title}</h3>
+                <div className="text-primary font-bold text-sm sm:text-lg">{formatPrice(selected.price)}</div>
+              </div>
+              <button
+                type="button"
+                className="shrink-0 rounded-md p-2 text-gray-500 hover:text-dark hover:bg-gray-100"
+                aria-label="Закрыть"
+                onClick={() => setSelected(null)}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                  <path fillRule="evenodd" d="M6.225 4.811a1 1 0 011.414 0L12 9.172l4.361-4.361a1 1 0 111.414 1.414L13.414 10.586l4.361 4.361a1 1 0 01-1.414 1.414L12 12l-4.361 4.361a1 1 0 01-1.414-1.414l4.361-4.361-4.361-4.361a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
+            <div className="text-sm sm:text-base text-gray-700 whitespace-pre-line">
+              {descriptions[selected.title] || 'Описание для этой программы появится скоро. Пожалуйста, свяжитесь с нами для подробностей.'}
+            </div>
+            <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row gap-2 sm:gap-3">
+              <a
+                href="/contacts"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 text-sm sm:text-base border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors"
+              >
+                Задать вопрос
+              </a>
+              <button
+                type="button"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 text-sm sm:text-base bg-gray-100 text-dark rounded-lg hover:bg-gray-200 transition-colors"
+                onClick={() => setSelected(null)}
+              >
+                Закрыть
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
