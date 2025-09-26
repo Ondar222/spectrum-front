@@ -213,9 +213,52 @@ export default function ServiceGrid() {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  const totalPages = Math.ceil(services.length / pageSize);
+  // Добавляем "Медосмотры", убираем дубли по названию и поднимаем выбранные направления вверх
+  const medExams: Service = {
+    id: 1000,
+    title: 'Медосмотры',
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6M9 11h6M5 7h.01M5 11h.01M5 15h.01M9 15h6" />
+        <rect x="3" y="4" width="18" height="16" rx="2" ry="2" />
+      </svg>
+    ),
+    color: 'bg-primary',
+    hoverColor: 'hover:bg-primaryDark',
+    link: '/prices',
+  };
+
+  const priorityTitles = [
+    'Сосудистая хирургия и флебология',
+    'Пластическая хирургия',
+    'Косметология',
+    'Медосмотры',
+  ];
+
+  const orderedServices = React.useMemo(() => {
+    const base = [...services];
+    // Добавляем "Медосмотры" если его нет
+    if (!base.some(s => s.title === 'Медосмотры')) {
+      base.unshift(medExams);
+    }
+    // Дедуп по названию (уберет повтор "Офтальмология")
+    const seen = new Set<string>();
+    const deduped = base.filter((s) => {
+      if (seen.has(s.title)) return false;
+      seen.add(s.title);
+      return true;
+    });
+    // Приоритетные направления наверху, остальное в исходном порядке
+    const priority = priorityTitles
+      .map(t => deduped.find(s => s.title === t))
+      .filter(Boolean) as Service[];
+    const rest = deduped.filter(s => !priorityTitles.includes(s.title));
+    return [...priority, ...rest];
+  }, []);
+
+  const totalPages = Math.ceil(orderedServices.length / pageSize);
   const start = page * pageSize;
-  const visible = services.slice(start, start + pageSize);
+  const visible = orderedServices.slice(start, start + pageSize);
 
   return (
     <section className="py-6 sm:py-8 bg-white">
