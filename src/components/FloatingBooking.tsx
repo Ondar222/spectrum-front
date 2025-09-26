@@ -29,13 +29,13 @@ export default function FloatingBooking({ className }: FloatingBookingProps) {
 
   return (
     <>
-      <button
+      {/* <button
         aria-label="Запись"
         onClick={handleOpen}
         className={`fixed left-4 bottom-4 sm:left-6 sm:bottom-6 z-40 rounded-full shadow-lg bg-primary text-white w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center hover:bg-primaryDark transition-colors ${className || ''}`}
       >
         <span className="text-xs sm:text-sm font-semibold">Запись</span>
-      </button>
+      </button> */}
 
       {isOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={handleClose}>

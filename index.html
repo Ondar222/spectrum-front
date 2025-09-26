@@ -14,74 +14,428 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/src/topbar.css">
   <style>
-    .auth-modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:9999;padding:1rem}
-    .auth-modal.show{display:flex}
-    .auth-dialog{width:100%;max-width:600px;background:#fff;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,.15);overflow:hidden;max-height:90vh;overflow-y:auto}
-    .auth-content{padding:1.5rem;background:#fff}
-    .auth-header{display:flex;margin-bottom:1.5rem;gap:0.25rem}
-    .auth-tab{flex:1;padding:.75rem 1rem;text-align:center;font-weight:600;border:2px solid #e5e7eb;cursor:pointer;background:#f8f9fa;border-radius:8px;transition:all 0.2s}
-    .auth-tab.active{color:#d2002e;border-color:#d2002e;background:#fff;box-shadow:0 2px 4px rgba(210,0,46,0.1)}
-    .auth-tab:hover:not(.active){background:#f1f5f9;border-color:#cbd5e1}
-    .auth-body{padding:0}
-    .auth-section{margin-bottom:1.25rem;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
-    .auth-section-header{background:linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 100%);padding:.75rem 1rem;font-weight:600;color:#1e40af;border-bottom:1px solid #e5e7eb;font-size:0.9rem}
-    .auth-section-body{padding:1rem}
-    .auth-row{margin-bottom:.75rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
-    .auth-label{min-width:140px;font-weight:500;color:#374151;font-size:0.9rem;flex-shrink:0}
-    .auth-input{flex:1;min-width:200px;padding:.625rem .75rem;border:1px solid #e5e7eb;border-radius:6px;font-size:14px;transition:border-color 0.2s,box-shadow 0.2s}
-    .auth-input:focus{outline:none;border-color:#d2002e;box-shadow:0 0 0 3px rgba(210,0,46,0.1)}
-    .auth-input::placeholder{color:#9ca3af}
-    .auth-help{color:#6b7280;font-size:12px;margin-top:.25rem;cursor:help;width:20px;height:20px;border-radius:50%;background:#f3f4f6;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-    .auth-required{color:#dc2626;font-weight:600}
-    .auth-actions{display:flex;gap:.75rem;align-items:center;justify-content:space-between;margin-top:1.5rem;flex-wrap:wrap}
-    .btn{display:inline-block;padding:.75rem 1.5rem;border-radius:8px;font-weight:600;border:none;cursor:pointer;text-decoration:none;transition:all 0.2s;font-size:0.9rem;min-width:120px;text-align:center}
-    .btn-primary{background:linear-gradient(135deg,#d2002e 0%,#b10026 100%);color:#fff;box-shadow:0 2px 4px rgba(210,0,46,0.2)}
-    .btn-primary:hover{background:linear-gradient(135deg,#b10026 0%,#9a0020 100%);transform:translateY(-1px);box-shadow:0 4px 8px rgba(210,0,46,0.3)}
-    .btn-secondary{background:#f8f9fa;color:#374151;border:1px solid #d1d5db;box-shadow:0 1px 2px rgba(0,0,0,0.05)}
-    .btn-secondary:hover{background:#f1f5f9;border-color:#9ca3af;transform:translateY(-1px)}
-    .auth-close{position:absolute;right:1rem;top:1rem;background:rgba(255,255,255,0.9);border:none;cursor:pointer;color:#6b7280;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all 0.2s;backdrop-filter:blur(4px)}
-    .auth-close:hover{background:rgba(255,255,255,1);color:#374151;transform:scale(1.1)}
-    .hidden{display:none}
-    .auth-checkbox{display:flex;align-items:flex-start;gap:.75rem;margin:1.25rem 0;padding:1rem;background:#f8f9fa;border-radius:8px;border:1px solid #e5e7eb}
-    .auth-checkbox input{margin-top:.25rem;width:16px;height:16px;accent-color:#d2002e}
-    .auth-checkbox label{font-size:0.9rem;line-height:1.4;color:#374151}
-    .auth-checkbox a{color:#d2002e;text-decoration:underline;font-weight:500}
-    .auth-captcha{display:flex;align-items:center;gap:.75rem;margin:1.25rem 0;padding:1rem;background:#f8f9fa;border-radius:8px;border:1px solid #e5e7eb;flex-wrap:wrap}
-    .auth-captcha label{font-size:0.9rem;color:#374151;font-weight:500;flex:1;min-width:200px}
-    .auth-captcha input{width:120px;padding:.5rem;border:1px solid #d1d5db;border-radius:4px;text-align:center;font-weight:600;letter-spacing:1px}
-    .auth-captcha span{font-weight:700;color:#d2002e;font-size:1.1rem;background:#fff;padding:.5rem 1rem;border-radius:4px;border:2px solid #d2002e;letter-spacing:2px}
-    
+    .auth-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 1rem
+    }
+
+    .auth-modal.show {
+      display: flex
+    }
+
+    .auth-dialog {
+      width: 100%;
+      max-width: 600px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, .15);
+      overflow: hidden;
+      max-height: 90vh;
+      overflow-y: auto
+    }
+
+    .auth-content {
+      padding: 1.5rem;
+      background: #fff
+    }
+
+    .auth-header {
+      display: flex;
+      margin-bottom: 1.5rem;
+      gap: 0.25rem
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: .75rem 1rem;
+      text-align: center;
+      font-weight: 600;
+      border: 2px solid #e5e7eb;
+      cursor: pointer;
+      background: #f8f9fa;
+      border-radius: 8px;
+      transition: all 0.2s
+    }
+
+    .auth-tab.active {
+      color: #d2002e;
+      border-color: #d2002e;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(210, 0, 46, 0.1)
+    }
+
+    .auth-tab:hover:not(.active) {
+      background: #f1f5f9;
+      border-color: #cbd5e1
+    }
+
+    .auth-body {
+      padding: 0
+    }
+
+    .auth-section {
+      margin-bottom: 1.25rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05)
+    }
+
+    .auth-section-header {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      padding: .75rem 1rem;
+      font-weight: 600;
+      color: #1e40af;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 0.9rem
+    }
+
+    .auth-section-body {
+      padding: 1rem
+    }
+
+    .auth-row {
+      margin-bottom: .75rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      flex-wrap: wrap
+    }
+
+    .auth-label {
+      min-width: 140px;
+      font-weight: 500;
+      color: #374151;
+      font-size: 0.9rem;
+      flex-shrink: 0
+    }
+
+    .auth-input {
+      flex: 1;
+      min-width: 200px;
+      padding: .625rem .75rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.2s, box-shadow 0.2s
+    }
+
+    .auth-input:focus {
+      outline: none;
+      border-color: #d2002e;
+      box-shadow: 0 0 0 3px rgba(210, 0, 46, 0.1)
+    }
+
+    .auth-input::placeholder {
+      color: #9ca3af
+    }
+
+    .auth-help {
+      color: #6b7280;
+      font-size: 12px;
+      margin-top: .25rem;
+      cursor: help;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0
+    }
+
+    .auth-required {
+      color: #dc2626;
+      font-weight: 600
+    }
+
+    .auth-actions {
+      display: flex;
+      gap: .75rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      flex-wrap: wrap
+    }
+
+    .btn {
+      display: inline-block;
+      padding: .75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      min-width: 120px;
+      text-align: center
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #d2002e 0%, #b10026 100%);
+      color: #fff;
+      box-shadow: 0 2px 4px rgba(210, 0, 46, 0.2)
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #b10026 0%, #9a0020 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(210, 0, 46, 0.3)
+    }
+
+    .btn-secondary {
+      background: #f8f9fa;
+      color: #374151;
+      border: 1px solid #d1d5db;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05)
+    }
+
+    .btn-secondary:hover {
+      background: #f1f5f9;
+      border-color: #9ca3af;
+      transform: translateY(-1px)
+    }
+
+    .auth-close {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      cursor: pointer;
+      color: #6b7280;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      backdrop-filter: blur(4px)
+    }
+
+    .auth-close:hover {
+      background: rgba(255, 255, 255, 1);
+      color: #374151;
+      transform: scale(1.1)
+    }
+
+    .hidden {
+      display: none
+    }
+
+    .auth-checkbox {
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      margin: 1.25rem 0;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb
+    }
+
+    .auth-checkbox input {
+      margin-top: .25rem;
+      width: 16px;
+      height: 16px;
+      accent-color: #d2002e
+    }
+
+    .auth-checkbox label {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: #374151
+    }
+
+    .auth-checkbox a {
+      color: #d2002e;
+      text-decoration: underline;
+      font-weight: 500
+    }
+
+    .auth-captcha {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin: 1.25rem 0;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      flex-wrap: wrap
+    }
+
+    .auth-captcha label {
+      font-size: 0.9rem;
+      color: #374151;
+      font-weight: 500;
+      flex: 1;
+      min-width: 200px
+    }
+
+    .auth-captcha input {
+      width: 120px;
+      padding: .5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      text-align: center;
+      font-weight: 600;
+      letter-spacing: 1px
+    }
+
+    .auth-captcha span {
+      font-weight: 700;
+      color: #d2002e;
+      font-size: 1.1rem;
+      background: #fff;
+      padding: .5rem 1rem;
+      border-radius: 4px;
+      border: 2px solid #d2002e;
+      letter-spacing: 2px
+    }
+
     /* Mobile styles */
     @media (max-width: 768px) {
-      .auth-modal{padding:0.5rem}
-      .auth-dialog{max-width:100%;margin:0;border-radius:8px;max-height:95vh}
-      .auth-content{padding:1rem}
-      .auth-header{margin-bottom:1rem;gap:0.125rem}
-      .auth-tab{padding:.5rem .75rem;font-size:0.85rem}
-      .auth-section{margin-bottom:1rem}
-      .auth-section-header{padding:.5rem .75rem;font-size:0.85rem}
-      .auth-section-body{padding:.75rem}
-      .auth-row{flex-direction:column;align-items:stretch;gap:.5rem;margin-bottom:.5rem}
-      .auth-label{min-width:auto;font-size:0.85rem;margin-bottom:.25rem}
-      .auth-input{min-width:auto;width:100%}
-      .auth-help{width:18px;height:18px;font-size:10px}
-      .auth-actions{flex-direction:column;gap:.5rem;margin-top:1rem}
-      .btn{width:100%;padding:.75rem 1rem;font-size:0.9rem}
-      .auth-close{right:0.75rem;top:0.75rem;width:28px;height:28px}
-      .auth-checkbox{padding:.75rem;margin:1rem 0}
-      .auth-captcha{padding:.75rem;margin:1rem 0;flex-direction:column;align-items:stretch;gap:.5rem}
-      .auth-captcha label{min-width:auto}
-      .auth-captcha input{width:100%;max-width:200px;margin:0 auto}
-      .auth-captcha span{text-align:center;margin:0 auto}
+      .auth-modal {
+        padding: 0.5rem
+      }
+
+      .auth-dialog {
+        max-width: 100%;
+        margin: 0;
+        border-radius: 8px;
+        max-height: 95vh
+      }
+
+      .auth-content {
+        padding: 1rem
+      }
+
+      .auth-header {
+        margin-bottom: 1rem;
+        gap: 0.125rem
+      }
+
+      .auth-tab {
+        padding: .5rem .75rem;
+        font-size: 0.85rem
+      }
+
+      .auth-section {
+        margin-bottom: 1rem
+      }
+
+      .auth-section-header {
+        padding: .5rem .75rem;
+        font-size: 0.85rem
+      }
+
+      .auth-section-body {
+        padding: .75rem
+      }
+
+      .auth-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: .5rem;
+        margin-bottom: .5rem
+      }
+
+      .auth-label {
+        min-width: auto;
+        font-size: 0.85rem;
+        margin-bottom: .25rem
+      }
+
+      .auth-input {
+        min-width: auto;
+        width: 100%
+      }
+
+      .auth-help {
+        width: 18px;
+        height: 18px;
+        font-size: 10px
+      }
+
+      .auth-actions {
+        flex-direction: column;
+        gap: .5rem;
+        margin-top: 1rem
+      }
+
+      .btn {
+        width: 100%;
+        padding: .75rem 1rem;
+        font-size: 0.9rem
+      }
+
+      .auth-close {
+        right: 0.75rem;
+        top: 0.75rem;
+        width: 28px;
+        height: 28px
+      }
+
+      .auth-checkbox {
+        padding: .75rem;
+        margin: 1rem 0
+      }
+
+      .auth-captcha {
+        padding: .75rem;
+        margin: 1rem 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: .5rem
+      }
+
+      .auth-captcha label {
+        min-width: auto
+      }
+
+      .auth-captcha input {
+        width: 100%;
+        max-width: 200px;
+        margin: 0 auto
+      }
+
+      .auth-captcha span {
+        text-align: center;
+        margin: 0 auto
+      }
     }
-    
+
     /* Desktop enhancements */
     @media (min-width: 769px) {
-      .auth-dialog{max-width:700px}
-      .auth-content{padding:2rem}
-      .auth-section{margin-bottom:1.5rem}
-      .auth-section-body{padding:1.25rem}
-      .auth-row{margin-bottom:1rem}
+      .auth-dialog {
+        max-width: 700px
+      }
+
+      .auth-content {
+        padding: 2rem
+      }
+
+      .auth-section {
+        margin-bottom: 1.5rem
+      }
+
+      .auth-section-body {
+        padding: 1.25rem
+      }
+
+      .auth-row {
+        margin-bottom: 1rem
+      }
     }
   </style>
   <!-- <script>
@@ -130,8 +484,8 @@
             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
         </svg>
       </a>
-      <img id="specialButton" class="special-button" style="cursor: pointer; width: 30px; height: 20px;" src="https://lidrekon.ru/images/special.png"
-        alt="ВЕРСИЯ ДЛЯ СЛАБОВИДЯЩИХ" title="ВЕРСИЯ ДЛЯ СЛАБОВИДЯЩИХ" />
+      <img id="specialButton" class="special-button" style="cursor: pointer; width: 30px; height: 20px;"
+        src="https://lidrekon.ru/images/special.png" alt="ВЕРСИЯ ДЛЯ СЛАБОВИДЯЩИХ" title="ВЕРСИЯ ДЛЯ СЛАБОВИДЯЩИХ" />
     </div>
   </div>
 
@@ -140,48 +494,57 @@
   <div id="authModal" class="auth-modal" aria-hidden="true">
     <div class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="authTitle" style="position:relative">
       <button class="auth-close" type="button" data-close-auth aria-label="Закрыть">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+          <path fill-rule="evenodd"
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+            clip-rule="evenodd" />
+        </svg>
       </button>
-      
-      <div class="auth-content">
-      <div class="auth-header">
-        <button class="auth-tab active" type="button" data-auth-tab="login" id="authTitle">Авторизация</button>
-        <button class="auth-tab" type="button" data-auth-tab="register">Регистрация</button>
-      </div>
-        
-      <div class="auth-body">
-        <form id="authLogin" class="auth-form">
-          <div class="auth-row">
-              <label class="auth-label">Email:</label>
-              <input class="auth-input" type="email" name="email" placeholder="Введите email" autocomplete="email" required />
-          </div>
-          <div class="auth-row">
-              <label class="auth-label">Пароль:</label>
-              <input class="auth-input" type="password" name="password" placeholder="Введите пароль" autocomplete="current-password" required />
-          </div>
-          <div class="auth-actions">
-            <button class="btn btn-primary" type="submit">Войти</button>
-              <button class="btn btn-secondary" type="button" data-close-auth>Отмена</button>
-          </div>
-        </form>
 
-        <form id="authRegister" class="auth-form hidden">
+      <div class="auth-content">
+        <div class="auth-header">
+          <button class="auth-tab active" type="button" data-auth-tab="login" id="authTitle">Авторизация</button>
+          <button class="auth-tab" type="button" data-auth-tab="register">Регистрация</button>
+        </div>
+
+        <div class="auth-body">
+          <form id="authLogin" class="auth-form">
+            <div class="auth-row">
+              <label class="auth-label">Email:</label>
+              <input class="auth-input" type="email" name="email" placeholder="Введите email" autocomplete="email"
+                required />
+            </div>
+            <div class="auth-row">
+              <label class="auth-label">Пароль:</label>
+              <input class="auth-input" type="password" name="password" placeholder="Введите пароль"
+                autocomplete="current-password" required />
+            </div>
+            <div class="auth-actions">
+              <button class="btn btn-primary" type="submit">Войти</button>
+              <button class="btn btn-secondary" type="button" data-close-auth>Отмена</button>
+            </div>
+          </form>
+
+          <form id="authRegister" class="auth-form hidden">
             <div class="auth-section">
               <div class="auth-section-header">Данные для входа</div>
               <div class="auth-section-body">
                 <div class="auth-row">
                   <label class="auth-label"><span class="auth-required">*</span> Логин:</label>
-                  <input class="auth-input" type="text" name="login" placeholder="(не менее 6 символов)" autocomplete="username" required />
+                  <input class="auth-input" type="text" name="login" placeholder="(не менее 6 символов)"
+                    autocomplete="username" required />
                   <span class="auth-help">?</span>
                 </div>
                 <div class="auth-row">
                   <label class="auth-label"><span class="auth-required">*</span> Пароль:</label>
-                  <input class="auth-input" type="password" name="password" placeholder="(не менее 6 символов)" autocomplete="new-password" required />
+                  <input class="auth-input" type="password" name="password" placeholder="(не менее 6 символов)"
+                    autocomplete="new-password" required />
                   <span class="auth-help">?</span>
                 </div>
                 <div class="auth-row">
                   <label class="auth-label"><span class="auth-required">*</span> Пароль ещё раз:</label>
-                  <input class="auth-input" type="password" name="password_confirm" placeholder="Повторите пароль" autocomplete="new-password" required />
+                  <input class="auth-input" type="password" name="password_confirm" placeholder="Повторите пароль"
+                    autocomplete="new-password" required />
                   <span class="auth-help">?</span>
                 </div>
               </div>
@@ -192,17 +555,20 @@
               <div class="auth-section-body">
                 <div class="auth-row">
                   <label class="auth-label"><span class="auth-required">*</span> Фамилия:</label>
-                  <input class="auth-input" type="text" name="lastname" placeholder="Введите фамилию" autocomplete="family-name" required />
+                  <input class="auth-input" type="text" name="lastname" placeholder="Введите фамилию"
+                    autocomplete="family-name" required />
                   <span class="auth-help">?</span>
                 </div>
                 <div class="auth-row">
                   <label class="auth-label"><span class="auth-required">*</span> Имя:</label>
-                  <input class="auth-input" type="text" name="firstname" placeholder="Введите имя" autocomplete="given-name" required />
+                  <input class="auth-input" type="text" name="firstname" placeholder="Введите имя"
+                    autocomplete="given-name" required />
                   <span class="auth-help">?</span>
                 </div>
                 <div class="auth-row">
                   <label class="auth-label">Отчество:</label>
-                  <input class="auth-input" type="text" name="middlename" placeholder="Введите отчество" autocomplete="additional-name" />
+                  <input class="auth-input" type="text" name="middlename" placeholder="Введите отчество"
+                    autocomplete="additional-name" />
                   <span class="auth-help">?</span>
                 </div>
               </div>
@@ -218,14 +584,14 @@
                   </select>
                   <span class="auth-help">?</span>
                 </div>
-          <div class="auth-row">
+                <div class="auth-row">
                   <label class="auth-label">Регион:</label>
                   <select class="auth-input" name="region">
                     <option value="moscow">Республика Тыва</option>
                   </select>
                   <span class="auth-help">?</span>
-          </div>
-          <div class="auth-row">
+                </div>
+                <div class="auth-row">
                   <label class="auth-label">Город:</label>
                   <select class="auth-input" name="city">
                     <option value="moscow">Кызыл</option>
@@ -240,12 +606,14 @@
               <div class="auth-section-body">
                 <div class="auth-row">
                   <label class="auth-label"><span class="auth-required">*</span> Электронная почта:</label>
-                  <input class="auth-input" type="email" name="email" placeholder="Введите email" autocomplete="email" required />
+                  <input class="auth-input" type="email" name="email" placeholder="Введите email" autocomplete="email"
+                    required />
                   <span class="auth-help">?</span>
-          </div>
-          <div class="auth-row">
+                </div>
+                <div class="auth-row">
                   <label class="auth-label">Мобильный телефон:</label>
-                  <input class="auth-input" type="tel" name="phone" placeholder="+7 (___) ___-__-__" autocomplete="tel" />
+                  <input class="auth-input" type="tel" name="phone" placeholder="+7 (___) ___-__-__"
+                    autocomplete="tel" />
                   <span class="auth-help">?</span>
                 </div>
               </div>
@@ -253,16 +621,17 @@
 
             <div class="auth-checkbox">
               <input type="checkbox" id="consent" name="consent" required />
-              <label for="consent">Я даю согласие на <a href="#" style="color:#d2002e;text-decoration:underline">обработку персональных данных</a></label>
-          </div>
+              <label for="consent">Я даю согласие на <a href="#"
+                  style="color:#d2002e;text-decoration:underline">обработку персональных данных</a></label>
+            </div>
 
-        
 
-          <div class="auth-actions">
+
+            <div class="auth-actions">
               <button class="btn btn-primary" type="submit">Регистрация</button>
               <button class="btn btn-secondary" type="button" data-close-auth>Очистить форму</button>
-          </div>
-        </form>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -270,14 +639,14 @@
 
   <script type="module" src="/src/main.tsx"></script>
   <script>
-    (function(){
+    (function () {
       var openBtn = document.getElementById('authTrigger');
       var modal = document.getElementById('authModal');
-      if(!openBtn || !modal){return}
+      if (!openBtn || !modal) { return }
       var loginForm = document.getElementById('authLogin');
       var registerForm = document.getElementById('authRegister');
       var tabs = modal.querySelectorAll('[data-auth-tab]');
-      
+
       // User type selection
       var userTypeSelection = document.createElement('div');
       userTypeSelection.innerHTML = `
@@ -299,24 +668,24 @@
           </div>
         </div>
       `;
-      
-      function open(){ 
-        modal.classList.add('show'); 
-        document.body.style.overflow='hidden';
+
+      function open() {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
         // Show user type selection first
         var authContent = modal.querySelector('.auth-content');
-        if(authContent) {
+        if (authContent) {
           authContent.innerHTML = '';
           authContent.appendChild(userTypeSelection);
         }
       }
-      
-      function close(){ 
-        modal.classList.remove('show'); 
-        document.body.style.overflow=''; 
+
+      function close() {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
         // Reset to original state
         var authContent = modal.querySelector('.auth-content');
-        if(authContent) {
+        if (authContent) {
           authContent.innerHTML = `
             <div class="auth-header">
               <button class="auth-tab active" type="button" data-auth-tab="login" id="authTitle">Авторизация</button>
@@ -435,116 +804,116 @@
           attachFormListeners();
         }
       }
-      
+
       function attachFormListeners() {
         var loginForm = document.getElementById('authLogin');
         var registerForm = document.getElementById('authRegister');
         var tabs = modal.querySelectorAll('[data-auth-tab]');
-        
-      tabs.forEach(function(tab){
-        tab.addEventListener('click', function(){
-          tabs.forEach(function(t){ t.classList.remove('active'); });
-          tab.classList.add('active');
-          var isLogin = tab.getAttribute('data-auth-tab') === 'login';
-          if(loginForm && registerForm){
-            if(isLogin){ loginForm.classList.remove('hidden'); registerForm.classList.add('hidden'); }
-            else { registerForm.classList.remove('hidden'); loginForm.classList.add('hidden'); }
-          }
+
+        tabs.forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            tabs.forEach(function (t) { t.classList.remove('active'); });
+            tab.classList.add('active');
+            var isLogin = tab.getAttribute('data-auth-tab') === 'login';
+            if (loginForm && registerForm) {
+              if (isLogin) { loginForm.classList.remove('hidden'); registerForm.classList.add('hidden'); }
+              else { registerForm.classList.remove('hidden'); loginForm.classList.add('hidden'); }
+            }
+          });
         });
-      });
-        
-      // Handle form submissions
-      if(loginForm){ 
-        loginForm.addEventListener('submit', async function(e){ 
-          e.preventDefault(); 
-          const formData = new FormData(loginForm);
-          const loginData = {
-            email: formData.get('email'),
-            password: formData.get('password')
-          };
-          
-          try {
-            const response = await fetch('http://localhost:3001/api/auth/login', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(loginData)
-            });
-            
-            if (!response.ok) {
-              const errorData = await response.json();
-              throw new Error(errorData.message || 'Ошибка авторизации');
+
+        // Handle form submissions
+        if (loginForm) {
+          loginForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const formData = new FormData(loginForm);
+            const loginData = {
+              email: formData.get('email'),
+              password: formData.get('password')
+            };
+
+            try {
+              const response = await fetch('http://localhost:3001/api/auth/login', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(loginData)
+              });
+
+              if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Ошибка авторизации');
+              }
+
+              const result = await response.json();
+              localStorage.setItem('auth_token', result.access_token);
+              localStorage.setItem('user_data', JSON.stringify(result.user));
+              alert('Авторизация успешна!');
+              close();
+            } catch (error) {
+              alert('Ошибка авторизации: ' + error.message);
             }
-            
-            const result = await response.json();
-            localStorage.setItem('auth_token', result.access_token);
-            localStorage.setItem('user_data', JSON.stringify(result.user));
-            alert('Авторизация успешна!');
-            close();
-          } catch (error) {
-            alert('Ошибка авторизации: ' + error.message);
-          }
-        }); 
-      }
-      
-      if(registerForm){ 
-        registerForm.addEventListener('submit', async function(e){ 
-          e.preventDefault(); 
-          const formData = new FormData(registerForm);
-          const registerData = {
-            email: formData.get('email'),
-            password: formData.get('password'),
-            name: formData.get('firstname') + ' ' + formData.get('lastname'),
-            phone: formData.get('phone'),
-            role: 'patient', // Default to patient
-            lastname: formData.get('lastname'),
-            firstname: formData.get('firstname'),
-            middlename: formData.get('middlename'),
-            country: formData.get('country'),
-            region: formData.get('region'),
-            city: formData.get('city')
-          };
-          
-          try {
-            const response = await fetch('http://localhost:3001/api/auth/register', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(registerData)
-            });
-            
-            if (!response.ok) {
-              const errorData = await response.json();
-              throw new Error(errorData.message || 'Ошибка регистрации');
+          });
+        }
+
+        if (registerForm) {
+          registerForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const formData = new FormData(registerForm);
+            const registerData = {
+              email: formData.get('email'),
+              password: formData.get('password'),
+              name: formData.get('firstname') + ' ' + formData.get('lastname'),
+              phone: formData.get('phone'),
+              role: 'patient', // Default to patient
+              lastname: formData.get('lastname'),
+              firstname: formData.get('firstname'),
+              middlename: formData.get('middlename'),
+              country: formData.get('country'),
+              region: formData.get('region'),
+              city: formData.get('city')
+            };
+
+            try {
+              const response = await fetch('http://localhost:3001/api/auth/register', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(registerData)
+              });
+
+              if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Ошибка регистрации');
+              }
+
+              const result = await response.json();
+              localStorage.setItem('auth_token', result.access_token);
+              localStorage.setItem('user_data', JSON.stringify(result.user));
+              alert('Регистрация успешна!');
+              close();
+            } catch (error) {
+              alert('Ошибка регистрации: ' + error.message);
             }
-            
-            const result = await response.json();
-            localStorage.setItem('auth_token', result.access_token);
-            localStorage.setItem('user_data', JSON.stringify(result.user));
-            alert('Регистрация успешна!');
-            close();
-          } catch (error) {
-            alert('Ошибка регистрации: ' + error.message);
-          }
-        }); 
+          });
+        }
       }
-      }
-      
-      openBtn.addEventListener('click', function(e){ e.preventDefault(); open(); });
-      modal.addEventListener('click', function(e){ if(e.target === modal){ close(); } });
-      modal.querySelectorAll('[data-close-auth]').forEach(function(btn){ btn.addEventListener('click', close); });
-      document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('show')){ close(); }});
-      
+
+      openBtn.addEventListener('click', function (e) { e.preventDefault(); open(); });
+      modal.addEventListener('click', function (e) { if (e.target === modal) { close(); } });
+      modal.querySelectorAll('[data-close-auth]').forEach(function (btn) { btn.addEventListener('click', close); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('show')) { close(); } });
+
       // User type selection
-      document.addEventListener('click', function(e) {
-        if(e.target && e.target.id === 'selectUserType') {
+      document.addEventListener('click', function (e) {
+        if (e.target && e.target.id === 'selectUserType') {
           var selectedType = document.querySelector('input[name="userType"]:checked');
-          if(selectedType) {
+          if (selectedType) {
             // Show the main auth form
             var authContent = modal.querySelector('.auth-content');
-            if(authContent) {
+            if (authContent) {
               authContent.innerHTML = `
                 <div class="auth-header">
                   <button class="auth-tab active" type="button" data-auth-tab="login" id="authTitle">Авторизация</button>
@@ -665,6 +1034,17 @@
         }
       });
     })();
+  </script>
+
+  <script id="archimed-script" strategy='beforeInteractive'>
+
+    (function (w, d, s, h, i, js, fjs) {
+      js = d.createElement(s);
+      fjs = d.getElementsByTagName(s)[0];
+      js.src = h + i;
+      js.async = 1;
+      fjs.parentNode.insertBefore(js, fjs);
+    }(window, document, 'script', 'https://widget.archimed-soft.ru/init/', '8b376fec94c62b15cfd228227a24eb95'));
   </script>
 </body>
 
