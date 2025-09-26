@@ -252,7 +252,9 @@ export default function Footer() {
               ИМЕЮТСЯ ПРОТИВОПОКАЗАНИЯ, НЕОБХОДИМА КОНСУЛЬТАЦИЯ СПЕЦИАЛИСТА
             </p>
             <p className="text-gray-200 text-xs sm:text-sm">© 2025 КЛИНИКА АЛДАН. ВСЕ ПРАВА ЗАЩИЩЕНЫ.</p>
-            <p className="text-gray-200 text-xs sm:text-sm">Разработано Lana Soft</p>
+            <p className="text-gray-200 text-xs sm:text-sm">
+              <a className="text-gray-200" href="https://lana-soft.ru/">Разработано Lana Soft</a>
+              </p>
           </div>
         </div>
       </div>
