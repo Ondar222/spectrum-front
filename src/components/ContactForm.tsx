@@ -30,12 +30,20 @@ export default function ContactForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!formData.agreeToTerms || !formData.agreeToSiteConsent) {
+
+    // Проверка обязательного согласия (один чекбокс)
+    if (!formData.agreeToTerms) {
       setValidationError('Пожалуйста, примите обязательные согласия');
       return;
     }
-    
+
+    // Базовая валидация телефона: минимум 10 цифр
+    const phoneDigits = formData.phone.replace(/\D/g, '');
+    if (phoneDigits.length < 10 || phoneDigits.length > 12) {
+      setValidationError('Введите корректный номер телефона');
+      return;
+    }
+
     setValidationError(null);
     setIsSubmitting(true);
 
