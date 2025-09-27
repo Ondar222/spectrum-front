@@ -27,6 +27,7 @@ export default function GiftCertificatesPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string>("");
   const [fieldErrors, setFieldErrors] = useState<{ [key: string]: string }>({});
+  const [useCustomAmount, setUseCustomAmount] = useState(false);
 
   // Определяем текущую среду
   const isProduction = import.meta.env.PROD || false;
@@ -45,7 +46,9 @@ export default function GiftCertificatesPage() {
     const { name, value, type } = e.target as HTMLInputElement;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "amount" ? Number.parseInt(value) : (type === 'checkbox' ? (e.target as HTMLInputElement).checked : value),
+      [name]: name === "amount"
+        ? Number.isNaN(Number.parseInt(value)) ? prev.amount : Number.parseInt(value)
+        : (type === 'checkbox' ? (e.target as HTMLInputElement).checked : value),
     }));
 
     // Очищаем ошибку поля при изменении
@@ -61,6 +64,15 @@ export default function GiftCertificatesPage() {
   const validateForm = (): { isValid: boolean; errors: string[] } => {
     const errors: string[] = [];
     const fieldErrors: { [key: string]: string } = {};
+
+    // Проверка суммы сертификата
+    const minAmount = 1000;
+    const maxAmount = 50000;
+    if (!formData.amount || Number.isNaN(formData.amount)) {
+      errors.push("Укажите сумму сертификата");
+    } else if (formData.amount < minAmount || formData.amount > maxAmount) {
+      errors.push(`Сумма должна быть от ${minAmount.toLocaleString('ru-RU')} до ${maxAmount.toLocaleString('ru-RU')} ₽`);
+    }
 
     if (!formData.recipientName.trim()) {
       errors.push("Имя получателя обязательно");
@@ -168,6 +180,9 @@ export default function GiftCertificatesPage() {
     { value: 10000, label: "10 000 ₽" },
     { value: 15000, label: "15 000 ₽" },
     { value: 20000, label: "20 000 ₽" },
+    { value: 30000, label: "30 000 ₽" },
+    { value: 40000, label: "40 000 ₽" },
+    { value: 50000, label: "50 000 ₽" },
   ];
 
   if (isSubmitted) {
@@ -411,14 +426,15 @@ export default function GiftCertificatesPage() {
                     <button
                       key={amount.value}
                       type="button"
-                      onClick={() =>
+                      onClick={() => {
+                        setUseCustomAmount(false);
                         setFormData((prev) => ({
                           ...prev,
                           amount: amount.value,
-                        }))
-                      }
+                        }));
+                      }}
                       className={`p-3 rounded-lg border-2 text-center transition-colors ${
-                        formData.amount === amount.value
+                        !useCustomAmount && formData.amount === amount.value
                           ? "border-primary bg-primary text-white"
                           : "border-gray-300 hover:border-primary"
                       }`}
@@ -426,6 +442,41 @@ export default function GiftCertificatesPage() {
                       {amount.label}
                     </button>
                   ))}
+                </div>
+
+                {/* Другая сумма */}
+                <div className="mt-3">
+                  <label className="inline-flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      checked={useCustomAmount}
+                      onChange={(e) => setUseCustomAmount(e.target.checked)}
+                      className="h-4 w-4 text-primary focus:ring-primary rounded border-gray-300"
+                    />
+                    Другая сумма
+                  </label>
+                  {useCustomAmount && (
+                    <div className="mt-2 flex items-center gap-3">
+                      <input
+                        type="number"
+                        inputMode="numeric"
+                        min={1000}
+                        max={50000}
+                        step={100}
+                        value={formData.amount || 1000}
+                        onChange={(e) => {
+                          const next = Number.parseInt(e.target.value);
+                          setFormData((prev) => ({
+                            ...prev,
+                            amount: Number.isNaN(next) ? prev.amount : next,
+                          }));
+                        }}
+                        className="w-40 px-4 py-2 border rounded focus:outline-none focus:border-primary border-gray-300"
+                        placeholder="Напр.: 7000"
+                      />
+                      <span className="text-sm text-gray-500">₽ (от 1 000 до 50 000)</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
