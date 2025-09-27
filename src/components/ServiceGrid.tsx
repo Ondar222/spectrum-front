@@ -271,7 +271,7 @@ export default function ServiceGrid() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
           {visible.map((service, index) => (
             <Link
-              key={service.id}
+              key={service.link}
               to={service.link}
               className={`${service.color} ${service.hoverColor} text-white p-2 sm:p-3 flex flex-col items-center text-center rounded-md sm:rounded-lg shadow-sm overflow-hidden group relative transition-all duration-200 ease-in-out hover:shadow-md`}
               style={{ "--delay": `${index * 0.02}s` } as React.CSSProperties}
