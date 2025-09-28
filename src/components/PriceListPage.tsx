@@ -20,7 +20,7 @@ export default function PriceListPage() {
     isOpen: false
   });
   const [currentPage, setCurrentPage] = useState<{ [groupId: number]: number }>({});
-  const [itemsPerPage] = useState(7);
+  const [itemsPerPage, setItemsPerPage] = useState(7);
   const [popularServices, setPopularServices] = useState<ApiService[]>([]);
 
   useEffect(() => {
@@ -211,25 +211,49 @@ export default function PriceListPage() {
     resetPagination();
   }, [selectedGroup, selectedType, gynFilter, searchTerm]);
 
+  // Adaptive items per page: show more services on smaller screens and for lab analyses
+  useEffect(() => {
+    const computeItemsPerPage = () => {
+      if (typeof window === 'undefined') return;
+      const width = window.innerWidth;
+      const isMobile = width < 640; // Tailwind sm breakpoint
+      const isTablet = width >= 640 && width < 1024; // sm..lg
+
+      let per = 7;
+      if (isMobile) {
+        per = selectedType === 'lab' ? 18 : 12;
+      } else if (isTablet) {
+        per = selectedType === 'lab' ? 16 : 10;
+      } else {
+        per = selectedType === 'lab' ? 14 : 9;
+      }
+      setItemsPerPage(per);
+    };
+
+    computeItemsPerPage();
+    window.addEventListener('resize', computeItemsPerPage);
+    return () => window.removeEventListener('resize', computeItemsPerPage);
+  }, [selectedType]);
+
   // Show instant skeleton to avoid perceived lag
   if (isLoading && serviceGroups.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12">
+      <div className="min-h-screen bg-gray-50 py-6 md:py-12">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-dark mb-4">Прайс-лист клиники</h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">Актуальные цены на все услуги клиники Алдан.</p>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-dark mb-3 md:mb-4">Прайс-лист клиники</h1>
+            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">Актуальные цены на все услуги клиники Алдан.</p>
           </div>
           <div className="grid gap-6">
             {Array.from({ length: 4 }).map((_, i) => (
               <div key={i} className="bg-white rounded-lg shadow-lg overflow-hidden animate-pulse">
-                <div className="bg-primary/70 h-14" />
+                <div className="bg-primary/70 h-12 md:h-14" />
                 <div className="divide-y divide-gray-100">
                   {Array.from({ length: 3 }).map((__, j) => (
-                    <div key={j} className="p-6 space-y-3">
-                      <div className="h-5 bg-gray-200 rounded w-2/3" />
-                      <div className="h-4 bg-gray-200 rounded w-1/3" />
-                      <div className="h-8 bg-gray-200 rounded w-24" />
+                    <div key={j} className="p-4 md:p-6 space-y-2 md:space-y-3">
+                      <div className="h-4 md:h-5 bg-gray-200 rounded w-2/3" />
+                      <div className="h-3 md:h-4 bg-gray-200 rounded w-1/3" />
+                      <div className="h-7 md:h-8 bg-gray-200 rounded w-24" />
                     </div>
                   ))}
                 </div>
@@ -252,12 +276,12 @@ export default function PriceListPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gray-50 py-6 md:py-12">
       <div className="container mx-auto px-4">
         {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-dark mb-4">Прайс-лист клиники</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        <div className="text-center mb-8 md:mb-12">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-dark mb-3 md:mb-4">Прайс-лист клиники</h1>
+          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
             Актуальные цены на все услуги клиники Алдан. Выберите интересующее вас направление 
             или воспользуйтесь поиском для быстрого нахождения нужной услуги.
           </p>
@@ -265,28 +289,28 @@ export default function PriceListPage() {
 
         {/* Popular Services Section */}
         {popularServices.length > 0 && (
-          <div className="mb-12">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-dark mb-4">Популярные услуги</h2>
-              <p className="text-lg text-gray-600">Самые востребованные услуги по доступным ценам</p>
+          <div className="mb-8 md:mb-12">
+            <div className="text-center mb-6 md:mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-dark mb-3 md:mb-4">Популярные услуги</h2>
+              <p className="text-sm sm:text-base text-gray-600">Самые востребованные услуги по доступным ценам</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {popularServices.map((service) => (
-                <div key={service.id} className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 p-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-lg font-semibold text-dark line-clamp-2">{service.name}</h3>
+                <div key={service.id} className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 p-4 md:p-6">
+                  <div className="flex justify-between items-start mb-3 md:mb-4">
+                    <h3 className="text-base md:text-lg font-semibold text-dark line-clamp-2">{service.name}</h3>
                     <div className="text-right ml-4">
-                      <div className="text-2xl font-bold text-primary">
+                      <div className="text-xl md:text-2xl font-bold text-primary">
                         {service.base_cost.toLocaleString()} ₽
                       </div>
                       {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
-                        <div className="text-sm text-gray-500">
+                        <div className="text-xs md:text-sm text-gray-500">
                           Срочно: {service.cito_cost.toLocaleString()} ₽
                         </div>
                       )}
                     </div>
                   </div>
-                  <div className="text-sm text-gray-600 mb-4">
+                  <div className="text-xs md:text-sm text-gray-600 mb-3 md:mb-4">
                     <div className="flex items-center mb-2">
                       <svg className="w-4 h-4 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -302,7 +326,7 @@ export default function PriceListPage() {
                   </div>
                   <button
                     onClick={() => setAppointmentModal({ isOpen: true, service })}
-                    className="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-primaryDark transition-colors duration-200 font-medium"
+                    className="w-full bg-primary text-white py-2 px-3 md:px-4 rounded-lg hover:bg-primaryDark transition-colors duration-200 font-medium text-sm md:text-base"
                   >
                     Записаться
                   </button>
@@ -313,11 +337,11 @@ export default function PriceListPage() {
         )}
 
         {/* Search and Filter */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <div className="bg-white rounded-lg shadow-lg p-4 md:p-6 mb-6 md:mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Search */}
             <div>
-              <label htmlFor="search" className="block text-gray-700 mb-2 font-medium">Поиск услуг</label>
+              <label htmlFor="search" className="block text-gray-700 mb-1 md:mb-2 font-medium text-sm md:text-base">Поиск услуг</label>
               <div className="relative">
                 <input
                   type="text"
@@ -325,9 +349,9 @@ export default function PriceListPage() {
                   placeholder="Введите название услуги..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-4 py-2 pl-10 border border-gray-300 rounded focus:outline-none focus:border-primary"
+                  className="w-full px-3 md:px-4 py-2 pl-9 md:pl-10 border border-gray-300 rounded focus:outline-none focus:border-primary text-sm md:text-base"
                 />
-                <svg className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="absolute left-3 top-2.5 h-4 w-4 md:h-5 md:w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
@@ -335,12 +359,12 @@ export default function PriceListPage() {
 
             {/* Group Filter */}
             <div>
-              <label htmlFor="group" className="block text-gray-700 mb-2 font-medium">Категория</label>
+              <label htmlFor="group" className="block text-gray-700 mb-1 md:mb-2 font-medium text-sm md:text-base">Категория</label>
               <select
                 id="group"
                 value={selectedGroup}
                 onChange={(e) => setSelectedGroup(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary"
+                className="w-full px-3 md:px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary text-sm md:text-base"
               >
                 <option value="all">Все категории</option>
                 {serviceGroups.map(group => (
@@ -352,7 +376,7 @@ export default function PriceListPage() {
             </div>
             {/* Type Filter */}
             <div>
-              <label className="block text-gray-700 mb-2 font-medium">Тип</label>
+              <label className="block text-gray-700 mb-1 md:mb-2 font-medium text-sm md:text-base">Тип</label>
               <div className="flex flex-wrap gap-2">
                 {[
                   { key: 'all', label: 'Все' },
@@ -363,7 +387,7 @@ export default function PriceListPage() {
                     key={opt.key}
                     type="button"
                     onClick={() => setSelectedType(opt.key as any)}
-                    className={`px-3 py-2 rounded-md text-sm border ${selectedType===opt.key ? 'bg-primary text-white border-primary' : 'bg-white text-gray-700 border-gray-300 hover:border-primary'}`}
+                    className={`px-2.5 md:px-3 py-1.5 md:py-2 rounded-md text-sm border ${selectedType===opt.key ? 'bg-primary text-white border-primary' : 'bg-white text-gray-700 border-gray-300 hover:border-primary'}`}
                   >
                     {opt.label}
                   </button>
@@ -387,9 +411,9 @@ export default function PriceListPage() {
             filteredGroups.map(group => (
               <div key={group.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
                 {/* Group Header */}
-                <div className="bg-primary text-white px-6 py-4">
-                  <h2 className="text-xl font-semibold">{group.name}</h2>
-                  <p className="text-primaryLight text-sm mt-1">
+                <div className="bg-primary text-white px-4 py-3 md:px-6 md:py-4">
+                  <h2 className="text-lg md:text-xl font-semibold">{group.name}</h2>
+                  <p className="text-primaryLight text-xs md:text-sm mt-1">
                     {(() => {
                       const filteredServices = group.services.filter(service => 
                         !isGynecologyGroup(group) || gynFilter==='all' || getGynSubcategory(service)===gynFilter
@@ -413,7 +437,7 @@ export default function PriceListPage() {
                 {/* Services in Group */}
                 <div className="divide-y divide-gray-200">
                   {isGynecologyGroup(group) && (
-                    <div className="px-6 py-4 bg-gray-50 border-b border-gray-200 flex flex-wrap gap-2">
+                    <div className="px-4 py-3 md:px-6 md:py-4 bg-gray-50 border-b border-gray-200 flex flex-wrap gap-2">
                       {[
                         { key: 'all', label: 'Все' },
                         { key: 'consult', label: 'Консультации' },
@@ -426,7 +450,7 @@ export default function PriceListPage() {
                           key={opt.key}
                           type="button"
                           onClick={() => setGynFilter(opt.key as any)}
-                          className={`px-3 py-1.5 rounded-md text-sm border ${gynFilter===opt.key ? 'bg-primary text-white border-primary' : 'bg-white text-gray-700 border-gray-300 hover:border-primary'}`}
+                          className={`px-2.5 md:px-3 py-1.5 rounded-md text-sm border ${gynFilter===opt.key ? 'bg-primary text-white border-primary' : 'bg-white text-gray-700 border-gray-300 hover:border-primary'}`}
                         >
                           {opt.label}
                         </button>
@@ -443,23 +467,23 @@ export default function PriceListPage() {
                     return (
                       <>
                         {paginatedServices.map(service => (
-                          <div key={service.id} className="p-6 hover:bg-gray-50 transition-colors min-h-[200px] flex flex-col">
+                          <div key={service.id} className="p-4 md:p-6 hover:bg-gray-50 transition-colors flex flex-col">
                             <div className="flex-grow">
-                              <div className="flex items-start justify-between mb-3">
-                                <h3 className="text-lg font-semibold text-dark leading-tight pr-2">{service.name}</h3>
+                              <div className="flex items-start justify-between mb-2 sm:mb-3">
+                                <h3 className="text-base md:text-lg font-semibold text-dark leading-tight pr-2 line-clamp-2">{service.name}</h3>
                                 {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
-                                  <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium flex-shrink-0">
+                                  <span className="bg-orange-100 text-orange-800 px-2 md:px-3 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-medium flex-shrink-0">
                                     Срочно
                                   </span>
                                 )}
                               </div>
                               {service.altname && service.altname !== service.name && (
-                                <p className="text-gray-600 mb-3 text-sm italic leading-relaxed">{service.altname}</p>
+                                <p className="text-gray-600 mb-2 md:mb-3 text-sm italic leading-relaxed hidden sm:block">{service.altname}</p>
                               )}
                               {service.info && (
-                                <p className="text-gray-600 mb-4 text-sm leading-relaxed line-clamp-3">{service.info}</p>
+                                <p className="text-gray-600 mb-3 md:mb-4 text-sm leading-relaxed line-clamp-2 md:line-clamp-3 hidden sm:block">{service.info}</p>
                               )}
-                              <div className="flex items-center space-x-4 text-sm text-gray-500 mb-4">
+                              <div className={`${selectedType === 'lab' ? 'hidden sm:flex' : 'flex'} items-center space-x-3 md:space-x-4 text-xs md:text-sm text-gray-500 mb-3 md:mb-4`}>
                                 <span className="flex items-center">
                                   <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -479,18 +503,18 @@ export default function PriceListPage() {
                             <div className="mt-auto pt-4 border-t border-gray-200">
                               <div className="flex items-center justify-between">
                                 <div>
-                                  <div className="text-2xl font-bold text-primary mb-1">
+                                  <div className="text-xl md:text-2xl font-bold text-primary mb-1">
                                     {formatPrice(getServicePrice(service))}
                                   </div>
                                   {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
-                                    <div className="text-sm text-gray-500">
+                                    <div className="text-xs md:text-sm text-gray-500">
                                       Обычно: {formatPrice(service.base_cost)}
                                     </div>
                                   )}
                                 </div>
                                 <button 
                                   onClick={() => handleAppointmentClick(service)}
-                                  className="bg-primary hover:bg-primaryDark text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                                  className="bg-primary hover:bg-primaryDark text-white px-4 md:px-6 py-2 rounded-lg font-medium transition-colors text-sm md:text-base"
                                 >
                                   Записаться
                                 </button>
@@ -501,16 +525,16 @@ export default function PriceListPage() {
                         
                         {/* Пагинация - показываем если больше 7 услуг */}
                         {totalPages > 1 && (
-                          <div className="px-6 py-4 bg-gray-50 border-t border-gray-200">
+                          <div className="px-4 py-3 md:px-6 md:py-4 bg-gray-50 border-t border-gray-200">
                             <div className="flex items-center justify-between">
-                              <div className="text-sm text-gray-600">
+                              <div className="text-xs md:text-sm text-gray-600">
                                 Показано {((getCurrentPage(group.id) - 1) * itemsPerPage) + 1}-{Math.min(getCurrentPage(group.id) * itemsPerPage, filteredServices.length)} из {filteredServices.length}
                               </div>
                               <div className="flex items-center space-x-2">
                                 <button
                                   onClick={() => setPage(group.id, getCurrentPage(group.id) - 1)}
                                   disabled={getCurrentPage(group.id) === 1}
-                                  className="px-4 py-2 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+                                  className="px-3 md:px-4 py-1.5 md:py-2 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
                                 >
                                   ← Назад
                                 </button>
@@ -585,14 +609,14 @@ export default function PriceListPage() {
                                 </div>
                                 
                                 {/* Простой индикатор для мобильных */}
-                                <span className="md:hidden px-3 py-1 text-sm bg-primary text-white rounded">
+                                <span className="md:hidden px-3 py-1 text-xs bg-primary text-white rounded">
                                   {getCurrentPage(group.id)} из {totalPages}
                                 </span>
                                 
                                 <button
                                   onClick={() => setPage(group.id, getCurrentPage(group.id) + 1)}
                                   disabled={getCurrentPage(group.id) === totalPages}
-                                  className="px-4 py-2 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+                                  className="px-3 md:px-4 py-1.5 md:py-2 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
                                 >
                                   Вперед →
                                 </button>
@@ -610,12 +634,12 @@ export default function PriceListPage() {
         </div>
 
         {/* Additional Information */}
-        <div className="mt-12 bg-white rounded-lg shadow-lg p-8">
-          <h2 className="text-2xl font-semibold text-dark mb-6">Важная информация</h2>
+        <div className="mt-8 md:mt-12 bg-white rounded-lg shadow-lg p-6 md:p-8">
+          <h2 className="text-xl md:text-2xl font-semibold text-dark mb-4 md:mb-6">Важная информация</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h3 className="text-lg font-semibold text-dark mb-3">Оплата услуг</h3>
-              <ul className="space-y-2 text-gray-600">
+              <h3 className="text-base md:text-lg font-semibold text-dark mb-2 md:mb-3">Оплата услуг</h3>
+              <ul className="space-y-1.5 md:space-y-2 text-gray-600 text-sm md:text-base">
                 <li>• Наличными в кассе клиники</li>
                 <li>• Банковскими картами</li>
                 <li>• Через онлайн-банкинг</li>
@@ -623,8 +647,8 @@ export default function PriceListPage() {
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-dark mb-3">Запись на прием</h3>
-              <ul className="space-y-2 text-gray-600">
+              <h3 className="text-base md:text-lg font-semibold text-dark mb-2 md:mb-3">Запись на прием</h3>
+              <ul className="space-y-1.5 md:space-y-2 text-gray-600 text-sm md:text-base">
                 <li>• По телефону: +7 (923) 317-60-60</li>
                 <li>• Через форму на сайте</li>
                 <li>• В личном кабинете пациента</li>
