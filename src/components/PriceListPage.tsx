@@ -22,6 +22,8 @@ export default function PriceListPage() {
   const [currentPage, setCurrentPage] = useState<{ [groupId: number]: number }>({});
   const [itemsPerPage, setItemsPerPage] = useState(7);
   const [popularServices, setPopularServices] = useState<ApiService[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
+  const [expandedGroups, setExpandedGroups] = useState<{ [groupId: number]: boolean }>({});
 
   useEffect(() => {
     const loadServices = async () => {
@@ -235,6 +237,18 @@ export default function PriceListPage() {
     return () => window.removeEventListener('resize', computeItemsPerPage);
   }, [selectedType]);
 
+  // Track mobile breakpoint for accordion behavior
+  useEffect(() => {
+    const handleResize = () => setIsMobile(typeof window !== 'undefined' && window.innerWidth < 768); // md breakpoint
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const toggleGroup = (groupId: number) => {
+    setExpandedGroups(prev => ({ ...prev, [groupId]: !prev[groupId] }));
+  };
+
   // Show instant skeleton to avoid perceived lag
   if (isLoading && serviceGroups.length === 0) {
     return (
@@ -411,9 +425,16 @@ export default function PriceListPage() {
             filteredGroups.map(group => (
               <div key={group.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
                 {/* Group Header */}
-                <div className="bg-primary text-white px-4 py-3 md:px-6 md:py-4">
-                  <h2 className="text-lg md:text-xl font-semibold">{group.name}</h2>
-                  <p className="text-primaryLight text-xs md:text-sm mt-1">
+                <div
+                  className="bg-primary text-white px-4 py-3 md:px-6 md:py-4 flex items-center justify-between"
+                  onClick={() => {
+                    if (isMobile) toggleGroup(group.id);
+                  }}
+                  role="button"
+                >
+                  <div>
+                    <h2 className="text-lg md:text-xl font-semibold">{group.name}</h2>
+                    <p className="text-primaryLight text-xs md:text-sm mt-1">
                     {(() => {
                       const filteredServices = group.services.filter(service => 
                         !isGynecologyGroup(group) || gynFilter==='all' || getGynSubcategory(service)===gynFilter
@@ -431,10 +452,21 @@ export default function PriceListPage() {
                       return `${filteredServices.length} ${filteredServices.length === 1 ? 'услуга' : 
                              filteredServices.length < 5 ? 'услуги' : 'услуг'}`;
                     })()}
-                  </p>
+                    </p>
+                  </div>
+                  {/* Chevron for mobile accordion */}
+                  <svg
+                    className={`md:hidden w-5 h-5 transition-transform ${expandedGroups[group.id] ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
                 </div>
 
-                {/* Services in Group */}
+                {/* Services in Group (accordion content) */}
+                {(!isMobile || expandedGroups[group.id]) && (
                 <div className="divide-y divide-gray-200">
                   {isGynecologyGroup(group) && (
                     <div className="px-4 py-3 md:px-6 md:py-4 bg-gray-50 border-b border-gray-200 flex flex-wrap gap-2">
@@ -530,65 +562,46 @@ export default function PriceListPage() {
                               <div className="text-xs md:text-sm text-gray-600">
                                 Показано {((getCurrentPage(group.id) - 1) * itemsPerPage) + 1}-{Math.min(getCurrentPage(group.id) * itemsPerPage, filteredServices.length)} из {filteredServices.length}
                               </div>
-                              <div className="flex items-center space-x-2">
+                              {/* Desktop pagination */}
+                              <div className="hidden md:flex items-center space-x-2">
                                 <button
                                   onClick={() => setPage(group.id, getCurrentPage(group.id) - 1)}
                                   disabled={getCurrentPage(group.id) === 1}
-                                  className="px-3 md:px-4 py-1.5 md:py-2 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+                                  className="px-4 py-2 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
                                 >
                                   ← Назад
                                 </button>
-                                
-                                {/* Номера страниц для десктопа */}
-                                <div className="hidden md:flex items-center space-x-1">
+                                <div className="flex items-center space-x-1">
                                   {(() => {
                                     const current = getCurrentPage(group.id);
                                     const total = totalPages;
-                                    const pages = [];
-                                    
-                                    // Показываем максимум 5 страниц
+                                    const pages = [] as React.ReactNode[];
                                     let start = Math.max(1, current - 2);
                                     let end = Math.min(total, start + 4);
-                                    
-                                    // Корректируем start если end достиг максимума
                                     if (end - start < 4) {
                                       start = Math.max(1, end - 4);
                                     }
-                                    
-                                    // Первая страница
                                     if (start > 1) {
                                       pages.push(
                                         <button
                                           key={1}
                                           onClick={() => setPage(group.id, 1)}
                                           className="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 transition-colors"
-                                        >
-                                          1
-                                        </button>
+                                        >1</button>
                                       );
                                       if (start > 2) {
                                         pages.push(<span key="ellipsis1" className="px-2 text-gray-500">...</span>);
                                       }
                                     }
-                                    
-                                    // Страницы в диапазоне
                                     for (let i = start; i <= end; i++) {
                                       pages.push(
                                         <button
                                           key={i}
                                           onClick={() => setPage(group.id, i)}
-                                          className={`px-3 py-1 text-sm border rounded transition-colors ${
-                                            i === current
-                                              ? 'bg-primary text-white border-primary'
-                                              : 'border-gray-300 hover:bg-gray-100'
-                                          }`}
-                                        >
-                                          {i}
-                                        </button>
+                                          className={`px-3 py-1 text-sm border rounded transition-colors ${i === current ? 'bg-primary text-white border-primary' : 'border-gray-300 hover:bg-gray-100'}`}
+                                        >{i}</button>
                                       );
                                     }
-                                    
-                                    // Последняя страница
                                     if (end < total) {
                                       if (end < total - 1) {
                                         pages.push(<span key="ellipsis2" className="px-2 text-gray-500">...</span>);
@@ -598,28 +611,34 @@ export default function PriceListPage() {
                                           key={total}
                                           onClick={() => setPage(group.id, total)}
                                           className="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 transition-colors"
-                                        >
-                                          {total}
-                                        </button>
+                                        >{total}</button>
                                       );
                                     }
-                                    
                                     return pages;
                                   })()}
                                 </div>
-                                
-                                {/* Простой индикатор для мобильных */}
-                                <span className="md:hidden px-3 py-1 text-xs bg-primary text-white rounded">
-                                  {getCurrentPage(group.id)} из {totalPages}
-                                </span>
-                                
                                 <button
                                   onClick={() => setPage(group.id, getCurrentPage(group.id) + 1)}
                                   disabled={getCurrentPage(group.id) === totalPages}
-                                  className="px-3 md:px-4 py-1.5 md:py-2 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+                                  className="px-4 py-2 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
                                 >
                                   Вперед →
                                 </button>
+                              </div>
+                              {/* Mobile show more */}
+                              <div className="flex md:hidden items-center space-x-2">
+                                {getCurrentPage(group.id) < totalPages && (
+                                  <button
+                                    onClick={() => setPage(group.id, getCurrentPage(group.id) + 1)}
+                                    className="px-3 py-1.5 text-sm bg-primary text-white rounded"
+                                  >Показать ещё</button>
+                                )}
+                                {getCurrentPage(group.id) > 1 && (
+                                  <button
+                                    onClick={() => setPage(group.id, 1)}
+                                    className="px-3 py-1.5 text-sm border border-gray-300 rounded hover:bg-gray-100"
+                                  >Свернуть</button>
+                                )}
                               </div>
                             </div>
                           </div>
@@ -628,6 +647,7 @@ export default function PriceListPage() {
                     );
                   })()}
                 </div>
+                )}
               </div>
             ))
           )}

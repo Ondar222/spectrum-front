@@ -78,7 +78,7 @@ export default function Header() {
 
           {/* Desktop navigation */}
           <nav className="hidden md:flex">
-            <ul className="flex space-x-8">
+            <ul className="flex space-x-4">
               <li>
                 <Link
                   to="/"
