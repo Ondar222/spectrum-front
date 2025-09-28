@@ -24,6 +24,7 @@ export default function PriceListPage() {
   const [popularServices, setPopularServices] = useState<ApiService[]>([]);
   const [isMobile, setIsMobile] = useState(false);
   const [expandedGroups, setExpandedGroups] = useState<{ [groupId: number]: boolean }>({});
+  const [expandedService, setExpandedService] = useState<{ [serviceId: number]: boolean }>({});
 
   useEffect(() => {
     const loadServices = async () => {
@@ -249,6 +250,10 @@ export default function PriceListPage() {
     setExpandedGroups(prev => ({ ...prev, [groupId]: !prev[groupId] }));
   };
 
+  const toggleServiceDesc = (serviceId: number) => {
+    setExpandedService(prev => ({ ...prev, [serviceId]: !prev[serviceId] }));
+  };
+
   // Show instant skeleton to avoid perceived lag
   if (isLoading && serviceGroups.length === 0) {
     return (
@@ -308,43 +313,75 @@ export default function PriceListPage() {
               <h2 className="text-2xl md:text-3xl font-bold text-dark mb-3 md:mb-4">Популярные услуги</h2>
               <p className="text-sm sm:text-base text-gray-600">Самые востребованные услуги по доступным ценам</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className={isMobile ? "grid grid-cols-2 gap-2" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"}>
               {popularServices.map((service) => (
-                <div key={service.id} className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 p-4 md:p-6">
-                  <div className="flex justify-between items-start mb-3 md:mb-4">
-                    <h3 className="text-base md:text-lg font-semibold text-dark line-clamp-2">{service.name}</h3>
-                    <div className="text-right ml-4">
-                      <div className="text-xl md:text-2xl font-bold text-primary">
-                        {service.base_cost.toLocaleString()} ₽
-                      </div>
+                isMobile ? (
+                  <div key={service.id} className="border border-gray-200 rounded-lg p-3 flex flex-col hover:shadow-sm bg-white">
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="text-sm font-semibold text-dark leading-tight pr-2 line-clamp-4">{service.name}</h3>
                       {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
-                        <div className="text-xs md:text-sm text-gray-500">
-                          Срочно: {service.cito_cost.toLocaleString()} ₽
-                        </div>
+                        <span className="bg-orange-100 text-orange-800 px-2 py-0.5 rounded-full text-[10px] font-medium flex-shrink-0">Срочно</span>
                       )}
                     </div>
-                  </div>
-                  <div className="text-xs md:text-sm text-gray-600 mb-3 md:mb-4">
-                    <div className="flex items-center mb-2">
-                      <svg className="w-4 h-4 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      {service.duration} мин
+                    <div className="text-xs text-gray-500 mb-2">
+                      <span className="font-bold text-primary text-base">{formatPrice(getServicePrice(service))}</span>
                     </div>
-                    <div className="flex items-center">
-                      <svg className="w-4 h-4 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                      </svg>
-                      {service.group_name}
+                    <div className="mt-auto flex items-center justify-between gap-2 pt-2">
+                      <button
+                        onClick={() => setAppointmentModal({ isOpen: true, service })}
+                        className="flex-1 bg-primary hover:bg-primaryDark text-white py-1.5 rounded-md text-xs font-medium"
+                      >Записаться</button>
+                      {(service.info || (service.altname && service.altname !== service.name)) && (
+                        <button
+                          onClick={() => toggleServiceDesc(service.id)}
+                          className="px-2 py-1 text-xs text-primary border border-primary rounded-md"
+                        >Описание</button>
+                      )}
                     </div>
+                    {(service.info || (service.altname && service.altname !== service.name)) && expandedService[service.id] && (
+                      <div className="mt-2 text-xs text-gray-600">
+                        {service.altname && service.altname !== service.name && (<p className="italic mb-1">{service.altname}</p>)}
+                        {service.info && (<p className="leading-relaxed">{service.info}</p>)}
+                      </div>
+                    )}
                   </div>
-                  <button
-                    onClick={() => setAppointmentModal({ isOpen: true, service })}
-                    className="w-full bg-primary text-white py-2 px-3 md:px-4 rounded-lg hover:bg-primaryDark transition-colors duration-200 font-medium text-sm md:text-base"
-                  >
-                    Записаться
-                  </button>
-                </div>
+                ) : (
+                  <div key={service.id} className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 p-4 md:p-6">
+                    <div className="flex justify-between items-start mb-3 md:mb-4">
+                      <h3 className="text-base md:text-lg font-semibold text-dark line-clamp-2">{service.name}</h3>
+                      <div className="text-right ml-4">
+                        <div className="text-xl md:text-2xl font-bold text-primary">
+                          {formatPrice(getServicePrice(service))}
+                        </div>
+                        {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
+                          <div className="text-xs md:text-sm text-gray-500">
+                            Срочно: {service.cito_cost.toLocaleString()} ₽
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="text-xs md:text-sm text-gray-600 mb-3 md:mb-4">
+                      <div className="flex items-center mb-2">
+                        <svg className="w-4 h-4 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {service.duration} мин
+                      </div>
+                      <div className="flex items-center">
+                        <svg className="w-4 h-4 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        {service.group_name}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setAppointmentModal({ isOpen: true, service })}
+                      className="w-full bg-primary text-white py-2 px-3 md:px-4 rounded-lg hover:bg-primaryDark transition-colors duration-200 font-medium text-sm md:text-base"
+                    >
+                      Записаться
+                    </button>
+                  </div>
+                )
               ))}
             </div>
           </div>
@@ -498,63 +535,95 @@ export default function PriceListPage() {
                     
                     return (
                       <>
-                        {paginatedServices.map(service => (
-                          <div key={service.id} className="p-4 md:p-6 hover:bg-gray-50 transition-colors flex flex-col">
-                            <div className="flex-grow">
-                              <div className="flex items-start justify-between mb-2 sm:mb-3">
-                                <h3 className="text-base md:text-lg font-semibold text-dark leading-tight pr-2 line-clamp-2">{service.name}</h3>
-                                {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
-                                  <span className="bg-orange-100 text-orange-800 px-2 md:px-3 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-medium flex-shrink-0">
-                                    Срочно
-                                  </span>
-                                )}
-                              </div>
-                              {service.altname && service.altname !== service.name && (
-                                <p className="text-gray-600 mb-2 md:mb-3 text-sm italic leading-relaxed hidden sm:block">{service.altname}</p>
-                              )}
-                              {service.info && (
-                                <p className="text-gray-600 mb-3 md:mb-4 text-sm leading-relaxed line-clamp-2 md:line-clamp-3 hidden sm:block">{service.info}</p>
-                              )}
-                              <div className={`${selectedType === 'lab' ? 'hidden sm:flex' : 'flex'} items-center space-x-3 md:space-x-4 text-xs md:text-sm text-gray-500 mb-3 md:mb-4`}>
-                                <span className="flex items-center">
-                                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                  </svg>
-                                  {formatDuration(service.duration)}
-                                </span>
-                                {service.code && (
-                                  <span className="flex items-center">
-                                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                    </svg>
-                                    Код: {service.code}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                            <div className="mt-auto pt-4 border-t border-gray-200">
-                              <div className="flex items-center justify-between">
-                                <div>
-                                  <div className="text-xl md:text-2xl font-bold text-primary mb-1">
-                                    {formatPrice(getServicePrice(service))}
-                                  </div>
+                        {isMobile ? (
+                          <div className="px-2 pt-2 grid grid-cols-2 gap-2">
+                            {paginatedServices.map(service => (
+                              <div key={service.id} className="border border-gray-200 rounded-lg p-3 flex flex-col hover:shadow-sm bg-white">
+                                <div className="flex items-start justify-between mb-2">
+                                  <h3 className="text-sm font-semibold text-dark leading-tight pr-2 line-clamp-4">{service.name}</h3>
                                   {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
-                                    <div className="text-xs md:text-sm text-gray-500">
-                                      Обычно: {formatPrice(service.base_cost)}
-                                    </div>
+                                    <span className="bg-orange-100 text-orange-800 px-2 py-0.5 rounded-full text-[10px] font-medium flex-shrink-0">Срочно</span>
                                   )}
                                 </div>
-                                <button 
-                                  onClick={() => handleAppointmentClick(service)}
-                                  className="bg-primary hover:bg-primaryDark text-white px-4 md:px-6 py-2 rounded-lg font-medium transition-colors text-sm md:text-base"
-                                >
-                                  Записаться
-                                </button>
+                                <div className="text-xs text-gray-500 mb-2">
+                                  <span className="font-bold text-primary text-base">{formatPrice(getServicePrice(service))}</span>
+                                </div>
+                                <div className="mt-auto flex items-center justify-between gap-2 pt-2">
+                                  <button onClick={() => handleAppointmentClick(service)} className="flex-1 bg-primary hover:bg-primaryDark text-white py-1.5 rounded-md text-xs font-medium">Записаться</button>
+                                  {(service.info || (service.altname && service.altname !== service.name)) && (
+                                    <button onClick={() => toggleServiceDesc(service.id)} className="px-2 py-1 text-xs text-primary border border-primary rounded-md">Описание</button>
+                                  )}
+                                </div>
+                                {(service.info || (service.altname && service.altname !== service.name)) && expandedService[service.id] && (
+                                  <div className="mt-2 text-xs text-gray-600">
+                                    {service.altname && service.altname !== service.name && (<p className="italic mb-1">{service.altname}</p>)}
+                                    {service.info && (<p className="leading-relaxed">{service.info}</p>)}
+                                  </div>
+                                )}
                               </div>
-                            </div>
+                            ))}
                           </div>
-                        ))}
-                        
+                        ) : (
+                          <>
+                            {paginatedServices.map(service => (
+                              <div key={service.id} className="p-4 md:p-6 hover:bg-gray-50 transition-colors flex flex-col">
+                                <div className="flex-grow">
+                                  <div className="flex items-start justify-between mb-2 sm:mb-3">
+                                    <h3 className="text-base md:text-lg font-semibold text-dark leading-tight pr-2 line-clamp-2">{service.name}</h3>
+                                    {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
+                                      <span className="bg-orange-100 text-orange-800 px-2 md:px-3 py-0.5 md:py-1 rounded-full text-xs md:text-sm font-medium flex-shrink-0">
+                                        Срочно
+                                      </span>
+                                    )}
+                                  </div>
+                                  {service.altname && service.altname !== service.name && (
+                                    <p className="text-gray-600 mb-2 md:mb-3 text-sm italic leading-relaxed hidden sm:block">{service.altname}</p>
+                                  )}
+                                  {service.info && (
+                                    <p className="text-gray-600 mb-3 md:mb-4 text-sm leading-relaxed line-clamp-2 md:line-clamp-3 hidden sm:block">{service.info}</p>
+                                  )}
+                                  <div className={`${selectedType === 'lab' ? 'hidden sm:flex' : 'flex'} items-center space-x-3 md:space-x-4 text-xs md:text-sm text-gray-500 mb-3 md:mb-4`}>
+                                    <span className="flex items-center">
+                                      <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                      </svg>
+                                      {formatDuration(service.duration)}
+                                    </span>
+                                    {service.code && (
+                                      <span className="flex items-center">
+                                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                        Код: {service.code}
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="mt-auto pt-4 border-t border-gray-200">
+                                  <div className="flex items-center justify-between">
+                                    <div>
+                                      <div className="text-xl md:text-2xl font-bold text-primary mb-1">
+                                        {formatPrice(getServicePrice(service))}
+                                      </div>
+                                      {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
+                                        <div className="text-xs md:text-sm text-gray-500">
+                                          Обычно: {formatPrice(service.base_cost)}
+                                        </div>
+                                      )}
+                                    </div>
+                                    <button 
+                                      onClick={() => handleAppointmentClick(service)}
+                                      className="bg-primary hover:bg-primaryDark text-white px-4 md:px-6 py-2 rounded-lg font-medium transition-colors text-sm md:text-base"
+                                    >
+                                      Записаться
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </>
+                        )}
+
                         {/* Пагинация - показываем если больше 7 услуг */}
                         {totalPages > 1 && (
                           <div className="px-4 py-3 md:px-6 md:py-4 bg-gray-50 border-t border-gray-200">
