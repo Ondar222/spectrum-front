@@ -205,10 +205,10 @@ export default function GiftCertificatesPage() {
                 />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-dark mb-4">
+            <h2 className="text-xl md:text-2xl font-bold text-dark mb-4">
               Сертификат успешно оформлен!
             </h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-sm md:text-base text-gray-600 mb-6">
               Электронный сертификат отправлен на указанный email адрес.
               Получатель сможет воспользоваться сертификатом в течение 3
               месяцев.
@@ -229,11 +229,11 @@ export default function GiftCertificatesPage() {
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4">
         {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-dark mb-4">
+        <div className="text-center mb-10">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-dark mb-4">
             Подарочные сертификаты
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
             Не знаете какой подарок преподнести? Подарочный сертификат на услуги
             клиники - идеальный выбор для любого торжества!
           </p>
@@ -251,7 +251,7 @@ export default function GiftCertificatesPage() {
           {/* Left Column - Benefits */}
           <div className="space-y-8">
             <div className="bg-white rounded-lg shadow-lg p-8">
-              <h2 className="text-2xl font-semibold text-dark mb-6">
+              <h2 className="text-xl md:text-2xl font-semibold text-dark mb-6">
                 Преимущества сертификата
               </h2>
               <ul className="space-y-4">
@@ -269,7 +269,7 @@ export default function GiftCertificatesPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="text-gray-600">
+                  <span className="text-sm md:text-base text-gray-600">
                     Оплачивается целый комплекс услуг
                   </span>
                 </li>
@@ -287,7 +287,7 @@ export default function GiftCertificatesPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="text-gray-600">
+                  <span className="text-sm md:text-base text-gray-600">
                     Использование в течение 3 месяцев
                   </span>
                 </li>
@@ -305,7 +305,7 @@ export default function GiftCertificatesPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="text-gray-600">
+                  <span className="text-sm md:text-base text-gray-600">
                     Красивый и стильный подарок
                   </span>
                 </li>
@@ -323,7 +323,7 @@ export default function GiftCertificatesPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="text-gray-600">Покупка на любую сумму</span>
+                  <span className="text-sm md:text-base text-gray-600">Покупка на любую сумму</span>
                 </li>
                 <li className="flex items-start">
                   <svg
@@ -339,13 +339,13 @@ export default function GiftCertificatesPage() {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span className="text-gray-600">Электронный сертификат</span>
+                  <span className="text-sm md:text-base text-gray-600">Электронный сертификат</span>
                 </li>
               </ul>
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-8">
-              <h3 className="text-xl font-semibold text-dark mb-4">
+              <h3 className="text-lg md:text-xl font-semibold text-dark mb-4">
                 Как это работает
               </h3>
               <div className="space-y-4">
@@ -354,7 +354,7 @@ export default function GiftCertificatesPage() {
                     1
                   </div>
                   <div>
-                    <h4 className="font-medium text-dark">
+                    <h4 className="font-medium text-dark text-sm md:text-base">
                       Выберите сумму сертификата
                     </h4>
                     <p className="text-sm text-gray-600">
@@ -367,7 +367,7 @@ export default function GiftCertificatesPage() {
                     2
                   </div>
                   <div>
-                    <h4 className="font-medium text-dark">Заполните форму</h4>
+                    <h4 className="font-medium text-dark text-sm md:text-base">Заполните форму</h4>
                     <p className="text-sm text-gray-600">
                       Укажите данные получателя и отправителя
                     </p>
@@ -378,7 +378,7 @@ export default function GiftCertificatesPage() {
                     3
                   </div>
                   <div>
-                    <h4 className="font-medium text-dark">
+                    <h4 className="font-medium text-dark text-sm md:text-base">
                       Оплатите сертификат
                     </h4>
                     <p className="text-sm text-gray-600">
@@ -391,7 +391,7 @@ export default function GiftCertificatesPage() {
                     4
                   </div>
                   <div>
-                    <h4 className="font-medium text-dark">
+                    <h4 className="font-medium text-dark text-sm md:text-base">
                       Получите сертификат
                     </h4>
                     <p className="text-sm text-gray-600">
@@ -405,7 +405,7 @@ export default function GiftCertificatesPage() {
 
           {/* Right Column - Form */}
           <div className="bg-white rounded-lg shadow-lg p-8">
-            <h2 className="text-2xl font-semibold text-dark mb-6">
+            <h2 className="text-xl md:text-2xl font-semibold text-dark mb-6">
               Оформить сертификат
             </h2>
 
@@ -418,7 +418,7 @@ export default function GiftCertificatesPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Amount Selection */}
               <div>
-                <label className="block text-gray-700 mb-3 font-medium">
+                <label className="block text-gray-700 mb-3 font-medium text-sm md:text-base">
                   Сумма сертификата
                 </label>
                 <div className="grid grid-cols-2 gap-3">
@@ -446,7 +446,7 @@ export default function GiftCertificatesPage() {
 
                 {/* Другая сумма */}
                 <div className="mt-3">
-                  <label className="inline-flex items-center gap-2 text-sm text-gray-700">
+                <label className="inline-flex items-center gap-2 text-sm text-gray-700">
                     <input
                       type="checkbox"
                       checked={useCustomAmount}
@@ -482,13 +482,13 @@ export default function GiftCertificatesPage() {
 
               {/* Recipient Information */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-dark">
+                <h3 className="text-base md:text-lg font-semibold text-dark">
                   Данные получателя
                 </h3>
                 <div>
                   <label
                     htmlFor="recipientName"
-                    className="block text-gray-700 mb-2"
+                    className="block text-gray-700 mb-2 text-sm md:text-base"
                   >
                     Имя и фамилия получателя *
                   </label>
@@ -515,7 +515,7 @@ export default function GiftCertificatesPage() {
                 <div>
                   <label
                     htmlFor="recipientEmail"
-                    className="block text-gray-700 mb-2"
+                    className="block text-gray-700 mb-2 text-sm md:text-base"
                   >
                     Email получателя *
                   </label>
@@ -542,13 +542,13 @@ export default function GiftCertificatesPage() {
 
               {/* Sender Information */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-dark">
+                <h3 className="text-base md:text-lg font-semibold text-dark">
                   Данные отправителя
                 </h3>
                 <div>
                   <label
                     htmlFor="senderName"
-                    className="block text-gray-700 mb-2"
+                    className="block text-gray-700 mb-2 text-sm md:text-base"
                   >
                     Ваше имя и фамилия *
                   </label>
@@ -575,7 +575,7 @@ export default function GiftCertificatesPage() {
                 <div>
                   <label
                     htmlFor="senderEmail"
-                    className="block text-gray-700 mb-2"
+                    className="block text-gray-700 mb-2 text-sm md:text-base"
                   >
                     Ваш email *
                   </label>
@@ -602,7 +602,7 @@ export default function GiftCertificatesPage() {
 
               {/* Message */}
               <div>
-                <label htmlFor="message" className="block text-gray-700 mb-2">
+                <label htmlFor="message" className="block text-gray-700 mb-2 text-sm md:text-base">
                   Поздравительное сообщение
                 </label>
                 <textarea
