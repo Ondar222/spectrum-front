@@ -313,30 +313,32 @@ export default function PriceListPage() {
               <h2 className="text-2xl md:text-3xl font-bold text-dark mb-3 md:mb-4">Популярные услуги</h2>
               <p className="text-sm sm:text-base text-gray-600">Самые востребованные услуги по доступным ценам</p>
             </div>
-            <div className={isMobile ? "grid grid-cols-2 gap-2" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"}>
+            <div className={isMobile ? "grid grid-cols-1 gap-2" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"}>
               {popularServices.map((service) => (
                 isMobile ? (
-                  <div key={service.id} className="border border-gray-200 rounded-lg p-3 flex flex-col hover:shadow-sm bg-white">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-sm font-semibold text-dark leading-tight pr-2 line-clamp-4">{service.name}</h3>
-                      {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
-                        <span className="bg-orange-100 text-orange-800 px-2 py-0.5 rounded-full text-[10px] font-medium flex-shrink-0">Срочно</span>
-                      )}
-                    </div>
-                    <div className="text-xs text-gray-500 mb-2">
-                      <span className="font-bold text-primary text-base">{formatPrice(getServicePrice(service))}</span>
-                    </div>
-                    <div className="mt-auto flex items-center justify-between gap-2 pt-2">
-                      <button
-                        onClick={() => setAppointmentModal({ isOpen: true, service })}
-                        className="flex-1 bg-primary hover:bg-primaryDark text-white py-1.5 rounded-md text-xs font-medium"
-                      >Записаться</button>
+                  <div key={service.id} className="border border-gray-200 rounded-lg p-2 hover:shadow-sm bg-white">
+                    <div className="flex items-center gap-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1">
+                          <h3 className="text-xs font-semibold text-dark leading-tight pr-1 line-clamp-2">{service.name}</h3>
+                          {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
+                            <span className="bg-orange-100 text-orange-800 px-1.5 py-0.5 rounded-full text-[10px] font-medium flex-shrink-0">Срочно</span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="text-primary font-bold text-sm flex-shrink-0">
+                        {formatPrice(getServicePrice(service))}
+                      </div>
                       {(service.info || (service.altname && service.altname !== service.name)) && (
                         <button
                           onClick={() => toggleServiceDesc(service.id)}
-                          className="px-2 py-1 text-xs text-primary border border-primary rounded-md"
+                          className="px-2 py-1 text-[10px] text-primary border border-primary rounded-md whitespace-nowrap"
                         >Описание</button>
                       )}
+                      <button
+                        onClick={() => setAppointmentModal({ isOpen: true, service })}
+                        className="bg-primary hover:bg-primaryDark text-white px-3 py-1 rounded-md text-[11px] font-medium flex-shrink-0"
+                      >Записаться</button>
                     </div>
                     {(service.info || (service.altname && service.altname !== service.name)) && expandedService[service.id] && (
                       <div className="mt-2 text-xs text-gray-600">
@@ -536,23 +538,25 @@ export default function PriceListPage() {
                     return (
                       <>
                         {isMobile ? (
-                          <div className="px-2 pt-2 grid grid-cols-2 gap-2">
+                          <div className="px-2 pt-1 grid grid-cols-1 gap-2">
                             {paginatedServices.map(service => (
-                              <div key={service.id} className="border border-gray-200 rounded-lg p-3 flex flex-col hover:shadow-sm bg-white">
-                                <div className="flex items-start justify-between mb-2">
-                                  <h3 className="text-sm font-semibold text-dark leading-tight pr-2 line-clamp-4">{service.name}</h3>
-                                  {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
-                                    <span className="bg-orange-100 text-orange-800 px-2 py-0.5 rounded-full text-[10px] font-medium flex-shrink-0">Срочно</span>
-                                  )}
-                                </div>
-                                <div className="text-xs text-gray-500 mb-2">
-                                  <span className="font-bold text-primary text-base">{formatPrice(getServicePrice(service))}</span>
-                                </div>
-                                <div className="mt-auto flex items-center justify-between gap-2 pt-2">
-                                  <button onClick={() => handleAppointmentClick(service)} className="flex-1 bg-primary hover:bg-primaryDark text-white py-1.5 rounded-md text-xs font-medium">Записаться</button>
+                              <div key={service.id} className="border border-gray-200 rounded-lg p-2 hover:shadow-sm bg-white">
+                                <div className="flex items-center gap-2">
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-1">
+                                      <h3 className="text-sm font-semibold text-dark leading-tight pr-1 line-clamp-2">{service.name}</h3>
+                                      {service.cito_cost > 0 && service.cito_cost !== service.base_cost && (
+                                        <span className="bg-orange-100 text-orange-800 px-1.5 py-0.5 rounded-full text-[10px] font-medium flex-shrink-0">Срочно</span>
+                                      )}
+                                    </div>
+                                  </div>
+                                  <div className="text-primary font-bold text-sm flex-shrink-0">
+                                    {formatPrice(getServicePrice(service))}
+                                  </div>
                                   {(service.info || (service.altname && service.altname !== service.name)) && (
-                                    <button onClick={() => toggleServiceDesc(service.id)} className="px-2 py-1 text-xs text-primary border border-primary rounded-md">Описание</button>
+                                    <button onClick={() => toggleServiceDesc(service.id)} className="px-2 py-1 text-[10px] text-primary border border-primary rounded-md whitespace-nowrap">Описание</button>
                                   )}
+                                  <button onClick={() => handleAppointmentClick(service)} className="bg-primary hover:bg-primaryDark text-white px-3 py-1 rounded-md text-[11px] font-medium flex-shrink-0">Записаться</button>
                                 </div>
                                 {(service.info || (service.altname && service.altname !== service.name)) && expandedService[service.id] && (
                                   <div className="mt-2 text-xs text-gray-600">
