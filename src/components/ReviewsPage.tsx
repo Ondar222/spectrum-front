@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import type { ArchimedDoctor, ApiService } from '../types/cms';
+import archimedService from '../services/archimed';
 
 interface Review {
   id: number;
@@ -15,56 +17,92 @@ export default function ReviewsPage() {
   const [selectedDoctor, setSelectedDoctor] = useState<string>('all');
   const [selectedService, setSelectedService] = useState<string>('all');
 
-  const doctors = ['Все врачи', 'Иванов И.И.', 'Петрова А.В.', 'Сидоров С.С.'];
-  const services = ['Все услуги', 'Терапия', 'Стоматология', 'Хирургия', 'Офтальмология'];
+  const [doctors, setDoctors] = useState<ArchimedDoctor[]>([]);
+  const [services, setServices] = useState<ApiService[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const reviews: Review[] = [
-    {
-      id: 1,
-      patientName: 'Анна К.',
-      rating: 5,
-      date: '15.03.2024',
-      doctor: 'Иванов И.И.',
-      service: 'Терапия',
-      text: 'Очень довольна посещением клиники. Доктор Иванов внимательно выслушал все жалобы, провел тщательный осмотр и назначил эффективное лечение. Персонал вежливый, кабинеты чистые. Рекомендую!',
-      // photos: ['/images/review1.jpg', '/images/review2.jpg']
-    },
-    {
-      id: 2,
-      patientName: 'Михаил С.',
-      rating: 4,
-      date: '10.03.2024',
-      doctor: 'Петрова А.В.',
-      service: 'Стоматология',
-      text: 'Хороший сервис, профессиональный подход. Доктор Петрова провела лечение качественно и безболезненно. Единственное, что можно улучшить - это время ожидания приема.'
-    },
-    {
-      id: 3,
-      patientName: 'Елена В.',
-      rating: 5,
-      date: '05.03.2024',
-      doctor: 'Сидоров С.С.',
-      service: 'Хирургия',
-      text: 'Выражаю огромную благодарность доктору Сидорову за проведенную операцию. Все прошло успешно, восстановление идет хорошо. Персонал клиники внимательный и заботливый.'
-    },
-    {
-      id: 4,
-      patientName: 'Дмитрий П.',
-      rating: 5,
-      date: '01.03.2024',
-      doctor: 'Иванов И.И.',
-      service: 'Офтальмология',
-      text: 'Отличная клиника с современным оборудованием. Доктор Иванов провел полное обследование и подобрал подходящее лечение. Результат превзошел ожидания!'
-    }
-  ];
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setIsLoading(true);
+        const [loadedDoctors, loadedServices] = await Promise.all([
+          archimedService.getDoctors(),
+          archimedService.getServices(),
+        ]);
+        setDoctors(loadedDoctors || []);
+        setServices(loadedServices || []);
+      } catch (e) {
+        console.error('Failed to load doctors/services for reviews', e);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    load();
+  }, []);
 
-  const filteredReviews = reviews.filter(review => {
+  const getDoctorInitials = (doctor: ArchimedDoctor) => {
+    const name = doctor?.name || '';
+    const name1 = doctor?.name1 || '';
+    const name2 = doctor?.name2 || '';
+    const i1 = name1 ? `${name1.charAt(0)}.` : '';
+    const i2 = name2 ? `${name2.charAt(0)}.` : '';
+    return `${name} ${i1} ${i2}`.trim().replace(/\s+/g, ' ');
+  };
+
+  const doctorOptions = useMemo(() => {
+    const names = doctors.map(getDoctorInitials).filter(Boolean);
+    const unique = Array.from(new Set(names));
+    return ['Все врачи', ...unique];
+  }, [doctors]);
+
+  const serviceGroupOptions = useMemo(() => {
+    const groups = services.map(s => s.group_name).filter(Boolean);
+    const cleaned = groups.filter(g => {
+      const n = (g || '').toLowerCase();
+      return !n.includes('стомат') && !n.includes('физиотерап');
+    });
+    const unique = Array.from(new Set(cleaned));
+    return ['Все услуги', ...unique];
+  }, [services]);
+
+  const sampleReviews: Review[] = useMemo(() => {
+    const doctorList = doctorOptions.slice(1);
+    const serviceList = serviceGroupOptions.slice(1);
+    const fallbackDoctor = 'Врач клиники';
+    const fallbackService = 'Медицинская услуга';
+    const baseTexts = [
+      'Очень довольна посещением клиники. Внимательно выслушали и помогли решить проблему. Рекомендую!',
+      'Профессиональный подход, вежливый персонал. Всё объяснили, назначили эффективное лечение.',
+      'Современное оборудование и аккуратная работа. Спасибо за заботу и внимание!',
+      'Все прошло отлично, быстро и безболезненно. Буду обращаться снова при необходимости.',
+    ];
+    const makeDate = (daysAgo: number) => {
+      const d = new Date();
+      d.setDate(d.getDate() - daysAgo);
+      return d.toLocaleDateString('ru-RU');
+    };
+    const names = ['Анна К.', 'Михаил С.', 'Елена В.', 'Дмитрий П.', 'Татьяна Л.', 'Игорь Н.', 'Светлана Р.', 'Павел З.'];
+    const count = Math.min(8, Math.max(4, Math.ceil((doctorList.length + serviceList.length) / 4)));
+    return Array.from({ length: count }).map((_, idx) => ({
+      id: idx + 1,
+      patientName: names[idx % names.length],
+      rating: 4 + (idx % 2),
+      date: makeDate((idx + 1) * 3),
+      doctor: doctorList[idx % (doctorList.length || 1)] || fallbackDoctor,
+      service: serviceList[idx % (serviceList.length || 1)] || fallbackService,
+      text: baseTexts[idx % baseTexts.length],
+    }));
+  }, [doctorOptions, serviceGroupOptions]);
+
+  const filteredReviews = sampleReviews.filter(review => {
     const doctorMatch = selectedDoctor === 'all' || review.doctor === selectedDoctor;
     const serviceMatch = selectedService === 'all' || review.service === selectedService;
     return doctorMatch && serviceMatch;
   });
 
-  const averageRating = reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
+  const averageRating = (sampleReviews.length
+    ? sampleReviews.reduce((acc, review) => acc + review.rating, 0) / sampleReviews.length
+    : 5);
 
   return (
     <div className="min-h-screen bg-lightTeal py-8 md:py-12">
@@ -90,7 +128,7 @@ export default function ReviewsPage() {
               </div>
             </div>
             <p className="text-center text-gray-600">
-              На основе {reviews.length} отзывов
+              На основе {sampleReviews.length} отзывов
             </p>
           </div>
 
@@ -106,9 +144,9 @@ export default function ReviewsPage() {
                   value={selectedDoctor}
                   onChange={(e) => setSelectedDoctor(e.target.value)}
                 >
-                  {doctors.map((doctor) => (
-                    <option key={doctor} value={doctor === 'Все врачи' ? 'all' : doctor}>
-                      {doctor}
+                  {doctorOptions.map((name) => (
+                    <option key={name} value={name === 'Все врачи' ? 'all' : name}>
+                      {name}
                     </option>
                   ))}
                 </select>
@@ -122,7 +160,7 @@ export default function ReviewsPage() {
                   value={selectedService}
                   onChange={(e) => setSelectedService(e.target.value)}
                 >
-                  {services.map((service) => (
+                  {serviceGroupOptions.map((service) => (
                     <option key={service} value={service === 'Все услуги' ? 'all' : service}>
                       {service}
                     </option>

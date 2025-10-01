@@ -112,31 +112,30 @@ export default function DocumentsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-lightTeal py-12">
+    <div className="min-h-screen bg-lightTeal py-8 md:py-12">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold text-center mb-8">Документы</h1>
+        <div className="max-w-6xl mx-auto">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 md:mb-8">Документы</h1>
 
-          <div className="bg-white rounded-lg shadow-md p-8">
-            <p className="text-gray-600 text-center mb-8">
-              На этой странице вы можете ознакомиться с основными документами
-              клиники
+          <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
+            <p className="text-gray-600 text-sm sm:text-base text-center mb-6 md:mb-8">
+              На этой странице вы можете ознакомиться с основными документами клиники
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
               {documents.map((doc) => (
                 <div
                   key={doc.id}
-                  className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow flex flex-col h-full min-h-[200px]"
+                  className="border border-gray-200 rounded-lg p-3 sm:p-4 hover:shadow-md transition-shadow flex flex-col h-full"
                 >
                   <div className="flex-grow">
-                    <h3 className="text-lg font-semibold text-dark mb-3 leading-tight">
+                    <h3 className="text-sm sm:text-base font-semibold text-dark mb-2 leading-tight line-clamp-3">
                       {doc.title}
                     </h3>
-                    <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                    <p className="text-gray-600 text-xs sm:text-sm mb-3 leading-relaxed line-clamp-3">
                       {doc.description}
                     </p>
-                    <div className="flex items-center space-x-4 text-sm text-gray-500 mb-4">
+                    <div className="flex items-center justify-between text-xs sm:text-sm text-gray-500 mb-3">
                       <span className="flex items-center">
                         <svg
                           className="w-4 h-4 mr-1 flex-shrink-0"
@@ -155,10 +154,10 @@ export default function DocumentsPage() {
                     </div>
                   </div>
 
-                  <div className="mt-auto pt-4 border-t border-gray-200">
+                  <div className="mt-auto pt-3 border-t border-gray-200">
                     <a
                       href={doc.downloadUrl}
-                      className="inline-flex items-center px-6 py-2 bg-primary hover:bg-primaryDark text-white text-sm font-medium rounded-lg transition-colors w-full justify-center"
+                      className="inline-flex items-center px-4 py-2 bg-primary hover:bg-primaryDark text-white text-sm font-medium rounded-lg transition-colors w-full justify-center"
                       download
                     >
                       <svg
@@ -181,8 +180,8 @@ export default function DocumentsPage() {
               ))}
             </div>
 
-            <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-              <p className="text-sm text-gray-600 text-center">
+            <div className="mt-6 md:mt-8 p-4 bg-gray-50 rounded-lg">
+              <p className="text-xs sm:text-sm text-gray-600 text-center">
                 Для получения дополнительных документов или справок обращайтесь
                 в администрацию клиники
               </p>
