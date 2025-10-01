@@ -48,10 +48,10 @@ export default function PromotionsPage() {
     return [{
       id: 'vk-7248',
       title: 'На все операции по варикозу -30%',
-      description: 'Смотрите видео акции во ВКонтакте',
+      description: 'Если симптомы варикозного расширения вен проявились у вас в сентябре или октябре, клиника «Алдан» дарит специальную скидку 30% на курс лечения. Для получения более подробной информации и записи на консультацию к флебологу звоните по указанному номеру телефона в контактах.',
       discountLabel: 'Акция',
       validUntil: '',
-      imageUrl: 'https://copyblank.ru/upload/iblock/6ab/6ab1bfd9b03a0b0f7f5ae8b7e9fee88d.webp',
+      imageUrl: '/www.jpg',
       link: 'https://vk.com/wall-128344113_7248',
       isVideo: true,
     } as any];
@@ -77,7 +77,15 @@ export default function PromotionsPage() {
                   {promo.isVideo ? (
                     <div className="relative w-full">
                       {promo.imageUrl ? (
-                        <img src={promo.imageUrl} alt={promo.title} className="w-full h-48 object-cover" />
+                        <img
+                          src={promo.imageUrl}
+                          alt={promo.title}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            const fallback = 'https://copyblank.ru/upload/iblock/6ab/6ab1bfd9b03a0b0f7f5ae8b7e9fee88d.webp';
+                            if (e.currentTarget.src !== fallback) e.currentTarget.src = fallback;
+                          }}
+                        />
                       ) : (
                         <div className="w-full pt-[56.25%] bg-gradient-to-br from-[#4c75a3] to-[#2a5885]" />
                       )}
