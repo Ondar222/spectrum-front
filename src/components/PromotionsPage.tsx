@@ -16,7 +16,7 @@ export default function PromotionsPage() {
         setPromotions(res.data || []);
       } catch (e) {
         console.error('Failed to load promotions from Directus', e);
-        setError('Не удалось загрузить акции. Попробуйте позже.');
+        // setError('Не удалось загрузить акции. Попробуйте позже.');
       } finally {
         setIsLoading(false);
       }
