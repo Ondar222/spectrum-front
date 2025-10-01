@@ -104,9 +104,9 @@ export default function FAQPage() {
   });
 
   return (
-    <div className="min-h-screen bg-lightTeal py-12">
+    <div className="min-h-screen bg-lightTeal py-8 md:py-12">
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-center mb-8">Часто задаваемые вопросы</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 md:mb-8">Часто задаваемые вопросы</h1>
 
         {/* Search and filter section */}
         <div className="max-w-4xl mx-auto mb-8">
@@ -139,13 +139,13 @@ export default function FAQPage() {
               key={item.id}
               className="bg-white rounded-lg shadow-md overflow-hidden min-h-[120px] flex flex-col"
             >
-              <div className="p-6 flex flex-col flex-grow">
+              <div className="p-5 md:p-6 flex flex-col flex-grow">
                 <div className="flex items-center mb-3">
                   <span className="bg-teal/10 text-teal px-3 py-1 rounded-full text-sm font-medium">
                     {item.category}
                   </span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3 leading-tight text-gray-900">{item.question}</h3>
+                <h3 className="text-lg sm:text-xl font-semibold mb-3 leading-tight text-gray-900">{item.question}</h3>
                 <p className="text-gray-600 whitespace-pre-line leading-relaxed flex-grow">{item.answer}</p>
               </div>
             </div>
@@ -160,8 +160,8 @@ export default function FAQPage() {
         )}
 
         {/* Contact section */}
-        <div className="max-w-4xl mx-auto mt-12 bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-bold mb-4">Не нашли ответ на свой вопрос?</h2>
+        <div className="max-w-4xl mx-auto mt-10 md:mt-12 bg-white rounded-lg shadow-md p-6 md:p-8">
+          <h2 className="text-xl sm:text-2xl font-bold mb-3 md:mb-4">Не нашли ответ на свой вопрос?</h2>
           <p className="text-gray-600 mb-4">
             Свяжитесь с нами, и мы с радостью ответим на все ваши вопросы.
           </p>

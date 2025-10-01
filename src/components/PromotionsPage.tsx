@@ -61,7 +61,7 @@ export default function PromotionsPage() {
     <div className="min-h-screen bg-lightTeal py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold text-center mb-8">Акции и специальные предложения</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 md:mb-8">Акции и специальные предложения</h1>
 
           {isLoading && (
             <div className="bg-white rounded-lg shadow-md p-8 text-center">Загрузка...</div>
@@ -104,7 +104,7 @@ export default function PromotionsPage() {
                     ) : null
                   )}
                 <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3 leading-tight">{promo.title}</h3>
+                  <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-3 leading-tight">{promo.title}</h3>
                   <p className="text-gray-600 mb-4 leading-relaxed flex-grow">{promo.description}</p>
                   <div className="mt-auto pt-4 border-t border-gray-200">
                     <div className="flex justify-between items-center">
@@ -123,9 +123,9 @@ export default function PromotionsPage() {
           )}
 
           {/* Subscription form */}
-          <div className="mt-12 bg-white rounded-lg shadow-md p-8">
-            <h2 className="text-2xl font-bold text-center mb-4">Подпишитесь на рассылку акций</h2>
-            <p className="text-gray-600 text-center mb-6">
+          <div className="mt-10 md:mt-12 bg-white rounded-lg shadow-md p-6 md:p-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-center mb-3 md:mb-4">Подпишитесь на рассылку акций</h2>
+            <p className="text-gray-600 text-center mb-4 md:mb-6">
               Будьте в курсе всех специальных предложений и акций нашей клиники
             </p>
             <form className="max-w-md mx-auto">

@@ -67,15 +67,15 @@ export default function ReviewsPage() {
   const averageRating = reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length;
 
   return (
-    <div className="min-h-screen bg-lightTeal py-12">
+    <div className="min-h-screen bg-lightTeal py-8 md:py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold text-center mb-8">Отзывы пациентов</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 md:mb-8">Отзывы пациентов</h1>
 
           {/* Rating summary */}
-          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <div className="bg-white rounded-lg shadow-md p-6 mb-6 md:mb-8">
             <div className="flex items-center justify-center mb-4">
-              <div className="text-4xl font-bold text-teal mr-4">{averageRating.toFixed(1)}</div>
+              <div className="text-3xl sm:text-4xl font-bold text-teal mr-4">{averageRating.toFixed(1)}</div>
               <div className="flex">
                 {[...Array(5)].map((_, i) => (
                   <svg
@@ -95,7 +95,7 @@ export default function ReviewsPage() {
           </div>
 
           {/* Filters */}
-          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <div className="bg-white rounded-lg shadow-md p-6 mb-6 md:mb-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -135,10 +135,10 @@ export default function ReviewsPage() {
           {/* Reviews list */}
           <div className="space-y-6">
             {filteredReviews.map((review) => (
-              <div key={review.id} className="bg-white rounded-lg shadow-md p-6 min-h-[200px] flex flex-col">
+              <div key={review.id} className="bg-white rounded-lg shadow-md p-5 md:p-6 min-h-[200px] flex flex-col">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-lg font-medium text-gray-900 leading-tight">{review.patientName}</h3>
+                    <h3 className="text-lg sm:text-xl font-medium text-gray-900 leading-tight">{review.patientName}</h3>
                     <p className="text-sm text-gray-500 mt-1">{review.date}</p>
                   </div>
                   <div className="flex">
@@ -177,8 +177,8 @@ export default function ReviewsPage() {
           </div>
 
           {/* Add review button */}
-          <div className="mt-8 text-center">
-            <button className="bg-teal text-white px-6 py-3 rounded-md font-medium hover:bg-teal/90 transition-colors">
+          <div className="mt-6 md:mt-8 text-center">
+            <button className="bg-teal text-white px-6 py-2.5 rounded-md font-medium hover:bg-teal/90 transition-colors">
               Оставить отзыв
             </button>
           </div>

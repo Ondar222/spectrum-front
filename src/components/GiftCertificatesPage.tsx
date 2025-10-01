@@ -205,7 +205,7 @@ export default function GiftCertificatesPage() {
                 />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-dark mb-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-dark mb-4">
               Сертификат успешно оформлен!
             </h2>
             <p className="text-gray-600 mb-6">
@@ -226,14 +226,14 @@ export default function GiftCertificatesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gray-50 py-8 md:py-12">
       <div className="container mx-auto px-4">
         {/* Hero Section */}
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-dark mb-4">
+        <div className="text-center mb-8 md:mb-10">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-dark mb-3 md:mb-4">
             Подарочные сертификаты
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
             Не знаете какой подарок преподнести? Подарочный сертификат на услуги
             клиники - идеальный выбор для любого торжества!
           </p>
@@ -247,11 +247,11 @@ export default function GiftCertificatesPage() {
           )} */}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
           {/* Left Column - Benefits */}
           <div className="space-y-8">
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <h2 className="text-2xl font-semibold text-dark mb-6">
+            <div className="bg-white rounded-lg shadow-lg p-6 md:p-8">
+              <h2 className="text-xl sm:text-2xl font-semibold text-dark mb-4 md:mb-6">
                 Преимущества сертификата
               </h2>
               <ul className="space-y-4">
@@ -344,8 +344,8 @@ export default function GiftCertificatesPage() {
               </ul>
             </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-8">
-              <h3 className="text-xl font-semibold text-dark mb-4">
+            <div className="bg-white rounded-lg shadow-lg p-6 md:p-8">
+              <h3 className="text-lg sm:text-xl font-semibold text-dark mb-3 md:mb-4">
                 Как это работает
               </h3>
               <div className="space-y-4">
@@ -404,8 +404,8 @@ export default function GiftCertificatesPage() {
           </div>
 
           {/* Right Column - Form */}
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            <h2 className="text-2xl font-semibold text-dark mb-6">
+          <div className="bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <h2 className="text-xl sm:text-2xl font-semibold text-dark mb-4 md:mb-6">
               Оформить сертификат
             </h2>
 
@@ -482,7 +482,7 @@ export default function GiftCertificatesPage() {
 
               {/* Recipient Information */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-dark">
+                <h3 className="text-lg sm:text-xl font-semibold text-dark">
                   Данные получателя
                 </h3>
                 <div>
@@ -542,7 +542,7 @@ export default function GiftCertificatesPage() {
 
               {/* Sender Information */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-dark">
+                <h3 className="text-lg sm:text-xl font-semibold text-dark">
                   Данные отправителя
                 </h3>
                 <div>
