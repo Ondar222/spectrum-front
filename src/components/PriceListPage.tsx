@@ -60,7 +60,7 @@ export default function PriceListPage() {
         const plasticServices: ApiService[] = [
           { id: 91001, kind: 0, code: 'PS-001', name: 'Консультация пластического хирурга', altcode: '', altname: '', barcode: '', info: 'Первичный прием, осмотр и планирование вмешательства', group_name: 'Пластическая хирургия', group_id: -1001, mz_code: '', cito_cost: 0, duration: 30, base_cost: 1800, purchase_price: 0, denomination: 0, unit_id: null, unit: null },
           { id: 91002, kind: 0, code: 'PS-002', name: 'Блефаропластика', altcode: '', altname: 'Коррекция век', barcode: '', info: '', group_name: 'Пластическая хирургия', group_id: -1001, mz_code: '', cito_cost: 0, duration: 0, base_cost: 45000, purchase_price: 0, denomination: 0, unit_id: null, unit: null },
-          { id: 91003, kind: 0, code: 'PS-003', name: 'Ринопластика', altcode: '', altname: 'Коррекция формы носа', barcode: '', info: '', group_name: 'Пластическая хирургия', group_id: -1001, mz_code: '', cito_cost: 0, duration: 0, base_cost: 120000, purchase_price: 0, denomination: 0, unit_id: null, unit: null },
+         
           { id: 91004, kind: 0, code: 'PS-004', name: 'Липосакция', altcode: '', altname: 'Удаление локальных жировых отложений', barcode: '', info: '', group_name: 'Пластическая хирургия', group_id: -1001, mz_code: '', cito_cost: 0, duration: 0, base_cost: 80000, purchase_price: 0, denomination: 0, unit_id: null, unit: null },
          
         ];
