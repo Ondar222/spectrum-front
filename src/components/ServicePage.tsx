@@ -256,12 +256,6 @@ const ServicePage: React.FC = () => {
                           )}
                           <div className="flex justify-between items-center">
                             <span className="text-primary font-bold text-sm">{getServicePrice(service).toLocaleString('ru-RU')} ₽</span>
-                            <button 
-                              onClick={() => handleAppointmentClick(service)}
-                              className="px-3 py-1 bg-primary text-white rounded text-xs hover:bg-primaryDark transition-colors"
-                            >
-                              Записаться
-                            </button>
                           </div>
                         </div>
                       ))}
@@ -293,13 +287,7 @@ const ServicePage: React.FC = () => {
                 </div>
                   <div className="flex justify-between items-center mt-auto pt-3 sm:pt-4">
                     <span className="text-primary font-bold text-base sm:text-lg">{getServicePrice(service).toLocaleString('ru-RU')} ₽</span>
-                  <button 
-                    onClick={() => handleAppointmentClick(service)}
-                      className="px-4 sm:px-6 py-1.5 sm:py-2 bg-primary text-white rounded-lg hover:bg-primaryDark transition-colors font-medium text-xs sm:text-sm"
-                  >
-                    Записаться
-                  </button>
-                </div>
+                  </div>
               </div>
             ))}
           </div>
@@ -363,9 +351,9 @@ const ServicePage: React.FC = () => {
       {/* Кнопка записи */}
       <section className="py-8 sm:py-10 md:py-12 bg-primary">
         <div className="container mx-auto px-3 sm:px-4 text-center">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-6">
+          {/* <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-6">
             Записаться на прием: {direction.title}
-          </h2>
+          </h2> */}
           <p className="text-white/90 mb-6 sm:mb-8 max-w-2xl mx-auto text-sm sm:text-base">
             Оставьте заявку и наш администратор свяжется с вами для уточнения деталей записи
           </p>

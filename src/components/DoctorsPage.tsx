@@ -287,12 +287,6 @@ export default function DoctorsPage() {
                     )}
 
                     <div className="flex flex-col space-y-1.5 sm:flex-row sm:space-y-0 sm:space-x-2 mt-auto">
-                      <button 
-                        onClick={() => handleAppointmentClick(doctor)}
-                        className="w-full sm:w-auto bg-primary hover:bg-primaryDark text-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg font-medium transition-colors text-xs sm:text-sm"
-                      >
-                        Записаться
-                      </button>
                       <Link 
                         to={`/doctors/${doctor.id}`}
                         className="w-full sm:w-auto px-3 sm:px-4 py-1 sm:py-2 border border-primary text-primary hover:bg-primary hover:text-white rounded-lg font-medium transition-colors text-xs sm:text-sm text-center"

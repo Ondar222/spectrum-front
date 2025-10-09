@@ -335,10 +335,6 @@ export default function PriceListPage() {
                           className="px-2 py-1 text-[10px] text-primary border border-primary rounded-md whitespace-nowrap"
                         >Описание</button>
                       )}
-                      <button
-                        onClick={() => setAppointmentModal({ isOpen: true, service })}
-                        className="bg-primary hover:bg-primaryDark text-white px-3 py-1 rounded-md text-[11px] font-medium flex-shrink-0"
-                      >Записаться</button>
                     </div>
                     {(service.info || (service.altname && service.altname !== service.name)) && expandedService[service.id] && (
                       <div className="mt-2 text-xs text-gray-600">
@@ -376,12 +372,7 @@ export default function PriceListPage() {
                         {service.group_name}
                       </div>
                     </div>
-                    <button
-                      onClick={() => setAppointmentModal({ isOpen: true, service })}
-                      className="w-full bg-primary text-white py-2 px-3 md:px-4 rounded-lg hover:bg-primaryDark transition-colors duration-200 font-medium text-sm md:text-base"
-                    >
-                      Записаться
-                    </button>
+                    {/* Кнопка записи скрыта по требованию */}
                   </div>
                 )
               ))}
@@ -556,7 +547,6 @@ export default function PriceListPage() {
                                   {(service.info || (service.altname && service.altname !== service.name)) && (
                                     <button onClick={() => toggleServiceDesc(service.id)} className="px-2 py-1 text-[10px] text-primary border border-primary rounded-md whitespace-nowrap">Описание</button>
                                   )}
-                                  <button onClick={() => handleAppointmentClick(service)} className="bg-primary hover:bg-primaryDark text-white px-3 py-1 rounded-md text-[11px] font-medium flex-shrink-0">Записаться</button>
                                 </div>
                                 {(service.info || (service.altname && service.altname !== service.name)) && expandedService[service.id] && (
                                   <div className="mt-2 text-xs text-gray-600">
@@ -615,12 +605,7 @@ export default function PriceListPage() {
                                         </div>
                                       )}
                                     </div>
-                                    <button 
-                                      onClick={() => handleAppointmentClick(service)}
-                                      className="bg-primary hover:bg-primaryDark text-white px-4 md:px-6 py-2 rounded-lg font-medium transition-colors text-sm md:text-base"
-                                    >
-                                      Записаться
-                                    </button>
+                                    {/* Кнопка записи скрыта по требованию */}
                                   </div>
                                 </div>
                               </div>

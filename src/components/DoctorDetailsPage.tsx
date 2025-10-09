@@ -225,14 +225,14 @@ const DoctorDetailsPage: React.FC = () => {
                 </div>
 
                 {/* Кнопка записи */}
-                <div className="mt-8">
+                {/* <div className="mt-8">
                   <button
                     onClick={handleAppointmentClick}
                     className="px-8 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primaryDark transition-colors"
                   >
                     Записаться на прием
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
