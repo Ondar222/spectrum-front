@@ -132,14 +132,14 @@ export default function Header() {
                 </Link>
               </li> */}
 
-              {/* <li>
+              <li>
                 <Link
                   to="/reviews"
                   className="text-dark hover:text-primary transition-colors"
                 >
                   Отзывы
                 </Link>
-              </li> */}
+              </li>
               <li>
                 <Link
                   to="/questions"

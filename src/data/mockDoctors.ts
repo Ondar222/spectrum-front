@@ -1,4 +1,5 @@
 import type { ArchimedDoctor, ArchimedBranch } from '../types/cms';
+import doctor1 from "../../public/doctorsImage/doctor1.jpg"
 
 export const mockDoctors: ArchimedDoctor[] = [
     {
@@ -21,7 +22,7 @@ export const mockDoctors: ArchimedDoctor[] = [
         scientific_degree_id: 1,
         scientific_degree: 'Кандидат медицинских наук',
         user_id: 1,
-        photo: "https://img.freepik.com/free-photo/doctor-holding-clipboard-looking-camera_23-2148285743.jpg?semt=ais_incoming&w=740&q=80",
+        photo: doctor1,
         address: 'г. Кызыл, ул. Ленина, 60',
         building_name: 'Поликлиника №1',
         building_web_name: 'Поликлиника №1',

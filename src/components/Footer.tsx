@@ -40,15 +40,6 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2 sm:space-y-3">
               <li>
-                <Link
-                  to="/doctors"
-                  className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base"
-                >
-                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full mr-2 sm:mr-3 group-hover:scale-125 transition-transform flex-shrink-0" />
-                  ONLINE консультации
-                </Link>
-              </li>
-              <li>
                 <a
                   href="/documents/utverzhdeno.pdf"
                   target="_blank"
@@ -82,15 +73,7 @@ export default function Footer() {
               {/* Временно скрыто - раздел сертификатов
               <li><a href="/certificates" className="text-gray-400 hover:text-primary">Подарочные сертификаты</a></li>
               */}
-              <li>
-                <Link
-                  to="/prices"
-                  className="text-gray-200 hover:text-primary transition-colors flex items-center group text-sm sm:text-base"
-                >
-                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-primary rounded-full mr-2 sm:mr-3 group-hover:scale-125 transition-transform flex-shrink-0" />
-                  Услуги
-                </Link>
-              </li>
+
               <li>
                 <Link
                   to="/doctors"
