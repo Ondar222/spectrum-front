@@ -7,7 +7,7 @@ export default function Footer() {
       className="relative text-white overflow-hidden"
       style={{
         backgroundImage:
-          "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url(https://clinicaldan.ru/upload/iblock/37e/37ee47227d019ba56cb6a41102fea374.jpg)",
+          "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url(https://spectrumaldan.ru/wp-content/uploads/2024/06/male-school-teacher-and-kids-in-class-smiling-to-camera.jpg)",
         backgroundSize: "cover",
         backgroundPosition: "center 30%",
         backgroundAttachment: "fixed",
