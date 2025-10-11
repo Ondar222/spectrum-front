@@ -10,7 +10,9 @@ import type {
   AppointmentStatus
 } from '../types/cms';
 import { mockServices } from '../data/mockServices';
-import { mockDoctors, mockBranches } from '../data/mockDoctors';
+import { customServices } from '../data/customPriceList';
+import { mockBranches } from '../data/mockDoctors';
+import { customDoctors } from '../data/customDoctors';
 
 // Archimed API configuration
 const ARCHIMED_API_URL = import.meta.env.VITE_ARCHIMED_API_URL || 'https://newapi.archimed-soft.ru/api/v5';
@@ -25,8 +27,8 @@ console.log('Final ARCHIMED_API_TOKEN:', ARCHIMED_API_TOKEN);
 const ARCHIMED_CATEGORIES_ENABLED = false;
 
 // Local cache settings
-const DOCTORS_CACHE_KEY = 'archimed_doctors_v1';
-const SERVICES_CACHE_KEY = 'archimed_services_v1';
+const DOCTORS_CACHE_KEY = 'archimed_doctors_v2_custom';
+const SERVICES_CACHE_KEY = 'archimed_services_v2_custom';
 const DOCTORS_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24h
 const SERVICES_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24h
 const DEFAULT_REQUEST_TIMEOUT_MS = 20000; // 20s
@@ -127,39 +129,10 @@ class ArchimedService {
 
   // Doctors
   async getDoctors(): Promise<ArchimedDoctor[]> {
-    console.log('getDoctors called, cache length:', this.doctorsCache.length);
-
-    if (this.doctorsCache.length > 0) {
-      console.log('Returning cached doctors:', this.doctorsCache.length);
-      // Revalidate in background for freshness
-      this.refreshDoctors();
-      return this.doctorsCache;
-    }
-
-    const fromStorage = this.readFromStorage<ArchimedDoctor[]>(DOCTORS_CACHE_KEY, DOCTORS_CACHE_TTL_MS);
-    if (fromStorage && fromStorage.length > 0) {
-      console.log('Loading doctors from storage:', fromStorage.length);
-      this.doctorsCache = fromStorage;
-      // refresh in background
-      this.refreshDoctors();
-      return this.doctorsCache;
-    }
-
-    console.log('No cached data, trying API...');
-    try {
-      const response = await this.request<{ data: ArchimedDoctor[]; total: number; page: number; limit: number }>('/doctors');
-      console.log('API returned doctors:', response.data?.length || 0);
-      this.doctorsCache = response.data || [];
-      this.writeToStorage(DOCTORS_CACHE_KEY, this.doctorsCache);
-      return this.doctorsCache;
-    } catch (error) {
-      console.warn('API недоступен, используем моковые данные для врачей:', error);
-      // Используем моковые данные при ошибке API
-      this.doctorsCache = mockDoctors;
-      this.writeToStorage(DOCTORS_CACHE_KEY, this.doctorsCache);
-      console.log('Using mock doctors:', this.doctorsCache.length);
-      return this.doctorsCache;
-    }
+    console.log('getDoctors called - returning custom doctors list');
+    this.doctorsCache = customDoctors;
+    this.writeToStorage(DOCTORS_CACHE_KEY, this.doctorsCache);
+    return this.doctorsCache;
   }
 
   async getDoctor(id: number): Promise<ArchimedDoctor> {
@@ -178,29 +151,10 @@ class ArchimedService {
 
   // Services (from Archimed)
   async getServices(): Promise<ApiService[]> {
-    if (this.servicesCache.length > 0) {
-      this.refreshServices();
-      return this.servicesCache;
-    }
-    const fromStorage = this.readFromStorage<ApiService[]>(SERVICES_CACHE_KEY, SERVICES_CACHE_TTL_MS);
-    if (fromStorage && fromStorage.length > 0) {
-      this.servicesCache = fromStorage;
-      this.refreshServices();
-      return this.servicesCache;
-    }
-
-    try {
-      const response = await this.request<{ data: ApiService[]; total: number; page: number; limit: number }>('/services');
-      this.servicesCache = response.data || [];
-      this.writeToStorage(SERVICES_CACHE_KEY, this.servicesCache);
-      return this.servicesCache;
-    } catch (error) {
-      console.warn('API недоступен, используем моковые данные для услуг:', error);
-      // Используем моковые данные при ошибке API
-      this.servicesCache = mockServices;
-      this.writeToStorage(SERVICES_CACHE_KEY, this.servicesCache);
-      return this.servicesCache;
-    }
+    // Always return custom educational price list
+    this.servicesCache = customServices;
+    this.writeToStorage(SERVICES_CACHE_KEY, this.servicesCache);
+    return this.servicesCache;
   }
 
   async getService(id: number): Promise<ApiService> {

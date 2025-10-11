@@ -109,7 +109,7 @@ export default function DoctorsPage() {
         <div className="container mx-auto px-3 sm:px-4">
           <div className="text-center mb-8 sm:mb-10 md:mb-12">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-dark mb-3 sm:mb-4">Наши специалисты</h1>
-            <p className="text-sm sm:text-base md:text-xl text-gray-600 max-w-3xl mx-auto">Высококвалифицированные врачи клиники Алдан с многолетним опытом работы.</p>
+            <p className="text-sm sm:text-base md:text-xl text-gray-600 max-w-3xl mx-auto">Специалисты Центра SpectrUM — опытные психологи и педагоги, работающие с детьми, подростками и взрослыми.</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-5">
             {Array.from({ length: 6 }).map((_, i) => (
@@ -145,7 +145,7 @@ export default function DoctorsPage() {
         <div className="text-center mb-8 sm:mb-10 md:mb-12">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-dark mb-3 sm:mb-4">Наши специалисты</h1>
           <p className="text-sm sm:text-base md:text-xl text-gray-600 max-w-3xl mx-auto">
-            Высококвалифицированные врачи клиники Алдан с многолетним опытом работы.
+            Специалисты Центра SpectrUM — опытные психологи и педагоги, работающие с детьми, подростками и взрослыми.
           </p>
         </div>
 

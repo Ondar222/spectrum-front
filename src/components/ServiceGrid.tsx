@@ -34,7 +34,7 @@ const services: Service[] = [
     ),
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
-    link: "/services/therapy",
+    link: "/prices?group=400",
   },
   {
     id: 2,
@@ -57,7 +57,7 @@ const services: Service[] = [
     ),
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
-    link: "/laboratory",
+    link: "/prices?group=900",
   },
   {
     id: 3,
@@ -80,7 +80,7 @@ const services: Service[] = [
     ),
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
-    link: "/services/diagnostics",
+    link: "/prices?group=700",
   },
   {
     id: 5,
@@ -103,7 +103,7 @@ const services: Service[] = [
     ),
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
-    link: "/services/gynecology",
+    link: "/prices?group=800",
   },
   {
     id: 5,
@@ -126,7 +126,7 @@ const services: Service[] = [
     ),
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
-    link: "/services/urology",
+    link: "/prices?group=600",
   },
   {
     id: 5,
@@ -149,7 +149,7 @@ const services: Service[] = [
     ),
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
-    link: "/services/plastic-surgery",
+    link: "/prices?group=800",
   },
   {
     id: 6,
@@ -172,7 +172,7 @@ const services: Service[] = [
     ),
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
-    link: "/services/surgery",
+    link: "/prices?group=500",
   },
   {
     id: 7,
@@ -195,7 +195,7 @@ const services: Service[] = [
     ),
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
-    link: "/services/cardiology",
+    link: "/prices?group=400",
   },
   {
     id: 8,
@@ -218,7 +218,7 @@ const services: Service[] = [
     ),
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
-    link: "/services/pediatrics",
+    link: "/prices?group=300",
   },
   {
     id: 9,
@@ -241,7 +241,7 @@ const services: Service[] = [
     ),
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
-    link: "/services/neurology",
+    link: "/prices?group=200",
   },
 ];
 
@@ -327,8 +327,8 @@ export default function ServiceGrid() {
           Наши направления
         </h2>
         <p className="text-gray-600 text-center max-w-2xl mx-auto mb-6 sm:mb-8 text-xs sm:text-sm">
-          Клиника Алдан предлагает широкий спектр медицинских услуг. Выберите
-          интересующее вас направление.
+          Центр SpectrUM предлагает образовательные и психологические услуги для
+          детей, подростков и взрослых. Выберите интересующее вас направление.
         </p>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">

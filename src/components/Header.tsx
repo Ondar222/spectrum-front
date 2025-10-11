@@ -75,10 +75,17 @@ export default function Header() {
             <img
               src="/favicon.png"
               alt="SpectrUM"
-              className="block h-32 sm:h-32 md:h-32 lg:h-24 xl:h-28 w-auto object-contain -my-3 sm:-my-3 md:-my-4"
+              className="block h-10 sm:h-10 md:h-10 lg:h-12 w-auto object-contain mr-3"
               loading="eager"
             />
-            <h3>SpectrUM</h3>
+            <div className="leading-tight">
+              <div className="text-base sm:text-lg md:text-xl font-bold text-dark">
+                SpectrUM
+              </div>
+              <div className="text-[10px] sm:text-xs text-gray-500">
+                психология • педагогика • развитие
+              </div>
+            </div>
           </Link>
 
           {/* Desktop navigation */}
@@ -230,10 +237,15 @@ export default function Header() {
             <img
               src="/favicon.png"
               alt="SpectrUM"
-              className="h-24 w-auto object-contain"
+              className="h-8 w-auto object-contain mr-2"
               loading="eager"
             />
-            <a href="/">SpectrUM</a>
+            <div className="leading-tight">
+              <div className="text-sm font-bold text-dark">SpectrUM</div>
+              <div className="text-[10px] text-gray-500">
+                психология • педагогика • развитие
+              </div>
+            </div>
           </Link>
           <button
             className="text-gray-500 hover:text-dark"

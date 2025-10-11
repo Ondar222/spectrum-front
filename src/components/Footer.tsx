@@ -154,36 +154,13 @@ export default function Footer() {
                   </svg>
                 </div>
                 <a
-                  href="tel:+79233816060"
+                  href="tel:+79235405050"
                   className="hover:text-primary transition-colors text-sm sm:text-base"
                 >
-                  +7 (923) 381-60-60
+                  +7 (923) 540-50-50
                 </a>
               </div>
-              <div className="flex items-center text-gray-200 group">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-full flex items-center justify-center mr-3 sm:mr-4 group-hover:bg-primary/30 transition-colors flex-shrink-0">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 sm:h-5 sm:w-5 text-primary"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                    />
-                  </svg>
-                </div>
-                <a
-                  href="tel:+79233176060"
-                  className="hover:text-primary transition-colors text-sm sm:text-base"
-                >
-                  +7 (923) 317-60-60
-                </a>
-              </div>
+
               <div className="flex items-center text-gray-200 group">
                 {/* <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary/30 transition-colors">
                   <svg
@@ -226,10 +203,10 @@ export default function Footer() {
                   </svg>
                 </div>
                 <a
-                  href="mailto:clinicaldan@mail.ru"
+                  href="mailto:spectrum_aldan@mail.ru"
                   className="hover:text-primary transition-colors text-sm sm:text-base"
                 >
-                  clinicaldan@mail.ru
+                  spectrum_aldan@mail.ru
                 </a>
               </div>
               <div className="flex items-center text-gray-200 group">
@@ -251,10 +228,10 @@ export default function Footer() {
                 </div>
                 <div>
                   <div className="text-sm sm:text-base">
-                    Время работы: Пн-Пт 08:00 - 22:00
+                    Время работы: Пн-Пт 08:00 - 20:00
                   </div>
                   <div className="text-xs sm:text-sm text-gray-300">
-                    Сб-Вс: 09:00 - 18:00
+                    Сб: 09:00 - 18:00
                   </div>
                 </div>
               </div>
@@ -266,33 +243,13 @@ export default function Footer() {
         <div className="pt-6 sm:pt-8 border-t border-white/20 text-sm">
           <div className="bg-black/20 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/10 space-y-1.5 sm:space-y-2">
             <p className="text-gray-200 text-xs sm:text-sm">
-              ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ "АЛДАН" ИНН: 1701049398
-              <a
-                href="https://yandex.ru/maps/?text=667000%2C%20Республика%20Тыва%2C%20город%20Кызыл%2C%20ул.%20Ленина%2C%20д.%2060%2C%20офис%201"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center ml-1 text-primary hover:underline"
-                aria-label="Открыть адрес на карте"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-4 h-4 sm:w-5 sm:h-5 mr-1 flex-shrink-0"
-                >
-                  <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
-                </svg>
-                <span className="text-xs sm:text-sm">
-                  667000, Республика Тыва, город Кызыл, ул. Ленина, д. 60, офис
-                  1
-                </span>
-              </a>
+              667003, Республика Тыва, город Кызыл, улица Островского, дом 10
             </p>
             <p className="text-gray-200 text-xs sm:text-sm">
               ИМЕЮТСЯ ПРОТИВОПОКАЗАНИЯ, НЕОБХОДИМА КОНСУЛЬТАЦИЯ СПЕЦИАЛИСТА
             </p>
             <p className="text-gray-200 text-xs sm:text-sm">
-              © 2025 КЛИНИКА АЛДАН. ВСЕ ПРАВА ЗАЩИЩЕНЫ.
+              © 2025 Центр SpectrUM. Все права защищены.
             </p>
             <p className="text-gray-200 text-xs sm:text-sm">
               <a className="text-gray-200" href="https://lana-soft.ru/">
