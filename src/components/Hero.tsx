@@ -11,7 +11,7 @@ const slides = [
     buttonText: "ПОДРОБНЕЕ",
     buttonLink: "/about",
     image:
-      "https://clinicaldan.ru/upload/iblock/37e/37ee47227d019ba56cb6a41102fea374.jpg",
+      "https://spectrumaldan.ru/wp-content/uploads/2024/06/girls-in-kindergarten-1536x1024.jpg",
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const slides = [
     buttonText: "ПОДРОБНЕЕ",
     buttonLink: "/prices",
     image:
-      "https://clinicaldan.ru/upload/iblock/37e/37ee47227d019ba56cb6a41102fea374.jpg",
+      "https://spectrumaldan.ru/wp-content/uploads/2024/06/male-teacher-with-elementary-school-kids-in-school-class.jpg",
   },
 ];
 
