@@ -42,7 +42,7 @@ function HomePage() {
     <>
       <Hero />
       <ServiceGrid />
-      <Checkups />
+
       <Advantages />
       <Testimonials />
       <ContactForm />
@@ -58,12 +58,12 @@ function App() {
 
   const handleCookieAccept = () => {
     // Здесь можно добавить логику для инициализации аналитики и других сервисов
-    console.log('Cookies accepted');
+    console.log("Cookies accepted");
   };
 
   const handleCookieDecline = () => {
     // Здесь можно добавить логику для отключения аналитики
-    console.log('Cookies declined');
+    console.log("Cookies declined");
   };
 
   return (
@@ -120,7 +120,7 @@ function App() {
         </main>
         <Footer />
         <FloatingBooking />
-        <CookieNotification 
+        <CookieNotification
           onAccept={handleCookieAccept}
           onDecline={handleCookieDecline}
         />

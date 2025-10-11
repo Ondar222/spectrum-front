@@ -3,10 +3,10 @@ import type { ArchimedDoctor, ArchimedBranch } from '../types/cms';
 export const mockDoctors: ArchimedDoctor[] = [
     {
         id: 1,
-        name: 'Иванова',
-        name1: 'Анна',
-        name2: 'Петровна',
-        type: 'Терапевт',
+        name: 'Соржу',
+        name1: 'Аяна',
+        name2: 'Алексеевна',
+        type: 'Клинический психолог',
         code: 'DOC001',
         max_time: '60',
         phone: '+7 (39422) 123-456',

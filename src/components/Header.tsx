@@ -7,12 +7,12 @@ export default function Header() {
 
   // Check if user is logged in
   useEffect(() => {
-    const userData = localStorage.getItem('user_data');
+    const userData = localStorage.getItem("user_data");
     if (userData) {
       try {
         setUser(JSON.parse(userData));
       } catch (error) {
-        console.error('Error parsing user data:', error);
+        console.error("Error parsing user data:", error);
       }
     }
   }, []);
@@ -67,13 +67,18 @@ export default function Header() {
 
         {/* Main header */}
         <div className="py-1 md:py-0 flex items-center justify-between">
-          <Link to="/" className="flex items-center" aria-label="Клиника Алдан">
+          <Link
+            to="/"
+            className="flex items-center"
+            aria-label="Центр SpectrUM"
+          >
             <img
-              src="/Logo.png"
-              alt="Клиника Алдан"
-              className="block h-36 sm:h-36 md:h-36 lg:h-28 xl:h-36 w-auto object-contain -my-3 sm:-my-3 md:-my-4"
+              src="/favicon.png"
+              alt="SpectrUM"
+              className="block h-32 sm:h-32 md:h-32 lg:h-24 xl:h-28 w-auto object-contain -my-3 sm:-my-3 md:-my-4"
               loading="eager"
             />
+            <h3>SpectrUM</h3>
           </Link>
 
           {/* Desktop navigation */}
@@ -92,7 +97,7 @@ export default function Header() {
                   to="/about"
                   className="text-dark hover:text-primary transition-colors"
                 >
-                  О клинике
+                  О центре
                 </Link>
               </li>
               <li>
@@ -100,7 +105,7 @@ export default function Header() {
                   to="/doctors"
                   className="text-dark hover:text-primary transition-colors"
                 >
-                  Врачи
+                  Специалисты
                 </Link>
               </li>
               <li>
@@ -111,30 +116,23 @@ export default function Header() {
                   Прайс-лист
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to="/stock"
                   className="text-dark hover:text-primary transition-colors"
                 >
                   Акции
                 </Link>
-              </li>
-              <li>
-                <Link
-                  to="/certificates"
-                  className="text-dark hover:text-primary transition-colors"
-                >
-                  Сертификаты
-                </Link>
-              </li>
-              <li>
+              </li> */}
+
+              {/* <li>
                 <Link
                   to="/reviews"
                   className="text-dark hover:text-primary transition-colors"
                 >
                   Отзывы
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   to="/questions"
@@ -151,7 +149,7 @@ export default function Header() {
                   Документы
                 </Link>
               </li>
-              {user && user.role === 'staff' && (
+              {user && user.role === "staff" && (
                 <li>
                   <Link
                     to="/staff"
@@ -227,9 +225,15 @@ export default function Header() {
             to="/"
             className="flex items-center"
             onClick={() => setIsMenuOpen(false)}
-            aria-label="Клиника Алдан"
+            aria-label="SpectrUM"
           >
-            <img src="/Logo.png" alt="Клиника Алдан" className="h-36 w-auto object-contain" loading="eager" />
+            <img
+              src="/favicon.png"
+              alt="SpectrUM"
+              className="h-24 w-auto object-contain"
+              loading="eager"
+            />
+            <a href="/">SpectrUM</a>
           </Link>
           <button
             className="text-gray-500 hover:text-dark"
@@ -270,7 +274,7 @@ export default function Header() {
                 className="block py-2 text-dark hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                О клинике
+                О центре
               </Link>
             </li>
             <li>
@@ -279,7 +283,7 @@ export default function Header() {
                 className="block py-2 text-dark hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Врачи
+                Специалисты
               </Link>
             </li>
             <li>
@@ -300,7 +304,7 @@ export default function Header() {
                 Акции
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 to="/certificates"
                 className="block py-2 text-dark hover:text-primary transition-colors"
@@ -308,7 +312,7 @@ export default function Header() {
               >
                 Сертификаты
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 to="/reviews"
@@ -336,7 +340,7 @@ export default function Header() {
                 Документы
               </Link>
             </li>
-            {user && user.role === 'staff' && (
+            {user && user.role === "staff" && (
               <li>
                 <Link
                   to="/staff"
