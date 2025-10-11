@@ -234,7 +234,7 @@ export default function AboutClinicPage() {
                 >
                   <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
                 </svg>
-                г. Кызыл, ул. Ленина д.60
+                667003, Республика Тыва, г. Кызыл , ул. Островского д 10
               </a>
             </div>
             <div className="text-center">
@@ -254,7 +254,7 @@ export default function AboutClinicPage() {
               <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
                 Телефон
               </h3>
-              <p className="text-gray-600">+7 (923) 317-60-60</p>
+              <p className="text-gray-600">+79235405050</p>
             </div>
             <div className="text-center">
               <svg
@@ -273,7 +273,7 @@ export default function AboutClinicPage() {
               <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
                 Email
               </h3>
-              <p className="text-gray-600">info@aldan-clinic.ru</p>
+              <p className="text-gray-600">spectrum_aldan@mail.ru</p>
             </div>
           </div>
         </div>
