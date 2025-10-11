@@ -5,13 +5,13 @@ const slides = [
   {
     id: 1,
     title: "Центр SpectrUM",
-    subtitle: "Современная медицина",
+    subtitle: "психология • педагогика • развитие",
     description:
-      " это образовательный центр, который направлен на всестороннее развитие детей разных возрастов. Специалисты ЦИР «SpectrUM» работают со всеми детьми, в том числе и с детьми с ограниченными возможностями здоровья. Так же психологи оказывают психологическую помощь детям и родителям.",
+      "Для детей и взрослых: поддержка психологов и педагогов, развитие навыков, мини-группы и индивидуальные занятия.",
     buttonText: "ПОДРОБНЕЕ",
     buttonLink: "/about",
     image:
-      "https://spectrumaldan.ru/wp-content/uploads/2024/06/girls-in-kindergarten-1536x1024.jpg",
+      "https://spectrumaldan.ru/wp-content/uploads/2024/06/children-talking-to-teacher-in-school.jpg",
   },
   {
     id: 2,

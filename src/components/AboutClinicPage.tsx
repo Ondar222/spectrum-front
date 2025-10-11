@@ -2,19 +2,15 @@ import React from "react";
 
 export default function AboutClinicPage() {
   return (
-    <div className="min-h-screen bg-gray-50 py-8 md:py-12">
+    <div className="min-h-screen bg-secondary py-8 md:py-12">
       <div className="container mx-auto px-4">
         {/* Hero Section */}
         <div className="text-center mb-10 md:mb-16">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4 text-dark">
-            О SpectrUM
+            Центр SpectrUM
           </h1>
-          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
-            Это образовательный центр, который направлен на всестороннее
-            развитие детей разных возрастов. Специалисты ЦИР «SpectrUM» работают
-            со всеми детьми, в том числе и с детьми с ограниченными
-            возможностями здоровья. Так же психологи оказывают психологическую
-            помощь детям и родителям.
+          <p className="text-base sm:text-lg text-gray-700 max-w-3xl mx-auto">
+            психология • педагогика • развитие для детей и взрослых
           </p>
         </div>
 

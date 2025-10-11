@@ -10,12 +10,12 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
-        // Custom colors for Aldan Clinic website
-        primary: "#d2002e", // RGB 210, 0, 46 - основной красный цвет клиники
-        primaryDark: "#b30026", // Темный оттенок для hover эффектов
-        primaryLight: "#e6334d", // Светлый оттенок
-        secondary: "#f8f9fa", // Светло-серый для фона
-        dark: "#2c3e50", // Темно-синий для текста
+        // Brand palette: SpectrUM (beige/loft + burgundy)
+        primary: "#9a2f2f", // Brighter burgundy
+        primaryDark: "#7a2626", // Darker burgundy for hover
+        primaryLight: "#c25454", // Lighter/brighter burgundy
+        secondary: "#f7f2ea", // Softer loft beige background
+        dark: "#2b2b2b", // Neutral dark for text
         white: "#ffffff", // Белый фон
         gray: {
           50: "#f9fafb",
@@ -90,7 +90,7 @@ module.exports = {
             height: "0",
           },
         },
-        "fadeInUp": {
+        fadeInUp: {
           "0%": {
             opacity: "0",
             transform: "translateY(30px)",
@@ -104,23 +104,23 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fadeInUp": "fadeInUp 0.6s ease-out",
+        fadeInUp: "fadeInUp 0.6s ease-out",
       },
       container: {
         center: true,
         padding: {
-          DEFAULT: '1rem',
-          sm: '2rem',
-          lg: '4rem',
-          xl: '5rem',
-          '2xl': '6rem',
+          DEFAULT: "1rem",
+          sm: "2rem",
+          lg: "4rem",
+          xl: "5rem",
+          "2xl": "6rem",
         },
         screens: {
-          sm: '640px',
-          md: '768px',
-          lg: '1024px',
-          xl: '1280px',
-          '2xl': '1536px',
+          sm: "640px",
+          md: "768px",
+          lg: "1024px",
+          xl: "1280px",
+          "2xl": "1536px",
         },
       },
     },

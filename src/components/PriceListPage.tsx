@@ -303,7 +303,7 @@ export default function PriceListPage() {
   // Show instant skeleton to avoid perceived lag
   if (isLoading && serviceGroups.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 py-6 md:py-12">
+      <div className="min-h-screen bg-secondary py-6 md:py-12">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-dark mb-3 md:mb-4">
@@ -348,7 +348,7 @@ export default function PriceListPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-6 md:py-12">
+    <div className="min-h-screen bg-secondary py-6 md:py-12">
       <div className="container mx-auto px-4">
         {/* Hero Section */}
         <div className="text-center mb-8 md:mb-12">
@@ -509,7 +509,7 @@ export default function PriceListPage() {
                   placeholder="Введите название услуги..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-3 md:px-4 py-2 pl-9 md:pl-10 border border-gray-300 rounded focus:outline-none focus:border-primary text-sm md:text-base"
+                  className="w-full px-3 md:px-4 py-2 pl-9 md:pl-10 border border-gray-200 rounded focus:outline-none focus:border-primary text-sm md:text-base"
                 />
                 <svg
                   className="absolute left-3 top-2.5 h-4 w-4 md:h-5 md:w-5 text-gray-400"
@@ -539,7 +539,7 @@ export default function PriceListPage() {
                 id="group"
                 value={selectedGroup}
                 onChange={(e) => setSelectedGroup(e.target.value)}
-                className="w-full px-3 md:px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-primary text-sm md:text-base"
+                className="w-full px-3 md:px-4 py-2 border border-gray-200 rounded focus:outline-none focus:border-primary text-sm md:text-base"
               >
                 <option value="all">Все категории</option>
                 {serviceGroups.map((group) => (
@@ -564,7 +564,7 @@ export default function PriceListPage() {
                     key={opt.key}
                     type="button"
                     onClick={() => setSelectedType(opt.key as any)}
-                    className={`px-2.5 md:px-3 py-1.5 md:py-2 rounded-md text-sm border ${selectedType === opt.key ? "bg-primary text-white border-primary" : "bg-white text-gray-700 border-gray-300 hover:border-primary"}`}
+                    className={`px-2.5 md:px-3 py-1.5 md:py-2 rounded-md text-sm border ${selectedType === opt.key ? "bg-primary text-white border-primary" : "bg-white text-gray-700 border-gray-200 hover:border-primary"}`}
                   >
                     {opt.label}
                   </button>
@@ -689,7 +689,7 @@ export default function PriceListPage() {
                             key={opt.key}
                             type="button"
                             onClick={() => setGynFilter(opt.key as any)}
-                            className={`px-2.5 md:px-3 py-1.5 rounded-md text-sm border ${gynFilter === opt.key ? "bg-primary text-white border-primary" : "bg-white text-gray-700 border-gray-300 hover:border-primary"}`}
+                            className={`px-2.5 md:px-3 py-1.5 rounded-md text-sm border ${gynFilter === opt.key ? "bg-primary text-white border-primary" : "bg-white text-gray-700 border-gray-200 hover:border-primary"}`}
                           >
                             {opt.label}
                           </button>
@@ -891,7 +891,7 @@ export default function PriceListPage() {
                                       )
                                     }
                                     disabled={getCurrentPage(group.id) === 1}
-                                    className="px-4 py-2 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+                                    className="px-4 py-2 text-sm border border-gray-200 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
                                   >
                                     ← Назад
                                   </button>
@@ -931,7 +931,7 @@ export default function PriceListPage() {
                                           <button
                                             key={i}
                                             onClick={() => setPage(group.id, i)}
-                                            className={`px-3 py-1 text-sm border rounded transition-colors ${i === current ? "bg-primary text-white border-primary" : "border-gray-300 hover:bg-gray-100"}`}
+                                            className={`px-3 py-1 text-sm border rounded transition-colors ${i === current ? "bg-primary text-white border-primary" : "border-gray-200 hover:bg-gray-100"}`}
                                           >
                                             {i}
                                           </button>
@@ -954,7 +954,7 @@ export default function PriceListPage() {
                                             onClick={() =>
                                               setPage(group.id, total)
                                             }
-                                            className="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-100 transition-colors"
+                                            className="px-3 py-1 text-sm border border-gray-200 rounded hover:bg-gray-100 transition-colors"
                                           >
                                             {total}
                                           </button>
@@ -973,7 +973,7 @@ export default function PriceListPage() {
                                     disabled={
                                       getCurrentPage(group.id) === totalPages
                                     }
-                                    className="px-4 py-2 text-sm border border-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
+                                    className="px-4 py-2 text-sm border border-gray-200 rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 transition-colors"
                                   >
                                     Вперед →
                                   </button>
@@ -996,7 +996,7 @@ export default function PriceListPage() {
                                   {getCurrentPage(group.id) > 1 && (
                                     <button
                                       onClick={() => setPage(group.id, 1)}
-                                      className="px-3 py-1.5 text-sm border border-gray-300 rounded hover:bg-gray-100"
+                                      className="px-3 py-1.5 text-sm border border-gray-200 rounded hover:bg-gray-100"
                                     >
                                       Свернуть
                                     </button>
