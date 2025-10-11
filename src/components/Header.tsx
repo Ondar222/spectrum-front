@@ -307,7 +307,7 @@ export default function Header() {
                 Прайс-лист
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 to="/stock"
                 className="block py-2 text-dark hover:text-primary transition-colors"
@@ -315,7 +315,7 @@ export default function Header() {
               >
                 Акции
               </Link>
-            </li>
+            </li> */}
             {/* <li>
               <Link
                 to="/certificates"
