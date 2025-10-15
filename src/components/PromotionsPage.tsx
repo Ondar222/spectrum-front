@@ -330,7 +330,7 @@ export default function PromotionsPage() {
               Подпишитесь на рассылку акций
             </h2>
             <p className="text-gray-600 text-center mb-4 md:mb-6">
-              Будьте в курсе всех специальных предложений и акций нашей клиники
+              Будьте в курсе всех специальных предложений и акций нашего центра
             </p>
             <form className="max-w-md mx-auto">
               <div className="flex gap-4">

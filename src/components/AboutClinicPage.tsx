@@ -120,34 +120,38 @@ export default function AboutClinicPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
-                    Диагностика
+                    Логопедия
                   </h3>
                   <p className="text-sm text-gray-600">
-                    Современные методы обследования
+                    <li>Диагностика</li>
+                    <li>Коррекция</li>
                   </p>
                 </div>
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
-                    Лечение
+                    Логопедическая диагностика
                   </h3>
                   <p className="text-sm text-gray-600">
-                    Эффективные методы терапии
+                    <li>Диагностика</li>
+                    <li>Коррекция</li>
                   </p>
                 </div>
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
-                    Профилактика
+                    Дефектология
                   </h3>
                   <p className="text-sm text-gray-600">
-                    Предупреждение заболеваний
+                    <li>Диагностика</li>
+                    <li>Коррекция</li>
                   </p>
                 </div>
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
-                    Реабилитация
+                    Психология
                   </h3>
                   <p className="text-sm text-gray-600">
-                    Восстановление здоровья
+                    <li>Диагностика</li>
+                    <li>Коррекция</li>
                   </p>
                 </div>
               </div>

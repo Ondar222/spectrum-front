@@ -310,7 +310,7 @@ export default function PriceListPage() {
               Прайс-лист центра
             </h1>
             <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
-              Актуальные цены на все услуги клиники Алдан.
+              Актуальные цены на все услуги центра SPectrUM.
             </p>
           </div>
           <div className="grid gap-6">
@@ -1026,7 +1026,7 @@ export default function PriceListPage() {
                 Оплата услуг
               </h3>
               <ul className="space-y-1.5 md:space-y-2 text-gray-600 text-sm md:text-base">
-                <li>• Наличными в кассе клиники</li>
+                <li>• Наличными в кассе центра</li>
                 <li>• Банковскими картами</li>
               </ul>
             </div>
