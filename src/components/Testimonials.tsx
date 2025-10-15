@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import footerPhone from "../../public/doctorsImage/FooterPhone.jpg";
 
 interface Testimonial {
   id: number;
@@ -47,10 +48,10 @@ export default function Testimonials() {
     <section
       className="py-6 sm:py-8 relative"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url('https://spectrumaldan.ru/wp-content/uploads/2024/06/children-talking-to-teacher-in-school.jpg')`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url(${footerPhone})`,
         backgroundSize: "cover",
         backgroundPosition: "center 30%",
-        backgroundAttachment: "fixed",
+        backgroundAttachment: "scroll",
       }}
     >
       <div className="container mx-auto px-3 sm:px-4 relative z-10">

@@ -557,7 +557,7 @@ export default function PriceListPage() {
               <div className="flex flex-wrap gap-2">
                 {[
                   { key: "all", label: "Все" },
-                  { key: "lab", label: "Лабораторная диагностика" },
+                  // { key: "lab", label: "Диагностика" },
                   { key: "other", label: "Другие услуги" },
                 ].map((opt) => (
                   <button
