@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import footerPhone from "../../public/doctorsImage/FooterPhone.jpg";
 
 export default function Footer() {
   return (
     <footer
       className="relative text-white overflow-hidden"
       style={{
-        backgroundImage:
-          "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url(https://spectrumaldan.ru/wp-content/uploads/2024/06/male-school-teacher-and-kids-in-class-smiling-to-camera.jpg)",
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url(${footerPhone})`,
         backgroundSize: "cover",
         backgroundPosition: "center 30%",
-        backgroundAttachment: "fixed",
+        backgroundAttachment: "scroll",
       }}
     >
       <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 md:py-12 relative z-10">

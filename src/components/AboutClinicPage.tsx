@@ -23,16 +23,16 @@ export default function AboutClinicPage() {
                 Наша миссия
               </h2>
               <p className="text-gray-600">
-                Мы стремимся обеспечить доступную и качественную медицинскую
+                Мы стремимся обеспечить доступную и качественную психологическую
                 помощь, используя современные методы диагностики и лечения. Наша
-                цель - помочь каждому пациенту достичь оптимального здоровья и
+                цель - помочь каждому клиенту достичь оптимального здоровья и
                 благополучия.
               </p>
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6 md:p-8">
               <h2 className="text-xl sm:text-2xl font-semibold mb-3 md:mb-4 text-dark">
-                Преимущества клиники
+                Преимущества центра
               </h2>
               <ul className="space-y-4">
                 <li className="flex items-start">
@@ -50,7 +50,7 @@ export default function AboutClinicPage() {
                     />
                   </svg>
                   <span className="text-gray-600">
-                    Современное оборудование и технологии
+                    Разнообразные методики обучения
                   </span>
                 </li>
                 <li className="flex items-start">
@@ -68,7 +68,7 @@ export default function AboutClinicPage() {
                     />
                   </svg>
                   <span className="text-gray-600">
-                    Опытные врачи с высокой квалификацией
+                    Квалифицированный персонал
                   </span>
                 </li>
                 <li className="flex items-start">
@@ -86,7 +86,7 @@ export default function AboutClinicPage() {
                     />
                   </svg>
                   <span className="text-gray-600">
-                    Индивидуальный подход к каждому пациенту
+                    Индивидуальный подход к каждому клиенту
                   </span>
                 </li>
                 <li className="flex items-start">
@@ -104,7 +104,7 @@ export default function AboutClinicPage() {
                     />
                   </svg>
                   <span className="text-gray-600">
-                    Удобное расположение и график работы
+                    Комфортные условия посещения
                   </span>
                 </li>
               </ul>
@@ -149,38 +149,6 @@ export default function AboutClinicPage() {
                   <p className="text-sm text-gray-600">
                     Восстановление здоровья
                   </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-lg p-6 md:p-8">
-              <h2 className="text-xl sm:text-2xl font-semibold mb-3 md:mb-4 text-dark">
-                Наши достижения
-              </h2>
-              <div className="grid grid-cols-2 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">
-                    15+
-                  </div>
-                  <div className="text-gray-600">Лет опыта</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">
-                    30+
-                  </div>
-                  <div className="text-gray-600">Специалистов</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">
-                    5000+
-                  </div>
-                  <div className="text-gray-600">Довольных пациентов</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">
-                    20+
-                  </div>
-                  <div className="text-gray-600">Медицинских направлений</div>
                 </div>
               </div>
             </div>

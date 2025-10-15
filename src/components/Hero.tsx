@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import carousel from "../../public/doctorsImage/carouselPhone.jpg";
 
 const slides = [
   {
@@ -10,8 +11,7 @@ const slides = [
       "Для детей и взрослых: поддержка психологов и педагогов, развитие навыков, мини-группы и индивидуальные занятия.",
     buttonText: "ПОДРОБНЕЕ",
     buttonLink: "/about",
-    image:
-      "https://spectrumaldan.ru/wp-content/uploads/2024/06/children-talking-to-teacher-in-school.jpg",
+    image: carousel,
   },
   {
     id: 2,
@@ -21,8 +21,7 @@ const slides = [
       "Современные программы комплексного обследования организма позволяют выявить заболевания на ранних стадиях и предотвратить их развитие. Индивидуальный подход к каждому пациенту.",
     buttonText: "ПОДРОБНЕЕ",
     buttonLink: "/prices",
-    image:
-      "https://spectrumaldan.ru/wp-content/uploads/2024/06/male-teacher-with-elementary-school-kids-in-school-class.jpg",
+    image: carousel,
   },
 ];
 
@@ -70,7 +69,7 @@ export default function Hero() {
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3)), url(${slides[currentSlide].image})`,
           backgroundSize: "cover",
           backgroundPosition: "center 30%",
-          backgroundAttachment: "fixed",
+          backgroundAttachment: "scroll",
         }}
       >
         {slides.map((slide, index) => (
