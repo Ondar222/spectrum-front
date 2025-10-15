@@ -55,7 +55,7 @@ export default function Testimonials() {
     >
       <div className="container mx-auto px-3 sm:px-4 relative z-10">
         <h2 className="text-xl sm:text-2xl font-bold text-center mb-6 sm:mb-8 text-white">
-          Отзывы пациентов
+          Отзывы клиентов
         </h2>
 
         <div className="max-w-3xl mx-auto relative">

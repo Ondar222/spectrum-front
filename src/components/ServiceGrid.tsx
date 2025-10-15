@@ -290,7 +290,7 @@ export default function ServiceGrid() {
 
   const priorityTitles = [
     "ДЕФЕКТОЛОГИЯ",
-    "ЛОГОПЕДИЯ",
+    "клинический психолог",
     "СУРДОПЕДАГОГИКА",
     "ПСИХОЛОГИЯ",
   ];

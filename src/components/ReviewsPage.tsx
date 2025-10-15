@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import type { ArchimedDoctor, ApiService } from "../types/cms";
+import type { ArchimedDoctor } from "../types/cms";
 import archimedService from "../services/archimed";
 
 interface Review {
@@ -18,19 +18,14 @@ export default function ReviewsPage() {
   const [selectedService, setSelectedService] = useState<string>("all");
 
   const [doctors, setDoctors] = useState<ArchimedDoctor[]>([]);
-  const [services, setServices] = useState<ApiService[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const load = async () => {
       try {
         setIsLoading(true);
-        const [loadedDoctors, loadedServices] = await Promise.all([
-          archimedService.getDoctors(),
-          archimedService.getServices(),
-        ]);
+        const loadedDoctors = await archimedService.getDoctors();
         setDoctors(loadedDoctors || []);
-        setServices(loadedServices || []);
       } catch (e) {
         console.error("Failed to load doctors/services for reviews", e);
       } finally {
@@ -55,21 +50,17 @@ export default function ReviewsPage() {
     return ["Все врачи", ...unique];
   }, [doctors]);
 
-  const serviceGroupOptions = useMemo(() => {
-    const groups = services.map((s) => s.group_name).filter(Boolean);
-    const cleaned = groups.filter((g) => {
-      const n = (g || "").toLowerCase();
-      return !n.includes("стомат") && !n.includes("физиотерап");
-    });
-    const unique = Array.from(new Set(cleaned));
-    return ["Все услуги", ...unique];
-  }, [services]);
+  const specialtyOptions = useMemo(() => {
+    const types = doctors.map((d) => d.type).filter(Boolean);
+    const unique = Array.from(new Set(types));
+    return ["Все специальности", ...unique];
+  }, [doctors]);
 
   const sampleReviews: Review[] = useMemo(() => {
-    const doctorList = doctorOptions.slice(1);
-    const serviceList = serviceGroupOptions.slice(1);
+    const doctorList = doctors;
+    const specialtyList = specialtyOptions.slice(1);
     const fallbackDoctor = "Специалист центра";
-    const fallbackService = "Медицинская услуга";
+    const fallbackSpecialty = "Специальность";
     const baseTexts = [
       "Очень довольна посещением центра. Внимательно выслушали и помогли решить проблему. Рекомендую!",
       "Профессиональный подход, вежливый персонал. Всё объяснили, назначили эффективное лечение.",
@@ -91,20 +82,22 @@ export default function ReviewsPage() {
       "Светлана Р.",
       "Павел З.",
     ];
-    const count = Math.min(
-      8,
-      Math.max(4, Math.ceil((doctorList.length + serviceList.length) / 4))
-    );
+    const count = Math.min(8, Math.max(4, doctorList.length || 4));
     return Array.from({ length: count }).map((_, idx) => ({
       id: idx + 1,
       patientName: names[idx % names.length],
       rating: 4 + (idx % 2),
       date: makeDate((idx + 1) * 3),
-      doctor: doctorList[idx % (doctorList.length || 1)] || fallbackDoctor,
-      service: serviceList[idx % (serviceList.length || 1)] || fallbackService,
+      doctor:
+        getDoctorInitials(doctorList[idx % (doctorList.length || 1)]) ||
+        fallbackDoctor,
+      service:
+        doctorList[idx % (doctorList.length || 1)]?.type ||
+        specialtyList[idx % (specialtyList.length || 1)] ||
+        fallbackSpecialty,
       text: baseTexts[idx % baseTexts.length],
     }));
-  }, [doctorOptions, serviceGroupOptions]);
+  }, [doctors, specialtyOptions]);
 
   const filteredReviews = sampleReviews.filter((review) => {
     const doctorMatch =
@@ -124,7 +117,7 @@ export default function ReviewsPage() {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 md:mb-8">
-            Отзывы пациентов
+            Отзывы клиентов
           </h1>
 
           {/* Rating summary */}
@@ -156,7 +149,7 @@ export default function ReviewsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Врач
+                  Специалист
                 </label>
                 <select
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal focus:border-teal"
@@ -175,17 +168,17 @@ export default function ReviewsPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Услуга
+                  Специальность
                 </label>
                 <select
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-teal focus:border-teal"
                   value={selectedService}
                   onChange={(e) => setSelectedService(e.target.value)}
                 >
-                  {serviceGroupOptions.map((service) => (
+                  {specialtyOptions.map((service) => (
                     <option
                       key={service}
-                      value={service === "Все услуги" ? "all" : service}
+                      value={service === "Все специальности" ? "all" : service}
                     >
                       {service}
                     </option>
