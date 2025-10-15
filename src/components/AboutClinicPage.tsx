@@ -1,6 +1,101 @@
 import React from "react";
 
 export default function AboutClinicPage() {
+  const directions = [
+    {
+      id: "defectology",
+      title: "Дефектология",
+      description:
+        "Диагностика и коррекционно‑развивающая работа при особенностях развития. Индивидуальные программы, сопровождение семьи и рекомендации для дома.",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 6v12m6-6H6"
+          />
+        </svg>
+      ),
+      color: "bg-primary",
+    },
+    {
+      id: "surdopedagogika",
+      title: "Сурдопедагогика",
+      description:
+        "Обучение и развитие детей с нарушением слуха. Поддержка после кохлеарной имплантации, развитие речи и коммуникации.",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 19V6a3 3 0 116 0c0 3-3 3-3 6v7"
+          />
+        </svg>
+      ),
+      color: "bg-primary",
+    },
+    {
+      id: "psychology",
+      title: "Психология",
+      description:
+        "Индивидуальные и семейные консультации для детей, подростков и взрослых. Диагностика, развитие навыков, групповые и индивидуальные занятия.",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 11c0 3-2 5-5 5V5a3 3 0 013-3h8v9c0 4-3 7-7 7"
+          />
+        </svg>
+      ),
+      color: "bg-primary",
+    },
+    {
+      id: "clinical-psychology",
+      title: "Клинический психолог",
+      description:
+        "Психодиагностика и ЭПИ‑заключения, работа с тревожными и кризисными состояниями, поддержка в процессе лечения.",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M13 7H7v10h6l4 4V3l-4 4z"
+          />
+        </svg>
+      ),
+      color: "bg-primary",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-secondary py-8 md:py-12">
       <div className="container mx-auto px-4">
@@ -117,43 +212,30 @@ export default function AboutClinicPage() {
               <h2 className="text-xl sm:text-2xl font-semibold mb-3 md:mb-4 text-dark">
                 Наши направления
               </h2>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
-                    Логопедия
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    <li>Диагностика</li>
-                    <li>Коррекция</li>
-                  </p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
-                    Логопедическая диагностика
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    <li>Диагностика</li>
-                    <li>Коррекция</li>
-                  </p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
-                    Дефектология
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    <li>Диагностика</li>
-                    <li>Коррекция</li>
-                  </p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
-                    Психология
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    <li>Диагностика</li>
-                    <li>Коррекция</li>
-                  </p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 items-stretch">
+                {directions.map((dir) => (
+                  <div
+                    key={dir.id}
+                    className="group relative rounded-xl border border-gray-100 bg-white p-4 sm:p-5 shadow-sm hover:shadow-md transition-all h-full"
+                  >
+                    <div className="relative z-10 flex items-start gap-2 min-h-[100px]">
+                      <div className="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+                        {dir.icon}
+                      </div>
+                      <div>
+                        <h3 className="text-sm sm:text-base font-semibold text-dark mb-1 leading-snug">
+                          {dir.title}
+                        </h3>
+                        <p
+                          className="text-[11px] sm:text-xs text-gray-600 leading-snug break-words"
+                          style={{ overflowWrap: "anywhere" }}
+                        >
+                          {dir.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
