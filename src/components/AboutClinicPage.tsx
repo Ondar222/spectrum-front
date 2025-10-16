@@ -1,43 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
+import AboutPhotos from "./AboutPhotos";
 
 export default function AboutClinicPage() {
-  const carouselRef = useRef<HTMLDivElement | null>(null);
-  const trackRef = useRef<HTMLDivElement | null>(null);
-  const [offset, setOffset] = useState(0);
-
-  // Autoplay: slightly faster scrolling
-  useEffect(() => {
-    let rafId = 0;
-    let last = performance.now();
-    const step = (now: number) => {
-      const dt = now - last;
-      last = now;
-      const pxPerMs = 0.09; // ~90px/sec
-      setOffset((prev) => {
-        const trackWidth = (trackRef.current?.scrollWidth || 0) / 2;
-        if (!trackWidth) return prev;
-        let next = prev + dt * pxPerMs;
-        if (next >= trackWidth) next -= trackWidth; // loop seamlessly
-        return next;
-      });
-      rafId = requestAnimationFrame(step);
-    };
-    rafId = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(rafId);
-  }, []);
-
-  const handleStep = (direction: 1 | -1) => {
-    const containerWidth = carouselRef.current?.clientWidth || 300;
-    const stepPx = containerWidth * 0.8;
-    const trackWidth = (trackRef.current?.scrollWidth || 0) / 2;
-    setOffset((prev) => {
-      if (!trackWidth) return prev;
-      let next = prev + (direction === 1 ? stepPx : -stepPx);
-      while (next >= trackWidth) next -= trackWidth;
-      while (next < 0) next += trackWidth;
-      return next;
-    });
-  };
   const directions = [
     {
       id: "defectology",
@@ -136,98 +100,12 @@ export default function AboutClinicPage() {
   return (
     <div className="min-h-screen bg-secondary py-8 md:py-12">
       <div className="container mx-auto px-4">
-        {/* Photos Carousel */}
+        {/* About Photos */}
         <div className="mb-10 md:mb-16">
           <h2 className="text-xl sm:text-2xl font-semibold mb-3 md:mb-5 text-dark text-center">
-            О нас
+            Наша галерея
           </h2>
-          <div
-            className="relative overflow-hidden rounded-xl shadow-lg border border-gray-100"
-            ref={carouselRef}
-          >
-            {/* Track */}
-            <div
-              ref={trackRef}
-              className="flex will-change-transform"
-              style={{
-                // duplicate images visually for seamless loop
-                width: "200%",
-                transform: `translateX(-${offset}px)`,
-                transition: "transform 400ms ease-out",
-              }}
-            >
-              {Array.from({ length: 16 }).map((_, i) => (
-                <div
-                  key={`about-photo-${i}`}
-                  className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 flex-shrink-0"
-                >
-                  <img
-                    src={`/about_us/photo${i + 1}.jpg`}
-                    alt={`Фото центра ${i + 1}`}
-                    className="block w-full h-40 sm:h-48 md:h-56 lg:h-64 object-cover"
-                    loading={i > 3 ? "lazy" : "eager"}
-                  />
-                </div>
-              ))}
-              {Array.from({ length: 16 }).map((_, i) => (
-                <div
-                  key={`about-photo-dup-${i}`}
-                  className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 flex-shrink-0"
-                >
-                  <img
-                    src={`/about_us/photo${i + 1}.jpg`}
-                    alt={`Фото центра ${i + 1}`}
-                    className="block w-full h-40 sm:h-48 md:h-56 lg:h-64 object-cover"
-                    loading="lazy"
-                  />
-                </div>
-              ))}
-            </div>
-            {/* Edge fade */}
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-10 sm:w-16 bg-gradient-to-r from-white to-transparent" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 sm:w-16 bg-gradient-to-l from-white to-transparent" />
-
-            {/* Controls */}
-            <button
-              type="button"
-              aria-label="Предыдущие фото"
-              onClick={() => handleStep(-1)}
-              className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-dark shadow-lg rounded-full p-2 sm:p-3 border border-gray-200 backdrop-blur z-10"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L8.414 10l4.293 4.293a1 1 0 010 1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-            <button
-              type="button"
-              aria-label="Следующие фото"
-              onClick={() => handleStep(1)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-dark shadow-lg rounded-full p-2 sm:p-3 border border-gray-200 backdrop-blur z-10"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M7.293 4.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L11.586 10 7.293 5.707a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-          </div>
-          {/* No CSS keyframes needed with JS autoplay */}
+          <AboutPhotos />
         </div>
         {/* Hero Section */}
         <div className="text-center mb-10 md:mb-16">
