@@ -276,14 +276,14 @@ export default function AboutClinicPage() {
                 rel="noopener noreferrer"
                 className="text-gray-600 hover:underline inline-flex items-center"
               >
-                <svg
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   className="w-5 h-5 mr-1 text-primary"
                 >
                   <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
-                </svg>
+                </svg> */}
                 667003, Республика Тыва, г. Кызыл , ул. Островского д 10
               </a>
             </div>
@@ -304,7 +304,9 @@ export default function AboutClinicPage() {
               <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
                 Телефон
               </h3>
-              <p className="text-gray-600">+79235405050</p>
+              <p className="text-gray-600">
+                <a href="tel:+7 (923) 540-50-50">+7 (923) 540-50-50</a>
+              </p>
             </div>
             <div className="text-center">
               <svg

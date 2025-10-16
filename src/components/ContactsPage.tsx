@@ -41,14 +41,22 @@ export default function ContactsPage() {
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">Телефон</h3>
                   <div className="text-gray-600 leading-relaxed space-y-1">
-                    <p>+7 (923) 540-50-50</p>
+                    <a
+                      href="tel:+79235405050"
+                      className="text-primary hover:underline text-sm sm:text-base"
+                    >
+                      +7 (923) 540-50-50
+                    </a>
                   </div>
                 </div>
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">Email</h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <a
+                    className="text-primary hover:underline text-sm sm:text-base"
+                    href="mailto:spectrum_aldan@mail.ru"
+                  >
                     spectrum_aldan@mail.ru
-                  </p>
+                  </a>
                 </div>
                 <div>
                   <h3 className="font-medium text-gray-700 mb-2">
