@@ -146,7 +146,7 @@ export default function ReviewsPage() {
               </div>
             </div>
             <p className="text-center text-gray-600">
-              На основе {sampleReviews.length} отзывов
+              {/* На основе {sampleReviews.length} отзывов */}
             </p>
           </div>
 
