@@ -14,60 +14,104 @@ export default function ContactsPage() {
               <h2 className="text-2xl font-semibold mb-6 text-gray-900">
                 Контактная информация
               </h2>
-              <div className="space-y-6 flex-grow">
-                <div>
-                  <h3 className="font-medium text-gray-700 mb-2">Адрес</h3>
-                  <p className="text-gray-600 leading-relaxed flex items-center gap-2">
-                    <a
-                      href="https://yandex.ru/maps/?text=667003%2C%20Республика%20Тыва%2C%20город%20Кызыл%2C%20улица%20Островского%2C%2010"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center text-primary hover:underline"
-                      aria-label="Открыть адрес на карте"
+              <div className="space-y-5 flex-grow text-gray-800">
+                {/* Адрес */}
+                <div className="flex items-center">
+                  <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-5 h-5 text-primary"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="w-5 h-5 mr-1"
-                      >
-                        <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
-                      </svg>
-                      667003, Республика Тыва, город Кызыл, улица Островского,
-                      10
-                    </a>
-                  </p>
-                </div>
-                <div>
-                  <h3 className="font-medium text-gray-700 mb-2">Телефон</h3>
-                  <div className="text-gray-600 leading-relaxed space-y-1">
-                    <a
-                      href="tel:+79235405050"
-                      className="text-primary hover:underline text-sm sm:text-base"
-                    >
-                      +7 (923) 540-50-50
-                    </a>
+                      <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
+                    </svg>
                   </div>
-                </div>
-                <div>
-                  <h3 className="font-medium text-gray-700 mb-2">Email</h3>
                   <a
-                    className="text-primary hover:underline text-sm sm:text-base"
+                    href="https://yandex.ru/maps/?text=667003%2C%20Республика%20Тыва%2C%20город%20Кызыл%2C%20улица%20Островского%2C%2010"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-primary transition-colors"
+                    aria-label="Открыть адрес на карте"
+                  >
+                    667003, Республика Тыва, город Кызыл, улица Островского, 10
+                  </a>
+                </div>
+
+                {/* Телефон */}
+                <div className="flex items-center">
+                  <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                      />
+                    </svg>
+                  </div>
+                  <a
+                    href="tel:+79235405050"
+                    className="hover:text-primary transition-colors"
+                  >
+                    +7 (923) 540-50-50
+                  </a>
+                </div>
+
+                {/* Email */}
+                <div className="flex items-center">
+                  <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </div>
+                  <a
+                    className="hover:text-primary transition-colors"
                     href="mailto:spectrum_aldan@mail.ru"
                   >
                     spectrum_aldan@mail.ru
                   </a>
                 </div>
-                <div>
-                  <h3 className="font-medium text-gray-700 mb-2">
-                    Режим работы
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    Пн-Пт: 08:00 - 20:00
-                  </p>
-                  <p className="text-gray-600 leading-relaxed">
-                    Сб: 09:00 - 18:00
-                  </p>
+
+                {/* Режим работы */}
+                <div className="flex items-start">
+                  <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <p>Пн-Пт: 08:00 - 20:00</p>
+                    <p>Сб: 09:00 - 18:00</p>
+                  </div>
                 </div>
               </div>
             </div>
