@@ -113,7 +113,8 @@ export default function AboutClinicPage() {
             Центр SpectrUM
           </h1>
           <p className="text-base sm:text-lg text-gray-700 max-w-3xl mx-auto">
-            психология • педагогика • развитие для детей и взрослых
+            Центр SpectrUM предлагает образовательные и психологические услуги
+            для детей, подростков и взрослых.
           </p>
         </div>
 
