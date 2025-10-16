@@ -191,8 +191,32 @@ export default function FAQPage() {
             <button className="bg-teal text-white px-6 py-2 rounded-md hover:bg-teal/90 transition-colors">
               Написать нам
             </button>
+
             <button className="border border-teal text-teal px-6 py-2 rounded-md hover:bg-teal/10 transition-colors">
-              Позвонить
+              <div className="flex items-center">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/20 rounded-full flex items-center justify-center mr-3 sm:mr-4 transition-colors flex-shrink-0">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 sm:h-5 sm:w-5 text-primary"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    />
+                  </svg>
+                </div>
+                <a
+                  href="tel:+79235405050"
+                  className="hover:text-primary transition-colors text-sm sm:text-base"
+                >
+                  Позвонить
+                </a>
+              </div>
             </button>
           </div>
         </div>
