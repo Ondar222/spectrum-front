@@ -1037,7 +1037,7 @@ export default function PriceListPage() {
               <ul className="space-y-1.5 md:space-y-2 text-gray-600 text-sm md:text-base">
                 <li>• По телефону: +7 (923) 540-50-50</li>
 
-                <li>• При личном обращении в клинику</li>
+                <li>• При личном обращении в центр</li>
               </ul>
             </div>
           </div>
