@@ -62,10 +62,10 @@ export default function ReviewsPage() {
     const fallbackDoctor = "Специалист центра";
     const fallbackSpecialty = "Специальность";
     const baseTexts = [
-      "Очень довольна посещением центра. Внимательно выслушали и помогли решить проблему. Рекомендую!",
-      "Профессиональный подход, вежливый персонал. Всё объяснили, назначили эффективное лечение.",
-      "Современное оборудование и аккуратная работа. Спасибо за заботу и внимание!",
-      "Все прошло отлично, быстро и безболезненно. Буду обращаться снова при необходимости.",
+      "Очень внимательные специалисты. Подобрали программу занятий и дали понятные рекомендации.",
+      "Профессиональный подход и доброжелательная атмосфера. Изменения заметны уже после нескольких встреч.",
+      "Современные методики и индивидуальный план развития. Спасибо за поддержку!",
+      "Все организовано удобно и вовремя. Ребенку нравится ходить на занятия — видим прогресс.",
     ];
     const makeDate = (daysAgo: number) => {
       const d = new Date();
@@ -106,6 +106,12 @@ export default function ReviewsPage() {
       selectedService === "all" || review.service === selectedService;
     return doctorMatch && serviceMatch;
   });
+
+  // Remove the last three reviews ("первые три снизу")
+  const visibleReviews = filteredReviews.slice(
+    0,
+    Math.max(0, filteredReviews.length - 3)
+  );
 
   const averageRating = sampleReviews.length
     ? sampleReviews.reduce((acc, review) => acc + review.rating, 0) /
@@ -190,7 +196,7 @@ export default function ReviewsPage() {
 
           {/* Reviews list */}
           <div className="space-y-6">
-            {filteredReviews.map((review) => (
+            {visibleReviews.map((review) => (
               <div
                 key={review.id}
                 className="bg-white rounded-lg shadow-md p-5 md:p-6 min-h-[200px] flex flex-col"
