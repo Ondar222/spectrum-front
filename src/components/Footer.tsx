@@ -239,6 +239,13 @@ export default function Footer() {
                 Разработано Lana Soft
               </a>
             </p>
+
+            <p className="text-gray-200 text-xs sm:text-sm">
+              <a className="text-gray-200" href="https://lana-soft.ru/">
+                Учредитель ООО «Алдан» Юридический адрес: Республика Тыва, г.
+                Кызыл, ул. Ленина, д. 60, офис 1.
+              </a>
+            </p>
           </div>
         </div>
       </div>
