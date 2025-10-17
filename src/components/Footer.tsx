@@ -235,13 +235,16 @@ export default function Footer() {
               © 2025 Центр SpectrUM. Все права защищены.
             </p>
             <p className="text-gray-200 text-xs sm:text-sm">
-              <a className="text-gray-200" href="https://lana-soft.ru/">
+              <a className="hover:text-primary" href="https://lana-soft.ru/">
                 Разработано Lana Soft
               </a>
             </p>
 
             <p className="text-gray-200 text-xs sm:text-sm">
-              <a className="text-gray-200" href="https://lana-soft.ru/">
+              <a
+                className="hover:text-primary"
+                href="https://aldan.yurta.site/"
+              >
                 Учредитель ООО «Алдан» Юридический адрес: Республика Тыва, г.
                 Кызыл, ул. Ленина, д. 60, офис 1.
               </a>
