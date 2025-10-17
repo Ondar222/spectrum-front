@@ -79,7 +79,7 @@ export default function Header() {
               loading="eager"
             />
             <div className="leading-tight">
-              <div className="text-lg sm:text-lg md:text-xl font-bold text-dark">
+              <div className="text-2xl sm:text-lg md:text-xl font-bold text-dark">
                 SpectrUM
               </div>
               <div className="text-[10px] sm:text-xs text-gray-500">
@@ -241,7 +241,7 @@ export default function Header() {
               loading="eager"
             />
             <div className="leading-tight">
-              <div className="text-base font-bold text-dark">SpectrUM</div>
+              <div className="text-xl font-bold text-dark">SpectrUM</div>
               <div className="text-[10px] text-gray-500">
                 психология • педагогика • развитие
               </div>

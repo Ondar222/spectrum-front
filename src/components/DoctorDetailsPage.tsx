@@ -114,6 +114,28 @@ const DoctorDetailsPage: React.FC = () => {
       {/* Хлебные крошки */}
       <div className="bg-white border-b">
         <div className="container mx-auto px-4 py-4">
+          {/* Стрелка назад к списку специалистов (моб. вид) */}
+          <div className="md:hidden mb-2">
+            <Link
+              to="/doctors"
+              className="inline-flex items-center text-primary hover:text-primaryDark"
+              aria-label="Назад к специалистам"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-5 h-5 mr-1"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.03 3.97a.75.75 0 010 1.06L5.06 10h15.19a.75.75 0 010 1.5H5.06l4.97 4.97a.75.75 0 11-1.06 1.06l-6.25-6.25a.75.75 0 010-1.06l6.25-6.25a.75.75 0 011.06 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <span>Назад к специалистам</span>
+            </Link>
+          </div>
           <nav className="flex items-center space-x-2 text-sm text-gray-600">
             <Link to="/" className="hover:text-primary">
               Главная
