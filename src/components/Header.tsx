@@ -123,14 +123,14 @@ export default function Header() {
                   Прайс-лист
                 </Link>
               </li>
-              {/* <li>
+              <li>
                 <Link
                   to="/stock"
                   className="text-dark hover:text-primary transition-colors"
                 >
-                  Акции
+                  Новости
                 </Link>
-              </li> */}
+              </li>
 
               <li>
                 <Link
@@ -307,15 +307,15 @@ export default function Header() {
                 Прайс-лист
               </Link>
             </li>
-            {/* <li>
+            <li>
               <Link
                 to="/stock"
                 className="block py-2 text-dark hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Акции
+                Новости
               </Link>
-            </li> */}
+            </li>
             {/* <li>
               <Link
                 to="/certificates"
