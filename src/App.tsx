@@ -11,7 +11,7 @@ import Checkups from "./components/Checkups";
 import DoctorsPage from "./components/DoctorsPage";
 import DoctorDetailsPage from "./components/DoctorDetailsPage";
 import ReviewsPage from "./components/ReviewsPage";
-import PromotionsPage from "./components/PromotionsPage";
+import NewsPage from "./components/NewsPage";
 import ContactsPage from "./components/ContactsPage";
 import FAQPage from "./components/FAQPage";
 import AboutClinicPage from "./components/AboutClinicPage";
@@ -78,7 +78,7 @@ function App() {
             <Route path="/doctors" element={<DoctorsPage />} />
             <Route path="/doctors/:id" element={<DoctorDetailsPage />} />
             <Route path="/reviews" element={<ReviewsPage />} />
-            <Route path="/stock" element={<PromotionsPage />} />
+            <Route path="/stock" element={<NewsPage />} />
             <Route path="/contacts" element={<ContactsPage />} />
             <Route path="/questions" element={<FAQPage />} />
             <Route path="/documents" element={<DocumentsPage />} />

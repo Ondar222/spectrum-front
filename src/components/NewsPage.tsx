@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import directusService from "../services/directus";
 import type { Promotion as CmsPromotion } from "../types/cms";
 
-export default function PromotionsPage() {
+export default function NewsPage() {
   const [promotions, setPromotions] = useState<CmsPromotion[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -66,14 +66,15 @@ export default function PromotionsPage() {
     return [
       {
         id: "vk-7248",
-        title: "На все операции по варикозу -30%",
+        title: "О центр SpectrUM",
         description:
-          "Описание акции Центра SpectrUM. Для получения подробной информации обращайтесь по нашим контактам.",
+          "Все родители мечтают, чтобы их ребенок рос здоровым, успешным, счастливым и общительным. Наш центр помогает семьям решать проблемы развития, обучения и воспитания детей на любых возрастных этапах. У нас Вас встретят неравнодушные специалисты, которые имеют богатый опыт работы с детьми и подростками, в том числе с особенностями развития.У нас в Центре мы используем современные методы и новейшее оборудование, максимально погружаемся в историю ребенка, чтобы процесс коррекции и реабилитации был максимально эффективным.",
         discountLabel: "Акция",
         validUntil: "",
-        imageUrl: "/www.jpg",
-        link: "https://vk.com/wall-128344113_7248",
-        isVideo: true,
+        imageUrl:
+          "https://nasledie.digital/wp-content/uploads/2024/08/Frame-1-6-1024x341.png",
+        link: "https://nasledie.digital/wp-content/uploads/2024/08/Frame-1-6-1024x341.png",
+        isVideo: false,
       } as any,
     ];
   }, [uiPromos]);
@@ -83,7 +84,7 @@ export default function PromotionsPage() {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 md:mb-8">
-            Акции и специальные предложения
+            Новости
           </h1>
 
           {isLoading && (
@@ -330,7 +331,7 @@ export default function PromotionsPage() {
               Подпишитесь на рассылку акций
             </h2>
             <p className="text-gray-600 text-center mb-4 md:mb-6">
-              Будьте в курсе всех специальных предложений и акций нашей клиники
+              Будьте в курсе всех специальных предложений и акций нашего центра
             </p>
             <form className="max-w-md mx-auto">
               <div className="flex gap-4">

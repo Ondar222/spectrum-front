@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import footerPhone from "../../public/doctorsImage/FooterPhone.jpg";
 
 export default function Footer() {
   return (
     <footer
       className="relative text-white overflow-hidden"
       style={{
-        backgroundImage:
-          "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url(https://spectrumaldan.ru/wp-content/uploads/2024/06/male-school-teacher-and-kids-in-class-smiling-to-camera.jpg)",
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url(${footerPhone})`,
         backgroundSize: "cover",
         backgroundPosition: "center 30%",
-        backgroundAttachment: "fixed",
+        backgroundAttachment: "scroll",
       }}
     >
       <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8 md:py-12 relative z-10">
@@ -235,8 +235,18 @@ export default function Footer() {
               © 2025 Центр SpectrUM. Все права защищены.
             </p>
             <p className="text-gray-200 text-xs sm:text-sm">
-              <a className="text-gray-200" href="https://lana-soft.ru/">
+              <a className="hover:text-primary" href="https://lana-soft.ru/">
                 Разработано Lana Soft
+              </a>
+            </p>
+
+            <p className="text-gray-200 text-xs sm:text-sm">
+              <a
+                className="hover:text-primary"
+                href="https://aldan.yurta.site/"
+              >
+                Учредитель ООО «Алдан» Юридический адрес: Республика Тыва, г.
+                Кызыл, ул. Ленина, д. 60, офис 1.
               </a>
             </p>
           </div>
