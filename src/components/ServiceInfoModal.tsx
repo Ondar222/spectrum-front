@@ -5,6 +5,7 @@ type ServiceLike = {
   title: string;
   desc?: string;
   bullets?: string[];
+  bulletsTitle?: string;
   chips?: string[];
   link: string;
   icon?: React.ReactNode;
@@ -79,11 +80,16 @@ export default function ServiceInfoModal({
           </div>
 
           {service.bullets && service.bullets.length > 0 && (
-            <ul className="mt-3 sm:mt-4 list-disc pl-5 space-y-1 text-sm sm:text-base text-gray-700">
-              {service.bullets.map((b, i) => (
-                <li key={i}>{b}</li>
-              ))}
-            </ul>
+            <div className="mt-3 sm:mt-4">
+              <p className="font-semibold text-gray-900 text-sm sm:text-base">
+                {service.bulletsTitle || "Рекомендуется:"}
+              </p>
+              <ul className="mt-1 list-disc pl-5 space-y-1 text-sm sm:text-base text-gray-700">
+                {service.bullets.map((b, i) => (
+                  <li key={i}>{b}</li>
+                ))}
+              </ul>
+            </div>
           )}
 
           {(service.chips || []).length > 0 && (
