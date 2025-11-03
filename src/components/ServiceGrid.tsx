@@ -73,7 +73,7 @@ const services: Service[] = [
   // },
   {
     id: 3,
-    title: "ЛекториУм",
+    title: "ЛЕКТОРИУМ",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +103,7 @@ const services: Service[] = [
   },
   {
     id: 5,
-    title: "Абономенты",
+    title: "АБОНОМЕНТЫ",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -374,7 +374,7 @@ const services: Service[] = [
   },
   {
     id: 21,
-    title: "Книжный клуб: Диалог с собой и другими",
+    title: "КНИЖНЫЙ КЛУБ: ДИАЛОГ С СОБОЙ И ДРУГИМИ",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -469,7 +469,7 @@ const services: Service[] = [
   },
   {
     id: 22,
-    title: "Кино клуб (взрослые)",
+    title: "КИНО КЛУБ (ВЗРОСЛЫЕ)",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"

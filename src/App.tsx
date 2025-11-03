@@ -12,6 +12,7 @@ import DoctorsPage from "./components/DoctorsPage";
 import DoctorDetailsPage from "./components/DoctorDetailsPage";
 import ReviewsPage from "./components/ReviewsPage";
 import NewsPage from "./components/NewsPage";
+import VacanciesPage from "./components/VacanciesPage";
 import ContactsPage from "./components/ContactsPage";
 import FAQPage from "./components/FAQPage";
 import AboutClinicPage from "./components/AboutClinicPage";
@@ -79,6 +80,7 @@ function App() {
             <Route path="/doctors/:id" element={<DoctorDetailsPage />} />
             <Route path="/reviews" element={<ReviewsPage />} />
             <Route path="/stock" element={<NewsPage />} />
+            <Route path="/vacancies" element={<VacanciesPage />} />
             <Route path="/contacts" element={<ContactsPage />} />
             <Route path="/questions" element={<FAQPage />} />
             <Route path="/documents" element={<DocumentsPage />} />
