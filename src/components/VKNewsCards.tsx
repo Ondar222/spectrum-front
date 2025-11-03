@@ -100,9 +100,9 @@ export default function VKNewsCards({
               <h3 className="font-semibold text-base md:text-lg mb-2 leading-snug">
                 {item.title}
               </h3>
-              <p className="text-gray-600 text-sm md:text-[15px] leading-relaxed flex-grow">
-                {item.description}
-              </p>
+              <div className="text-gray-600 text-sm md:text-[15px] leading-relaxed flex-grow">
+                <div dangerouslySetInnerHTML={{ __html: item.description }} />
+              </div>
               {item.link && (
                 <div className="mt-4">
                   <a

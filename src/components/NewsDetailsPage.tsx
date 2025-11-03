@@ -39,9 +39,9 @@ export default function NewsDetailsPage() {
               {post.title}
             </h1>
             {post.fullText ? (
-              <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-                {post.fullText}
-              </p>
+              <div className="text-gray-700 leading-relaxed">
+                <div dangerouslySetInnerHTML={{ __html: post.fullText }} />
+              </div>
             ) : (
               <div className="text-gray-700 leading-relaxed">
                 <p className="mb-3">

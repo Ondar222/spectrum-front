@@ -24,7 +24,7 @@ export default function NewsPage() {
                   <img
                     src={post.image}
                     alt={post.title}
-                    className="w-full h-48 object-cover"
+                    className="w-full h-48 object-contain"
                     loading="lazy"
                   />
                 </Link>
