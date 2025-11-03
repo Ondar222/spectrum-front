@@ -79,7 +79,7 @@ export default function Header() {
               loading="eager"
             />
             <div className="leading-tight">
-              <div className="text-base sm:text-lg md:text-xl font-bold text-dark">
+              <div className="text-2xl sm:text-lg md:text-xl font-bold text-dark">
                 SpectrUM
               </div>
               <div className="text-[10px] sm:text-xs text-gray-500">
@@ -123,14 +123,14 @@ export default function Header() {
                   Прайс-лист
                 </Link>
               </li>
-              {/* <li>
+              <li>
                 <Link
                   to="/stock"
                   className="text-dark hover:text-primary transition-colors"
                 >
-                  Акции
+                  Новости
                 </Link>
-              </li> */}
+              </li>
 
               <li>
                 <Link
@@ -241,7 +241,7 @@ export default function Header() {
               loading="eager"
             />
             <div className="leading-tight">
-              <div className="text-sm font-bold text-dark">SpectrUM</div>
+              <div className="text-xl font-bold text-dark">SpectrUM</div>
               <div className="text-[10px] text-gray-500">
                 психология • педагогика • развитие
               </div>
@@ -307,15 +307,15 @@ export default function Header() {
                 Прайс-лист
               </Link>
             </li>
-            {/* <li>
+            <li>
               <Link
                 to="/stock"
                 className="block py-2 text-dark hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Акции
+                Новости
               </Link>
-            </li> */}
+            </li>
             {/* <li>
               <Link
                 to="/certificates"

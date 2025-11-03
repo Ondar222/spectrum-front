@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ServiceInfoModal from "./ServiceInfoModal";
 
 // Define service types
 interface Service {
@@ -9,56 +10,67 @@ interface Service {
   color: string;
   hoverColor: string;
   link: string;
+  desc?: string;
+  bullets?: string[];
+  bulletsTitle?: string;
+  chips?: string[];
+  sections?: {
+    title: string;
+    text?: string;
+    bulletsTitle?: string;
+    bullets?: string[];
+    chips?: string[];
+  }[];
 }
 
 // Define our services with icons and colors (now 19, paginated as carousel)
 const services: Service[] = [
-  {
-    id: 1,
-    title: "Консультации",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-        />
-      </svg>
-    ),
-    color: "bg-primary",
-    hoverColor: "hover:bg-primaryDark",
-    link: "/prices?group=400",
-  },
-  {
-    id: 2,
-    title: "Диагностика",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-        />
-      </svg>
-    ),
-    color: "bg-primary",
-    hoverColor: "hover:bg-primaryDark",
-    link: "/prices?group=900",
-  },
+  // {
+  //   id: 1,
+  //   title: "Консультации",
+  //   icon: (
+  //     <svg
+  //       xmlns="http://www.w3.org/2000/svg"
+  //       className="h-6 w-6"
+  //       fill="none"
+  //       viewBox="0 0 24 24"
+  //       stroke="currentColor"
+  //     >
+  //       <path
+  //         strokeLinecap="round"
+  //         strokeLinejoin="round"
+  //         strokeWidth={2}
+  //         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+  //       />
+  //     </svg>
+  //   ),
+  //   color: "bg-primary",
+  //   hoverColor: "hover:bg-primaryDark",
+  //   link: "/prices?group=400",
+  // },
+  // {
+  //   id: 2,
+  //   title: "Диагностика",
+  //   icon: (
+  //     <svg
+  //       xmlns="http://www.w3.org/2000/svg"
+  //       className="h-6 w-6"
+  //       fill="none"
+  //       viewBox="0 0 24 24"
+  //       stroke="currentColor"
+  //     >
+  //       <path
+  //         strokeLinecap="round"
+  //         strokeLinejoin="round"
+  //         strokeWidth={2}
+  //         d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
+  //       />
+  //     </svg>
+  //   ),
+  //   color: "bg-primary",
+  //   hoverColor: "hover:bg-primaryDark",
+  //   link: "/prices?group=900",
+  // },
   {
     id: 3,
     title: "ЛекториУм",
@@ -81,6 +93,13 @@ const services: Service[] = [
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
     link: "/prices?group=700",
+    desc: "Образовательные лекции и встречи для родителей и специалистов по развитию и поддержке детей.",
+    bullets: [
+      "актуальные темы воспитания и обучения",
+      "разбор сложных случаев",
+      "общение с экспертами",
+    ],
+    chips: ["1–2 часа", "для родителей", "расписание"],
   },
   {
     id: 5,
@@ -104,53 +123,56 @@ const services: Service[] = [
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
     link: "/prices?group=800",
+    desc: "Выгодные комплексы занятий и консультаций. Можно собрать под вашу цель и экономить.",
+    bullets: ["индивидуальный план", "фиксированная цена", "удобный график"],
+    chips: ["индив.", "семейные", "детские"],
   },
-  {
-    id: 5,
-    title: "СЕМИНАРЫ/КУРСЫ",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-        />
-      </svg>
-    ),
-    color: "bg-primary",
-    hoverColor: "hover:bg-primaryDark",
-    link: "/prices?group=600",
-  },
-  {
-    id: 5,
-    title: "Занятия",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={2}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M3 17l6-6 2 2 6-6M13 7h8M3 21h8"
-        />
-      </svg>
-    ),
-    color: "bg-primary",
-    hoverColor: "hover:bg-primaryDark",
-    link: "/prices?group=800",
-  },
+  // {
+  //   id: 5,
+  //   title: "СЕМИНАРЫ/КУРСЫ",
+  //   icon: (
+  //     <svg
+  //       xmlns="http://www.w3.org/2000/svg"
+  //       className="h-6 w-6"
+  //       fill="none"
+  //       viewBox="0 0 24 24"
+  //       stroke="currentColor"
+  //     >
+  //       <path
+  //         strokeLinecap="round"
+  //         strokeLinejoin="round"
+  //         strokeWidth={2}
+  //         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+  //       />
+  //     </svg>
+  //   ),
+  //   color: "bg-primary",
+  //   hoverColor: "hover:bg-primaryDark",
+  //   link: "/prices?group=600",
+  // },
+  // {
+  //   id: 5,
+  //   title: "Занятия",
+  //   icon: (
+  //     <svg
+  //       xmlns="http://www.w3.org/2000/svg"
+  //       className="h-6 w-6"
+  //       fill="none"
+  //       viewBox="0 0 24 24"
+  //       stroke="currentColor"
+  //       strokeWidth={2}
+  //     >
+  //       <path
+  //         strokeLinecap="round"
+  //         strokeLinejoin="round"
+  //         d="M3 17l6-6 2 2 6-6M13 7h8M3 21h8"
+  //       />
+  //     </svg>
+  //   ),
+  //   color: "bg-primary",
+  //   hoverColor: "hover:bg-primaryDark",
+  //   link: "/prices?group=800",
+  // },
   {
     id: 6,
     title: "КЛИНИЧЕСКИЙ ПСИХОЛОГ",
@@ -173,6 +195,13 @@ const services: Service[] = [
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
     link: "/prices?group=500",
+    desc: "Диагностика и коррекция эмоциональных и когнитивных трудностей, поддержка семей.",
+    bullets: [
+      "сложности поведения и обучения",
+      "стресс, тревожность",
+      "поддержка родителей",
+    ],
+    chips: ["60 минут", "от 3-х лет"],
   },
   {
     id: 7,
@@ -196,6 +225,22 @@ const services: Service[] = [
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
     link: "/prices?group=400",
+    desc: "Данная диагностика направлена на выявление индивидуально-психологических свойств личности, определение уязвимых сторон личности, поиск психологических ресурсов и резервов, адаптивных и компенсаторных возможностей личности.",
+    bulletsTitle:
+      "Рекомендуется пройти психологическую диагностику, если Вы столкнулись с:",
+    bullets: [
+      "личностным кризисом",
+      "проблемами в детско-родительских взаимоотношениях",
+      "эмоциональными трудностями",
+      "поведенческими проблемами (неврозы, страхи, тревожность, проблемы общения)",
+      "психосоматическим расстройством",
+    ],
+    chips: [
+      "детский 2 200 руб.",
+      "взрослый 2 700 руб.",
+      "семейная (пара) 3 200 руб.",
+      "детско-родит. 2 700 руб.",
+    ],
   },
   {
     id: 8,
@@ -219,6 +264,16 @@ const services: Service[] = [
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
     link: "/prices?group=300",
+    desc: "В центре интеллектуального развития SpectrUM ведет прием сурдопедагог Оюн Ася Мергеньевна — педагог, специалист по обучению и воспитанию детей с нарушениями слуха.",
+    bulletsTitle: "Работаем и консультируем:",
+    bullets: [
+      "слабослышащие дети",
+      "глухие дети",
+      "дети с кохлеарными имплантатами",
+      "на занятия можно с 2,5 лет",
+      "На консультацию возьмите: документацию о проведённом лечении; аудиограмму; медицинскую карту ребенка; заключение диагноза врачом; при кандидатах на кохлеарную имплантацию — слуховые аппараты с индивидуальным вкладышем",
+    ],
+    chips: ["от 2,5 лет", "индивидуально", "2 200 руб."],
   },
   {
     id: 9,
@@ -242,6 +297,104 @@ const services: Service[] = [
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
     link: "/prices?group=200",
+    sections: [
+      {
+        title: "Логопедическая диагностика",
+        text: "Во время диагностики специалист анализирует степень нарушения устной и письменной речи у дошкольников и школьников, проводит обследование фонематического слуха, состояния речевого аппарата, его строение и состояние мышц. По результатам диагностики логопед разрабатывает индивидуальную программу коррекции выявленных нарушений (произношение звуков, развитие импрессивного и экспрессивного словаря), а также определяет необходимость проведения логомассажа.",
+        bulletsTitle: "Рекомендуется консультация логопеда, если ребенок:",
+        bullets: [
+          "в 2 года не говорит совсем",
+          'в 2–3 года понимает речь, но говорит только на "своем" языке',
+          "в 4–6 лет говорит невнятно, звуки произносит нечетко или заменяет на другие",
+          "после 6 лет не выговаривает некоторые звуки, запинается, повторяет слоги по 2 раза",
+          "в школьном возрасте имеет проблемы с чтением и письмом",
+        ],
+      },
+      {
+        title: "Логопедическая коррекция",
+        text: "Состоит из логопедического массажа (по показаниям), пальчиковой и артикуляционной гимнастики, упражнений для развития слухового внимания, постановки и автоматизации звуков, логоритмики. Занятия направлены на развитие лого- грамматических представлений, правильного речевого дыхания, а также на преодоление нарушений письма и чтения. В результате занятий с логопедом у ребенка развивается способность воспринимать и понимать отдельные элементы звуковой речи, расширяется и обогащается словарный запас, происходит подготовка к письму и чтению. Программа коррекции подбирается индивидуально.",
+        chips: ["от 30 минут", "от 3-х лет", "от 1 700 руб."],
+      },
+    ],
+  },
+  {
+    id: 20,
+    title: "КЛУБ НАСТОЛЬНЫХ ИГР",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+      >
+        <path d="M12 3l2.12 4.29L19 8l-3.5 3.4.82 4.77L12 14.77 7.68 16.17l.82-4.77L5 8l4.88-.71L12 3z" />
+      </svg>
+    ),
+    color: "bg-primary",
+    hoverColor: "hover:bg-primaryDark",
+    link: "/prices",
+    desc: "Игровые встречи для детей: развиваем коммуникативные и стратегические навыки через настольные игры.",
+    bullets: [
+      "командные и дуэльные форматы",
+      "навыки общения и планирования",
+      "дружелюбный ведущий",
+    ],
+    chips: ["для детей", "расписание"],
+  },
+  {
+    id: 21,
+    title: "Книжный клуб (взрослые)",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+      >
+        <path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 4.5A2.5 2.5 0 016.5 7H20v13H6.5A2.5 2.5 0 014 17.5V4.5z" />
+      </svg>
+    ),
+    color: "bg-primary",
+    hoverColor: "hover:bg-primaryDark",
+    link: "/prices",
+    desc: "Обсуждаем книги, делимся впечатлениями, прокачиваем критическое мышление и мягкие навыки общения.",
+    bullets: [
+      "современная и классическая литература",
+      "дискуссии в безопасной атмосфере",
+      "чай и печенье",
+    ],
+    chips: ["для взрослых", "ежемесячно"],
+  },
+  {
+    id: 22,
+    title: "Кино клуб (взрослые)",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+      >
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="M7 5v4M17 5v4M7 15v4M17 15v4" />
+      </svg>
+    ),
+    color: "bg-primary",
+    hoverColor: "hover:bg-primaryDark",
+    link: "/prices",
+    desc: "Просмотр и обсуждение фильмов: учимся видеть смыслы, говорить о чувствах и мнениях уважительно.",
+    bullets: [
+      "классика и современные фильмы",
+      "модерируемая дискуссия",
+      "уютная атмосфера",
+    ],
+    chips: ["для взрослых", "раз в месяц"],
   },
 ];
 
@@ -286,11 +439,18 @@ export default function ServiceGrid() {
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
     link: "/prices",
+    desc: "Помощь детям с особенностями развития: формирование учебных навыков, развитие мышления и адаптация.",
+    bullets: [
+      "отставание в развитии",
+      "задержка психического развития",
+      "интеллектуальные трудности",
+    ],
+    chips: ["60 минут", "от 3-х лет"],
   };
 
   const priorityTitles = [
     "ДЕФЕКТОЛОГИЯ",
-    "ЛОГОПЕДИЯ",
+    "клинический психолог",
     "СУРДОПЕДАГОГИКА",
     "ПСИХОЛОГИЯ",
   ];
@@ -320,6 +480,8 @@ export default function ServiceGrid() {
   const start = page * pageSize;
   const visible = orderedServices.slice(start, start + pageSize);
 
+  const [openService, setOpenService] = React.useState<Service | null>(null);
+
   return (
     <section className="py-6 sm:py-8 bg-white">
       <div className="container mx-auto px-3 sm:px-4">
@@ -331,49 +493,55 @@ export default function ServiceGrid() {
           детей, подростков и взрослых. Выберите интересующее вас направление.
         </p>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 gap-2 sm:gap-3">
           {visible.map((service, index) => (
-            <Link
-              key={service.link}
-              to={service.link}
-              className={`${service.color} ${service.hoverColor} text-white p-2 sm:p-3 flex flex-col items-center text-center rounded-md sm:rounded-lg shadow-sm overflow-hidden group relative transition-all duration-200 ease-in-out hover:shadow-md`}
-              style={{ "--delay": `${index * 0.02}s` } as React.CSSProperties}
-            >
-              {/* Hover background effect */}
-              <div className="absolute inset-0 bg-white/10 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
-
-              {/* Icon with animation */}
-              <div className="mb-1 sm:mb-2 relative z-10 transition-transform duration-200 group-hover:scale-105">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center">
-                  {service.icon}
+            <div key={service.link} className="relative">
+              <Link
+                to={service.link}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenService(service);
+                }}
+                className={`${service.color} ${service.hoverColor} text-white p-2 sm:p-3 flex flex-col items-center text-center rounded-md sm:rounded-lg shadow-sm overflow-hidden group relative transition-all duration-200 ease-in-out hover:shadow-md`}
+                style={{ "--delay": `${index * 0.02}s` } as React.CSSProperties}
+              >
+                <div className="absolute inset-0 bg-white/10 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
+                <div className="mb-1 sm:mb-2 relative z-10 transition-transform duration-200 group-hover:scale-105">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center">
+                    {service.icon}
+                  </div>
                 </div>
-              </div>
+                <h3 className="text-xs sm:text-sm font-medium relative z-10 leading-tight">
+                  {service.title}
+                </h3>
+                <div className="mt-0.5 sm:mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 relative z-10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-3 w-3 sm:h-4 sm:w-4 mx-auto"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                  </svg>
+                </div>
+              </Link>
 
-              {/* Title */}
-              <h3 className="text-xs sm:text-sm font-medium relative z-10 leading-tight">
-                {service.title}
-              </h3>
-
-              {/* Arrow indicator that appears on hover */}
-              <div className="mt-0.5 sm:mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 relative z-10">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-3 w-3 sm:h-4 sm:w-4 mx-auto"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-              </div>
-            </Link>
+              {/* Modal is rendered once below the grid */}
+            </div>
           ))}
         </div>
+
+        <ServiceInfoModal
+          open={!!openService}
+          onClose={() => setOpenService(null)}
+          service={openService as any}
+        />
 
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-1 sm:gap-2 mt-4 sm:mt-6">

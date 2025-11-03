@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import footerPhone from "../../public/doctorsImage/FooterPhone.jpg";
 
 interface Testimonial {
   id: number;
@@ -12,19 +13,19 @@ const testimonials: Testimonial[] = [
     id: 1,
     text: "Хочу выразить благодарность специалистам Центра SpectrUM! Профессиональный подход и внимательное отношение. Получили понятные рекомендации и поддержку.",
     author: "Ай-Кыс",
-    date: "15.03.2023",
+    date: "06.05.2024",
   },
   {
     id: 2,
-    text: "Обращаюсь в клинику Aлдан уже несколько лет и всегда доволен обслуживанием. Врачи действительно заинтересованы в том, чтобы помочь, а не просто формально провести прием. Особенно радует возможность сдать анализы и пройти все необходимые процедуры в одном месте.",
+    text: "Обращаюсь в центр SpectrUM уже несколько лет и всегда доволен обслуживанием. Специалисты действительно заинтересованы в том, чтобы помочь, а не просто формально провести прием.",
     author: "Белек",
-    date: "02.11.2022",
+    date: "02.11.2024",
   },
   {
     id: 3,
-    text: "Посетила врача-кардиолога. Прием длился более часа, все подробно расспросили, тщательно обследовали, сделали ЭКГ. Получила детальное объяснение моего состояния и четкий план лечения. Спасибо за внимательное отношение!",
+    text: "Посетила специалиста. Прием длился более часа, все подробно расспросили, тщательно обследовали. Получила детальное объяснение моего состояния и четкий план лечения. Спасибо за внимательное отношение!",
     author: "Екатерина",
-    date: "24.05.2023",
+    date: "24.05.2024",
   },
 ];
 
@@ -47,15 +48,15 @@ export default function Testimonials() {
     <section
       className="py-6 sm:py-8 relative"
       style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url('https://spectrumaldan.ru/wp-content/uploads/2024/06/children-talking-to-teacher-in-school.jpg')`,
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)), url(${footerPhone})`,
         backgroundSize: "cover",
         backgroundPosition: "center 30%",
-        backgroundAttachment: "fixed",
+        backgroundAttachment: "scroll",
       }}
     >
       <div className="container mx-auto px-3 sm:px-4 relative z-10">
         <h2 className="text-xl sm:text-2xl font-bold text-center mb-6 sm:mb-8 text-white">
-          Отзывы пациентов
+          Отзывы клиентов
         </h2>
 
         <div className="max-w-3xl mx-auto relative">

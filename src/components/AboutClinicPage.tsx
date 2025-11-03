@@ -1,16 +1,120 @@
 import React from "react";
+import AboutPhotos from "./AboutPhotos";
 
 export default function AboutClinicPage() {
+  const directions = [
+    {
+      id: "defectology",
+      title: "Дефектология",
+      description:
+        "Диагностика и коррекционно‑развивающая работа при особенностях развития. Индивидуальные программы, сопровождение семьи и рекомендации для дома.",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 6v12m6-6H6"
+          />
+        </svg>
+      ),
+      color: "bg-primary",
+    },
+    {
+      id: "surdopedagogika",
+      title: "Сурдопедагогика",
+      description:
+        "Обучение и развитие детей с нарушением слуха. Поддержка после кохлеарной имплантации, развитие речи и коммуникации.",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 19V6a3 3 0 116 0c0 3-3 3-3 6v7"
+          />
+        </svg>
+      ),
+      color: "bg-primary",
+    },
+    {
+      id: "psychology",
+      title: "Психология",
+      description:
+        "Индивидуальные и семейные консультации для детей, подростков и взрослых. Диагностика, развитие навыков, групповые и индивидуальные занятия.",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 11c0 3-2 5-5 5V5a3 3 0 013-3h8v9c0 4-3 7-7 7"
+          />
+        </svg>
+      ),
+      color: "bg-primary",
+    },
+    {
+      id: "clinical-psychology",
+      title: "Клинический психолог",
+      description:
+        "Психодиагностика и ЭПИ‑заключения, работа с тревожными и кризисными состояниями, поддержка в процессе лечения.",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M13 7H7v10h6l4 4V3l-4 4z"
+          />
+        </svg>
+      ),
+      color: "bg-primary",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-secondary py-8 md:py-12">
       <div className="container mx-auto px-4">
+        {/* About Photos */}
+        <div className="mb-10 md:mb-16">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-3 md:mb-5 text-dark text-center">
+            Наша галерея
+          </h2>
+          <AboutPhotos />
+        </div>
         {/* Hero Section */}
         <div className="text-center mb-10 md:mb-16">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4 text-dark">
             Центр SpectrUM
           </h1>
           <p className="text-base sm:text-lg text-gray-700 max-w-3xl mx-auto">
-            психология • педагогика • развитие для детей и взрослых
+            Центр SpectrUM предлагает образовательные и психологические услуги
+            для детей, подростков и взрослых.
           </p>
         </div>
 
@@ -23,16 +127,16 @@ export default function AboutClinicPage() {
                 Наша миссия
               </h2>
               <p className="text-gray-600">
-                Мы стремимся обеспечить доступную и качественную медицинскую
+                Мы стремимся обеспечить доступную и качественную психологическую
                 помощь, используя современные методы диагностики и лечения. Наша
-                цель - помочь каждому пациенту достичь оптимального здоровья и
+                цель - помочь каждому клиенту достичь оптимального здоровья и
                 благополучия.
               </p>
             </div>
 
             <div className="bg-white rounded-lg shadow-lg p-6 md:p-8">
               <h2 className="text-xl sm:text-2xl font-semibold mb-3 md:mb-4 text-dark">
-                Преимущества клиники
+                Преимущества центра
               </h2>
               <ul className="space-y-4">
                 <li className="flex items-start">
@@ -50,7 +154,7 @@ export default function AboutClinicPage() {
                     />
                   </svg>
                   <span className="text-gray-600">
-                    Современное оборудование и технологии
+                    Разнообразные методики обучения
                   </span>
                 </li>
                 <li className="flex items-start">
@@ -68,7 +172,7 @@ export default function AboutClinicPage() {
                     />
                   </svg>
                   <span className="text-gray-600">
-                    Опытные врачи с высокой квалификацией
+                    Квалифицированный персонал
                   </span>
                 </li>
                 <li className="flex items-start">
@@ -86,7 +190,7 @@ export default function AboutClinicPage() {
                     />
                   </svg>
                   <span className="text-gray-600">
-                    Индивидуальный подход к каждому пациенту
+                    Индивидуальный подход к каждому клиенту
                   </span>
                 </li>
                 <li className="flex items-start">
@@ -104,7 +208,7 @@ export default function AboutClinicPage() {
                     />
                   </svg>
                   <span className="text-gray-600">
-                    Удобное расположение и график работы
+                    Комфортные условия посещения
                   </span>
                 </li>
               </ul>
@@ -117,71 +221,30 @@ export default function AboutClinicPage() {
               <h2 className="text-xl sm:text-2xl font-semibold mb-3 md:mb-4 text-dark">
                 Наши направления
               </h2>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
-                    Диагностика
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Современные методы обследования
-                  </p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
-                    Лечение
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Эффективные методы терапии
-                  </p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
-                    Профилактика
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Предупреждение заболеваний
-                  </p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
-                    Реабилитация
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Восстановление здоровья
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-lg p-6 md:p-8">
-              <h2 className="text-xl sm:text-2xl font-semibold mb-3 md:mb-4 text-dark">
-                Наши достижения
-              </h2>
-              <div className="grid grid-cols-2 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">
-                    15+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 items-stretch">
+                {directions.map((dir) => (
+                  <div
+                    key={dir.id}
+                    className="group relative rounded-xl border border-gray-100 bg-white p-4 sm:p-5 shadow-sm hover:shadow-md transition-all h-full"
+                  >
+                    <div className="relative z-10 flex items-start gap-2 min-h-[100px]">
+                      <div className="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+                        {dir.icon}
+                      </div>
+                      <div>
+                        <h3 className="text-sm sm:text-base font-semibold text-dark mb-1 leading-snug">
+                          {dir.title}
+                        </h3>
+                        <p
+                          className="text-[11px] sm:text-xs text-gray-600 leading-snug break-words"
+                          style={{ overflowWrap: "anywhere" }}
+                        >
+                          {dir.description}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-gray-600">Лет опыта</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">
-                    30+
-                  </div>
-                  <div className="text-gray-600">Специалистов</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">
-                    5000+
-                  </div>
-                  <div className="text-gray-600">Довольных пациентов</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">
-                    20+
-                  </div>
-                  <div className="text-gray-600">Медицинских направлений</div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -222,14 +285,14 @@ export default function AboutClinicPage() {
                 rel="noopener noreferrer"
                 className="text-gray-600 hover:underline inline-flex items-center"
               >
-                <svg
+                {/* <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   className="w-5 h-5 mr-1 text-primary"
                 >
                   <path d="M12 2C8.134 2 5 5.134 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.866-3.134-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
-                </svg>
+                </svg> */}
                 667003, Республика Тыва, г. Кызыл , ул. Островского д 10
               </a>
             </div>
@@ -250,7 +313,9 @@ export default function AboutClinicPage() {
               <h3 className="text-lg sm:text-xl font-semibold mb-2 text-dark">
                 Телефон
               </h3>
-              <p className="text-gray-600">+79235405050</p>
+              <p className="text-gray-600">
+                <a href="tel:+7 (923) 540-50-50">+7 (923) 540-50-50</a>
+              </p>
             </div>
             <div className="text-center">
               <svg

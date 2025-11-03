@@ -307,10 +307,10 @@ export default function PriceListPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-dark mb-3 md:mb-4">
-              Прайс-лист клиники
+              Прайс-лист центра
             </h1>
             <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
-              Актуальные цены на все услуги клиники Алдан.
+              Актуальные цены на все услуги центра SPectrUM.
             </p>
           </div>
           <div className="grid gap-6">
@@ -353,7 +353,7 @@ export default function PriceListPage() {
         {/* Hero Section */}
         <div className="text-center mb-8 md:mb-12">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-dark mb-3 md:mb-4">
-            Прайс-лист клиники
+            Прайс-лист центра
           </h1>
           <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
             Актуальные цены на услуги Центра SpectrUM. Выберите интересующее вас
@@ -557,7 +557,7 @@ export default function PriceListPage() {
               <div className="flex flex-wrap gap-2">
                 {[
                   { key: "all", label: "Все" },
-                  { key: "lab", label: "Лабораторная диагностика" },
+                  // { key: "lab", label: "Диагностика" },
                   { key: "other", label: "Другие услуги" },
                 ].map((opt) => (
                   <button
@@ -1026,10 +1026,8 @@ export default function PriceListPage() {
                 Оплата услуг
               </h3>
               <ul className="space-y-1.5 md:space-y-2 text-gray-600 text-sm md:text-base">
-                <li>• Наличными в кассе клиники</li>
+                <li>• Наличными в кассе центра</li>
                 <li>• Банковскими картами</li>
-                <li>• Через онлайн-банкинг</li>
-                <li>• По полису ДМС (при наличии)</li>
               </ul>
             </div>
             <div>
@@ -1037,10 +1035,9 @@ export default function PriceListPage() {
                 Запись на прием
               </h3>
               <ul className="space-y-1.5 md:space-y-2 text-gray-600 text-sm md:text-base">
-                <li>• По телефону: +7 (923) 317-60-60</li>
-                <li>• Через форму на сайте</li>
-                <li>• В личном кабинете пациента</li>
-                <li>• При личном обращении в клинику</li>
+                <li>• По телефону: +7 (923) 540-50-50</li>
+
+                <li>• При личном обращении в центр</li>
               </ul>
             </div>
           </div>
