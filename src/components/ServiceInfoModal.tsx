@@ -9,6 +9,13 @@ type ServiceLike = {
   chips?: string[];
   link: string;
   icon?: React.ReactNode;
+  sections?: {
+    title: string;
+    text?: string;
+    bulletsTitle?: string;
+    bullets?: string[];
+    chips?: string[];
+  }[];
 };
 
 interface ServiceInfoModalProps {
@@ -40,8 +47,8 @@ export default function ServiceInfoModal({
       role="dialog"
     >
       <div className="absolute inset-0 bg-black/60" onClick={onClose} />
-      <div className="relative w-full sm:max-w-2xl bg-white sm:rounded-2xl rounded-t-2xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        <div className="p-4 sm:p-6">
+      <div className="relative w-full sm:max-w-2xl bg-white sm:rounded-2xl rounded-t-2xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 max-h-[92vh]">
+        <div className="p-4 sm:p-6 overflow-y-auto overscroll-contain max-h-[92vh]">
           <div className="flex items-start gap-3 sm:gap-4">
             {service.icon && (
               <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
@@ -52,7 +59,7 @@ export default function ServiceInfoModal({
               <h3 className="text-lg sm:text-xl font-bold text-primary leading-tight">
                 {service.title}
               </h3>
-              {service.desc && (
+              {!service.sections && service.desc && (
                 <p className="mt-2 text-sm sm:text-base text-gray-700">
                   {service.desc}
                 </p>
@@ -79,30 +86,77 @@ export default function ServiceInfoModal({
             </button>
           </div>
 
-          {service.bullets && service.bullets.length > 0 && (
-            <div className="mt-3 sm:mt-4">
-              <p className="font-semibold text-gray-900 text-sm sm:text-base">
-                {service.bulletsTitle || "Рекомендуется:"}
-              </p>
-              <ul className="mt-1 list-disc pl-5 space-y-1 text-sm sm:text-base text-gray-700">
-                {service.bullets.map((b, i) => (
-                  <li key={i}>{b}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {(service.chips || []).length > 0 && (
-            <div className="mt-4 grid grid-cols-3 gap-2">
-              {service.chips!.map((c, i) => (
-                <div
-                  key={i}
-                  className="rounded-lg bg-gradient-to-b from-indigo-50 to-purple-50 border border-gray-200 p-2.5 text-center text-xs sm:text-sm font-semibold text-primary"
+          {service.sections && service.sections.length > 0 ? (
+            <div className="mt-4 space-y-4">
+              {service.sections.map((s, idx) => (
+                <article
+                  key={idx}
+                  className="rounded-xl shadow-sm overflow-hidden bg-gradient-to-b from-white to-pink-50 border border-gray-200"
                 >
-                  {c}
-                </div>
+                  <div className="p-4 sm:p-5">
+                    <h4 className="text-base sm:text-lg font-bold text-primary mb-2">
+                      {s.title}
+                    </h4>
+                    {s.text && (
+                      <p className="text-sm sm:text-base text-gray-700 mb-3">
+                        {s.text}
+                      </p>
+                    )}
+                    {s.bullets && s.bullets.length > 0 && (
+                      <div>
+                        <p className="font-semibold text-gray-900 text-sm sm:text-base">
+                          {s.bulletsTitle || "Рекомендуется:"}
+                        </p>
+                        <ul className="mt-1 list-disc pl-5 space-y-1 text-sm sm:text-base text-gray-700">
+                          {s.bullets.map((b, i) => (
+                            <li key={i}>{b}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                  {s.chips && s.chips.length > 0 && (
+                    <div className="grid grid-cols-3 gap-2 p-3 bg-white/70">
+                      {s.chips.map((c, i) => (
+                        <div
+                          key={i}
+                          className="rounded-lg bg-gradient-to-b from-indigo-50 to-purple-50 border border-gray-200 p-2.5 text-center text-xs sm:text-sm font-semibold text-primary"
+                        >
+                          {c}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </article>
               ))}
             </div>
+          ) : (
+            <>
+              {service.bullets && service.bullets.length > 0 && (
+                <div className="mt-3 sm:mt-4">
+                  <p className="font-semibold text-gray-900 text-sm sm:text-base">
+                    {service.bulletsTitle || "Рекомендуется:"}
+                  </p>
+                  <ul className="mt-1 list-disc pl-5 space-y-1 text-sm sm:text-base text-gray-700">
+                    {service.bullets.map((b, i) => (
+                      <li key={i}>{b}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {(service.chips || []).length > 0 && (
+                <div className="mt-4 grid grid-cols-3 gap-2">
+                  {service.chips!.map((c, i) => (
+                    <div
+                      key={i}
+                      className="rounded-lg bg-gradient-to-b from-indigo-50 to-purple-50 border border-gray-200 p-2.5 text-center text-xs sm:text-sm font-semibold text-primary"
+                    >
+                      {c}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
           )}
 
           <div className="mt-5 flex flex-col sm:flex-row gap-2">
