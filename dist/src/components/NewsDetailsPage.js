@@ -1,0 +1,12 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import React from "react";
+import { Link, useParams } from "react-router-dom";
+import { NEWS_POSTS } from "../data/news";
+export default function NewsDetailsPage() {
+    const { slug } = useParams();
+    const post = NEWS_POSTS.find((p) => p.slug === slug);
+    if (!post) {
+        return (_jsx("div", { className: "min-h-screen bg-lightTeal py-6 sm:py-8 md:py-10", children: _jsx("div", { className: "container mx-auto px-4", children: _jsxs("div", { className: "max-w-3xl mx-auto bg-white rounded-xl shadow p-6", children: [_jsx("h1", { className: "text-xl font-semibold mb-3", children: "\u041D\u043E\u0432\u043E\u0441\u0442\u044C \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u0430" }), _jsx(Link, { to: "/stock", className: "inline-flex items-center justify-center px-3 py-2 rounded-md bg-primary hover:bg-primaryDark text-white text-sm font-medium transition-colors", children: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043A \u043D\u043E\u0432\u043E\u0441\u0442\u044F\u043C" })] }) }) }));
+    }
+    return (_jsx("div", { className: "min-h-screen bg-lightTeal py-6 sm:py-8 md:py-10", children: _jsx("div", { className: "container mx-auto px-4", children: _jsxs("div", { className: "max-w-3xl mx-auto bg-white rounded-xl shadow overflow-hidden", children: [_jsx("img", { src: post.image, alt: post.title, className: "w-full h-64 object-cover", loading: "lazy" }), _jsxs("div", { className: "p-6", children: [_jsx("h1", { className: "text-2xl sm:text-3xl font-bold mb-4", children: post.title }), post.fullText ? (_jsx("div", { className: "text-gray-700 leading-relaxed", children: _jsx("div", { dangerouslySetInnerHTML: { __html: post.fullText } }) })) : (_jsxs("div", { className: "text-gray-700 leading-relaxed", children: [_jsx("p", { className: "mb-3", children: "\u041F\u043E\u043B\u043D\u043E\u0435 \u043E\u043F\u0438\u0441\u0430\u043D\u0438\u0435 \u0434\u043B\u044F \u044D\u0442\u043E\u0439 \u043D\u043E\u0432\u043E\u0441\u0442\u0438 \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442." }), _jsx("p", { children: post.shortText })] })), _jsx("div", { className: "mt-6", children: _jsx(Link, { to: "/stock", className: "inline-flex items-center justify-center px-3 py-2 rounded-md border border-primary text-primary hover:bg-primary hover:text-white text-sm font-medium transition-colors", children: "\u041D\u0430\u0437\u0430\u0434 \u043A \u043D\u043E\u0432\u043E\u0441\u0442\u044F\u043C" }) })] })] }) }) }));
+}
