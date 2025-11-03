@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ServiceInfoModal from "./ServiceInfoModal";
 
 // Define service types
 interface Service {
@@ -9,6 +10,9 @@ interface Service {
   color: string;
   hoverColor: string;
   link: string;
+  desc?: string;
+  bullets?: string[];
+  chips?: string[];
 }
 
 // Define our services with icons and colors (now 19, paginated as carousel)
@@ -81,6 +85,13 @@ const services: Service[] = [
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
     link: "/prices?group=700",
+    desc: "Образовательные лекции и встречи для родителей и специалистов по развитию и поддержке детей.",
+    bullets: [
+      "актуальные темы воспитания и обучения",
+      "разбор сложных случаев",
+      "общение с экспертами",
+    ],
+    chips: ["1–2 часа", "для родителей", "расписание"],
   },
   {
     id: 5,
@@ -104,6 +115,9 @@ const services: Service[] = [
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
     link: "/prices?group=800",
+    desc: "Выгодные комплексы занятий и консультаций. Можно собрать под вашу цель и экономить.",
+    bullets: ["индивидуальный план", "фиксированная цена", "удобный график"],
+    chips: ["индив.", "семейные", "детские"],
   },
   // {
   //   id: 5,
@@ -173,6 +187,13 @@ const services: Service[] = [
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
     link: "/prices?group=500",
+    desc: "Диагностика и коррекция эмоциональных и когнитивных трудностей, поддержка семей.",
+    bullets: [
+      "сложности поведения и обучения",
+      "стресс, тревожность",
+      "поддержка родителей",
+    ],
+    chips: ["60 минут", "от 3-х лет", "от 4 000 руб."],
   },
   {
     id: 7,
@@ -196,6 +217,13 @@ const services: Service[] = [
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
     link: "/prices?group=400",
+    desc: "Психологические консультации для детей, подростков и взрослых: диагностика, поддержка, развитие.",
+    bullets: [
+      "эмоциональные трудности",
+      "детско-родительские отношения",
+      "личностные кризисы",
+    ],
+    chips: ["первичная 4 000 руб.", "от 2-х лет", "семейная 5 000 руб."],
   },
   {
     id: 8,
@@ -219,6 +247,9 @@ const services: Service[] = [
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
     link: "/prices?group=300",
+    desc: "Сопровождение детей с нарушением слуха: развитие речи, коммуникации и учебных навыков.",
+    bullets: ["навыки чтения с губ", "развитие речи", "подготовка к школе"],
+    chips: ["от 3-х лет", "индивидуально"],
   },
   {
     id: 9,
@@ -242,6 +273,9 @@ const services: Service[] = [
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
     link: "/prices?group=200",
+    desc: "Постановка и автоматизация звуков, развитие речи и коммуникативных навыков.",
+    bullets: ["запуск речи", "коррекция звукопроизношения", "ОНР/ФФН"],
+    chips: ["от 3-х лет", "индивидуально"],
   },
 ];
 
@@ -286,6 +320,13 @@ export default function ServiceGrid() {
     color: "bg-primary",
     hoverColor: "hover:bg-primaryDark",
     link: "/prices",
+    desc: "Помощь детям с особенностями развития: формирование учебных навыков, развитие мышления и адаптация.",
+    bullets: [
+      "отставание в развитии",
+      "задержка психического развития",
+      "интеллектуальные трудности",
+    ],
+    chips: ["60 минут", "от 3-х лет", "4 000 руб."],
   };
 
   const priorityTitles = [
@@ -320,6 +361,8 @@ export default function ServiceGrid() {
   const start = page * pageSize;
   const visible = orderedServices.slice(start, start + pageSize);
 
+  const [openService, setOpenService] = React.useState<Service | null>(null);
+
   return (
     <section className="py-6 sm:py-8 bg-white">
       <div className="container mx-auto px-3 sm:px-4">
@@ -333,47 +376,53 @@ export default function ServiceGrid() {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 gap-2 sm:gap-3">
           {visible.map((service, index) => (
-            <Link
-              key={service.link}
-              to={service.link}
-              className={`${service.color} ${service.hoverColor} text-white p-2 sm:p-3 flex flex-col items-center text-center rounded-md sm:rounded-lg shadow-sm overflow-hidden group relative transition-all duration-200 ease-in-out hover:shadow-md`}
-              style={{ "--delay": `${index * 0.02}s` } as React.CSSProperties}
-            >
-              {/* Hover background effect */}
-              <div className="absolute inset-0 bg-white/10 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
-
-              {/* Icon with animation */}
-              <div className="mb-1 sm:mb-2 relative z-10 transition-transform duration-200 group-hover:scale-105">
-                <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center">
-                  {service.icon}
+            <div key={service.link} className="relative">
+              <Link
+                to={service.link}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setOpenService(service);
+                }}
+                className={`${service.color} ${service.hoverColor} text-white p-2 sm:p-3 flex flex-col items-center text-center rounded-md sm:rounded-lg shadow-sm overflow-hidden group relative transition-all duration-200 ease-in-out hover:shadow-md`}
+                style={{ "--delay": `${index * 0.02}s` } as React.CSSProperties}
+              >
+                <div className="absolute inset-0 bg-white/10 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
+                <div className="mb-1 sm:mb-2 relative z-10 transition-transform duration-200 group-hover:scale-105">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center">
+                    {service.icon}
+                  </div>
                 </div>
-              </div>
+                <h3 className="text-xs sm:text-sm font-medium relative z-10 leading-tight">
+                  {service.title}
+                </h3>
+                <div className="mt-0.5 sm:mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 relative z-10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-3 w-3 sm:h-4 sm:w-4 mx-auto"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                  </svg>
+                </div>
+              </Link>
 
-              {/* Title */}
-              <h3 className="text-xs sm:text-sm font-medium relative z-10 leading-tight">
-                {service.title}
-              </h3>
-
-              {/* Arrow indicator that appears on hover */}
-              <div className="mt-0.5 sm:mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 relative z-10">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-3 w-3 sm:h-4 sm:w-4 mx-auto"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-              </div>
-            </Link>
+              {/* Modal is rendered once below the grid */}
+            </div>
           ))}
         </div>
+
+        <ServiceInfoModal
+          open={!!openService}
+          onClose={() => setOpenService(null)}
+          service={openService as any}
+        />
 
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-1 sm:gap-2 mt-4 sm:mt-6">
