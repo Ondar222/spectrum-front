@@ -21,7 +21,7 @@ const items: ShortDirection[] = [
     chips: [
       { label: "60 минут" },
       { label: "от 3-х лет" },
-      { label: "4 000 руб." },
+      { label: "2 200 руб." },
     ],
   },
   {
@@ -35,7 +35,7 @@ const items: ShortDirection[] = [
       "психосоматические расстройства",
     ],
     chips: [
-      { label: "первичная 4 000 руб." },
+      { label: "первичная 2 200 руб." },
       { label: "от 2-х лет" },
       { label: "семейная 5 000 руб." },
     ],
