@@ -11,16 +11,16 @@ export default function DocumentsPage() {
       downloadUrl:
         "https://clinicaldan.ru/upload/iblock/f4b/70jj4rxxrs5otk5k73lp87r10e7ea2j0.pdf",
     },
-    {
-      id: 2,
-      title: "Свидетельство о государственной регистрации",
-      description:
-        "Свидетельство о государственной регистрации юридического лица",
-      fileType: "PDF",
-      fileSize: "1.8 MB",
-      downloadUrl:
-        "https://clinicaldan.ru/upload/iblock/d01/d01f535a0a6bf5cc9394eb2bf0f38438.jpg",
-    },
+    // {
+    //   id: 2,
+    //   title: "Свидетельство о государственной регистрации",
+    //   description:
+    //     "Свидетельство о государственной регистрации юридического лица",
+    //   fileType: "PDF",
+    //   fileSize: "1.8 MB",
+    //   downloadUrl:
+    //     "https://clinicaldan.ru/upload/iblock/d01/d01f535a0a6bf5cc9394eb2bf0f38438.jpg",
+    // },
     {
       id: 3,
       title: "Порядок записи",
@@ -84,14 +84,14 @@ export default function DocumentsPage() {
       fileSize: "1.5 MB",
       downloadUrl: "/documents/document4.jpg",
     },
-    {
-      id: 10,
-      title: "Договор оказания платных медицинских услуг № ___",
-      description: "Договор оказания платных медицинских услуг № ___",
-      fileType: "PDF",
-      fileSize: "1.5 MB",
-      downloadUrl: "/documents/document5.doc",
-    },
+    // {
+    //   id: 10,
+    //   title: "Договор оказания платных медицинских услуг № ___",
+    //   description: "Договор оказания платных медицинских услуг № ___",
+    //   fileType: "PDF",
+    //   fileSize: "1.5 MB",
+    //   downloadUrl: "/documents/document5.doc",
+    // },
     {
       id: 11,
       title: "Политика конфиденциальности",
