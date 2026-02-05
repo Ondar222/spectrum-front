@@ -50,7 +50,7 @@ export const customServices: ApiService[] = [
 
   // 20–22 КЛИНИЧЕСКИЙ ПСИХОЛОГ
   { id: 50020, kind: 0, code: 'EDU-020', name: 'Первичная консультация клинического психолога', altcode: '', altname: '', barcode: '', info: '', group_name: PRICE_GROUPS.CLINICAL_PSY.name, group_id: PRICE_GROUPS.CLINICAL_PSY.id, mz_code: '', cito_cost: 0, duration: mins('01:00'), base_cost: rub(2800), purchase_price: 0, denomination: 0, unit_id: null, unit: null },
-  { id: 50021, kind: 0, code: 'EDU-021', name: 'Повторная консультация клинического психолога', altcode: '', altname: '', barcode: '', info: '', group_name: PRICE_GROUPS.CLINICAL_PSY.name, group_id: PRICE_GROUPS.CLINICAL_PSY.id, mz_code: '', cito_cost: 0, duration: mins('01:00'), base_cost: rub(2800), purchase_price: 0, denomination: 0, unit_id: null, unit: null },
+  { id: 50021, kind: 0, code: 'EDU-021', name: 'Повторная консультация клинического психолога', altcode: '', altname: '', barcode: '', info: '', group_name: PRICE_GROUPS.CLINICAL_PSY.name, group_id: PRICE_GROUPS.CLINICAL_PSY.id, mz_code: '', cito_cost: 0, duration: mins('01:00'), base_cost: rub(2500), purchase_price: 0, denomination: 0, unit_id: null, unit: null },
   { id: 50022, kind: 0, code: 'EDU-022', name: 'Экспериментально-психологическое исследование (ЭПИ-заключение)', altcode: '', altname: '', barcode: '', info: '', group_name: PRICE_GROUPS.CLINICAL_PSY.name, group_id: PRICE_GROUPS.CLINICAL_PSY.id, mz_code: '', cito_cost: 0, duration: mins('01:30'), base_cost: rub(3200), purchase_price: 0, denomination: 0, unit_id: null, unit: null },
 
   // 23–29 ЗАНЯТИЯ
