@@ -28,13 +28,13 @@ export default function ContactsPage() {
                     </svg>
                   </div>
                   <a
-                    href="https://yandex.ru/maps/?text=667003%2C%20Республика%20Тыва%2C%20город%20Кызыл%2C%20улица%20Островского%2C%2010"
+                    href="https://yandex.ru/maps/?text=Республика%20Тыва%2C%20г.%20Кызыл%2C%20ул.%20Ленина%2C%20д.%2060%2C%20офис%201"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-primary transition-colors"
                     aria-label="Открыть адрес на карте"
                   >
-                    667003, Республика Тыва, город Кызыл, улица Островского, 10
+                    Республика Тыва, г. Кызыл, ул. Ленина, д. 60, офис 1
                   </a>
                 </div>
 
@@ -122,7 +122,7 @@ export default function ContactsPage() {
               </h2>
               <div className="flex-grow" style={{ height: "520px" }}>
                 <iframe
-                  src="https://yandex.ru/map-widget/v1/?um=constructor%3A2278f32cc4ff75c081d1dde56b49cffae63a144dd1b287c62638de631eafb40d&amp;source=constructor"
+                  src="https://yandex.ru/map-widget/v1/?um=constructor%3A25d13afc56fef2b8db43876a65f6ef21137ffd2374ff383d965608a21b9b5b6c&amp;source=constructor"
                   width="100%"
                   height="100%"
                   className="rounded-lg"

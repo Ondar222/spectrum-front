@@ -226,7 +226,7 @@ export default function Footer() {
         <div className="pt-6 sm:pt-8 border-t border-white/20 text-sm">
           <div className="bg-black/20 backdrop-blur-sm rounded-lg p-3 sm:p-4 border border-white/10 space-y-1.5 sm:space-y-2">
             <p className="text-gray-200 text-xs sm:text-sm">
-              667003, Республика Тыва, город Кызыл, улица Островского, дом 10
+              Республика Тыва, г. Кызыл, ул. Ленина, д. 60, офис 1
             </p>
             <p className="text-gray-200 text-xs sm:text-sm">
               ИМЕЮТСЯ ПРОТИВОПОКАЗАНИЯ, НЕОБХОДИМА КОНСУЛЬТАЦИЯ СПЕЦИАЛИСТА
