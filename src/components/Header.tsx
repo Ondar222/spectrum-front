@@ -66,35 +66,27 @@ export default function Header() {
         {/* Top bar */}
 
         {/* Main header */}
-        <div className="py-1 md:py-0 flex items-center justify-between">
+        <div className="py-2 md:py-3 flex items-center justify-between">
           <Link
             to="/"
-            className="flex items-center"
+            className="flex items-center flex-shrink-0"
             aria-label="Центр SpectrUM"
           >
             <img
-              src="/favicon.png"
+              src="/Спектрум лого.png"
               alt="SpectrUM"
-              className="block h-8 sm:h-8 md:h-9 lg:h-10 w-auto object-contain mr-3"
+              className="block h-7 sm:h-8 md:h-9 lg:h-10 w-auto object-contain"
               loading="eager"
             />
-            <div className="leading-tight">
-              <div className="text-xl sm:text-base md:text-lg font-bold text-dark">
-                SpectrUM
-              </div>
-              <div className="text-[9px] sm:text-[11px] text-gray-500">
-                психология • педагогика • развитие
-              </div>
-            </div>
           </Link>
 
           {/* Desktop navigation */}
-          <nav className="hidden md:flex">
-            <ul className="flex space-x-4">
+          <nav className="hidden md:flex flex-1 justify-center px-4">
+            <ul className="flex space-x-5 lg:space-x-6">
               <li>
                 <Link
                   to="/"
-                  className="text-dark hover:text-primary transition-colors text-sm"
+                  className="text-dark hover:text-primary transition-colors text-[13px] lg:text-sm whitespace-nowrap"
                 >
                   Главная
                 </Link>
@@ -102,7 +94,7 @@ export default function Header() {
               <li>
                 <Link
                   to="/about"
-                  className="text-dark hover:text-primary transition-colors text-sm"
+                  className="text-dark hover:text-primary transition-colors text-[13px] lg:text-sm whitespace-nowrap"
                 >
                   О центре
                 </Link>
@@ -110,7 +102,7 @@ export default function Header() {
               <li>
                 <Link
                   to="/doctors"
-                  className="text-dark hover:text-primary transition-colors text-sm"
+                  className="text-dark hover:text-primary transition-colors text-[13px] lg:text-sm whitespace-nowrap"
                 >
                   Специалисты
                 </Link>
@@ -118,7 +110,7 @@ export default function Header() {
               <li>
                 <Link
                   to="/prices"
-                  className="text-dark hover:text-primary transition-colors text-sm"
+                  className="text-dark hover:text-primary transition-colors text-[13px] lg:text-sm whitespace-nowrap"
                 >
                   Прайс-лист
                 </Link>
@@ -126,7 +118,7 @@ export default function Header() {
               <li>
                 <Link
                   to="/stock"
-                  className="text-dark hover:text-primary transition-colors text-sm"
+                  className="text-dark hover:text-primary transition-colors text-[13px] lg:text-sm whitespace-nowrap"
                 >
                   Новости
                 </Link>
@@ -134,7 +126,7 @@ export default function Header() {
               <li>
                 <Link
                   to="/vacancies"
-                  className="text-dark hover:text-primary transition-colors text-sm"
+                  className="text-dark hover:text-primary transition-colors text-[13px] lg:text-sm whitespace-nowrap"
                 >
                   Вакансии
                 </Link>
@@ -143,7 +135,7 @@ export default function Header() {
               <li>
                 <Link
                   to="/reviews"
-                  className="text-dark hover:text-primary transition-colors text-sm"
+                  className="text-dark hover:text-primary transition-colors text-[13px] lg:text-sm whitespace-nowrap"
                 >
                   Отзывы
                 </Link>
@@ -151,7 +143,7 @@ export default function Header() {
               <li>
                 <Link
                   to="/questions"
-                  className="text-dark hover:text-primary transition-colors text-sm"
+                  className="text-dark hover:text-primary transition-colors text-[13px] lg:text-sm whitespace-nowrap"
                 >
                   Вопросы
                 </Link>
@@ -159,7 +151,7 @@ export default function Header() {
               <li>
                 <Link
                   to="/documents"
-                  className="text-dark hover:text-primary transition-colors text-sm"
+                  className="text-dark hover:text-primary transition-colors text-[13px] lg:text-sm whitespace-nowrap"
                 >
                   Документы
                 </Link>
@@ -168,7 +160,7 @@ export default function Header() {
                 <li>
                   <Link
                     to="/staff"
-                    className="text-dark hover:text-primary transition-colors text-sm"
+                    className="text-dark hover:text-primary transition-colors text-[13px] lg:text-sm whitespace-nowrap"
                   >
                     Панель сотрудника
                   </Link>
@@ -177,7 +169,7 @@ export default function Header() {
               <li>
                 <Link
                   to="/contacts"
-                  className="text-dark hover:text-primary transition-colors text-sm"
+                  className="text-dark hover:text-primary transition-colors text-[13px] lg:text-sm whitespace-nowrap"
                 >
                   Контакты
                 </Link>
@@ -187,7 +179,7 @@ export default function Header() {
 
           {/* Mobile menu button */}
           <button
-            className="md:hidden text-dark p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="md:hidden text-dark p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 flex-shrink-0"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-expanded={isMenuOpen}
             aria-label="Toggle menu"
@@ -243,17 +235,11 @@ export default function Header() {
             aria-label="SpectrUM"
           >
             <img
-              src="/favicon.png"
+              src="/Спектрум лого.png"
               alt="SpectrUM"
-              className="h-8 w-auto object-contain mr-2"
+              className="h-8 w-auto object-contain"
               loading="eager"
             />
-            <div className="leading-tight">
-              <div className="text-xl font-bold text-dark">SpectrUM</div>
-              <div className="text-[10px] text-gray-500">
-                психология • педагогика • развитие
-              </div>
-            </div>
           </Link>
           <button
             className="text-gray-500 hover:text-dark"
