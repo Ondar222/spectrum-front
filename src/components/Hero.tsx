@@ -5,7 +5,7 @@ import carousel from "../../public/doctorsImage/carouselPhone.jpg";
 const slides = [
   {
     id: 1,
-    title: "Центр SpectrUM",
+    title: "Центр СпектрУМ",
     subtitle: "психология • педагогика • развитие",
     description:
       "Для детей и взрослых: поддержка психологов и педагогов, развитие навыков, мини-группы и индивидуальные занятия.",

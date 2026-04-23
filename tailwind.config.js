@@ -10,7 +10,7 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
-        // Brand palette: SpectrUM (beige/loft + burgundy)
+        // Brand palette: СпектрУМ (beige/loft + burgundy)
         primary: "#9a2f2f", // Brighter burgundy
         primaryDark: "#7a2626", // Darker burgundy for hover
         primaryLight: "#c25454", // Lighter/brighter burgundy

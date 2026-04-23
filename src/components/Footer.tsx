@@ -22,11 +22,11 @@ export default function Footer() {
               to="/"
               className="text-lg sm:text-xl md:text-2xl font-semibold text-white block mb-3 sm:mb-4 hover:text-primary transition-colors"
             >
-              Центр SpectrUM
+Центр СпектрУМ
             </Link>
             <p className="text-gray-200 mb-3 sm:mb-4 leading-relaxed text-sm sm:text-base">
               это образовательный центр, который направлен на всестороннее
-              развитие детей разных возрастов. Специалисты ЦИР «SpectrUM»
+              развитие детей разных возрастов. Специалисты ЦИР «СпектрУМ»
               работают со всеми детьми, в том числе и с детьми с ограниченными
               возможностями здоровья. Так же психологи оказывают психологическую
               помощь детям и родителям.
@@ -232,7 +232,7 @@ export default function Footer() {
               ИМЕЮТСЯ ПРОТИВОПОКАЗАНИЯ, НЕОБХОДИМА КОНСУЛЬТАЦИЯ СПЕЦИАЛИСТА
             </p>
             <p className="text-gray-200 text-xs sm:text-sm">
-              © 2025 Центр SpectrUM. Все права защищены.
+              © 2025 Центр СпектрУМ. Все права защищены.
             </p>
             <p className="text-gray-200 text-xs sm:text-sm">
               <a className="hover:text-primary" href="https://lana-soft.ru/">

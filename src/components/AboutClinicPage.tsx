@@ -110,10 +110,10 @@ export default function AboutClinicPage() {
         {/* Hero Section */}
         <div className="text-center mb-10 md:mb-16">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 md:mb-4 text-dark">
-            Центр SpectrUM
+            Центр СпектрУМ
           </h1>
           <p className="text-base sm:text-lg text-gray-700 max-w-3xl mx-auto">
-            Центр SpectrUM предлагает образовательные и психологические услуги
+            Центр СпектрУМ предлагает образовательные и психологические услуги
             для детей, подростков и взрослых.
           </p>
         </div>

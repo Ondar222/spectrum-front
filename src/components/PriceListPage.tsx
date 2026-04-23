@@ -310,7 +310,7 @@ export default function PriceListPage() {
               Прайс-лист центра
             </h1>
             <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
-              Актуальные цены на все услуги центра SPectrUM.
+              Актуальные цены на все услуги центра СпектрУМ.
             </p>
           </div>
           <div className="grid gap-6">
@@ -356,7 +356,7 @@ export default function PriceListPage() {
             Прайс-лист центра
           </h1>
           <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
-            Актуальные цены на услуги Центра SpectrUM. Выберите интересующее вас
+            Актуальные цены на услуги Центра СпектрУМ. Выберите интересующее вас
             направление или воспользуйтесь поиском для быстрого нахождения
             нужной услуги.
           </p>

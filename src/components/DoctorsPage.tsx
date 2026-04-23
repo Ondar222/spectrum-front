@@ -129,7 +129,7 @@ export default function DoctorsPage() {
               Наши специалисты
             </h1>
             <p className="text-sm sm:text-base md:text-xl text-gray-600 max-w-3xl mx-auto">
-              Специалисты Центра SpectrUM — опытные психологи и педагоги,
+              Специалисты Центра СпектрУМ — опытные психологи и педагоги,
               работающие с детьми, подростками и взрослыми.
             </p>
           </div>
@@ -172,7 +172,7 @@ export default function DoctorsPage() {
             Наши специалисты
           </h1>
           <p className="text-sm sm:text-base md:text-xl text-gray-600 max-w-3xl mx-auto">
-            Специалисты Центра SpectrUM — опытные психологи и педагоги,
+            Специалисты Центра СпектрУМ — опытные психологи и педагоги,
             работающие с детьми, подростками и взрослыми.
           </p>
         </div>

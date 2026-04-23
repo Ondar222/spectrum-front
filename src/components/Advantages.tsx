@@ -94,7 +94,7 @@ export default function Advantages() {
     >
       <div className="container mx-auto px-3 sm:px-4 relative z-10">
         <h2 className="text-xl sm:text-2xl font-bold text-center mb-6 sm:mb-8 text-dark">
-          Преимущества SpectrUM
+          Преимущества СпектрУМ
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">

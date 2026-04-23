@@ -70,11 +70,11 @@ export default function Header() {
           <Link
             to="/"
             className="flex items-center flex-shrink-0"
-            aria-label="Центр SpectrUM"
+            aria-label="Центр СпектрУМ"
           >
             <img
               src="/Спектрум лого.png"
-              alt="SpectrUM"
+              alt="СпектрУМ"
               className="block h-7 sm:h-8 md:h-9 lg:h-10 w-auto object-contain"
               loading="eager"
             />
@@ -232,11 +232,11 @@ export default function Header() {
             to="/"
             className="flex items-center"
             onClick={() => setIsMenuOpen(false)}
-            aria-label="SpectrUM"
+            aria-label="СпектрУМ"
           >
             <img
               src="/Спектрум лого.png"
-              alt="SpectrUM"
+              alt="СпектрУМ"
               className="h-8 w-auto object-contain"
               loading="eager"
             />
