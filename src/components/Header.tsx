@@ -70,11 +70,11 @@ export default function Header() {
           <Link
             to="/"
             className="flex items-center flex-shrink-0"
-            aria-label="Центр СпектрУМ"
+            aria-label="Центр СпектрУМ — логопед, дефектолог, психолог"
           >
             <img
               src="/Спектрум лого.png"
-              alt="СпектрУМ"
+              alt="Центр СпектрУМ — логопед, дефектолог, психолог в Кызыле"
               className="block h-7 sm:h-8 md:h-9 lg:h-10 w-auto object-contain"
               loading="eager"
             />
