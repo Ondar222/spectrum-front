@@ -6,6 +6,7 @@ export type NewsPost = {
   shortText: string;
   fullText?: string;
   date?: string; // ISO string, optional if needed later
+  url?: string; // внешняя ссылка на оригинальный пост (например, ВКонтакте)
 };
 
 export const NEWS_POSTS: NewsPost[] = [

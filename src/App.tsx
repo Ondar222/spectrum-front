@@ -6,6 +6,7 @@ import Hero from "./components/Hero";
 import ServiceGrid from "./components/ServiceGrid";
 import Advantages from "./components/Advantages";
 import Testimonials from "./components/Testimonials";
+import HomeNews from "./components/HomeNews";
 import ContactForm from "./components/ContactForm";
 import Checkups from "./components/Checkups";
 import DoctorsPage from "./components/DoctorsPage";
@@ -47,6 +48,7 @@ function HomePage() {
 
       <Advantages />
       <Testimonials />
+      <HomeNews />
       <ContactForm />
     </>
   );

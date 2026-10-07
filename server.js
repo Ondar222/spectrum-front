@@ -33,6 +33,150 @@ const ALFA_BANK_CONFIG = {
   },
 };
 
+// Конфигурация ВКонтакте (публичная группа, с которой тянутся посты)
+const VK_CONFIG = {
+  accessToken:
+    process.env.VK_API_TOKEN ||
+    "73849c1373849c1373849c138670bb86a27738473849c131a2089ea3553b2671f256178",
+  ownerId: process.env.VK_OWNER_ID || "-225368787",
+  apiVersion: "5.199",
+};
+
+// Прокси для получения постов группы ВКонтакте
+app.get("/api/vk/posts", async (req, res) => {
+  const startTime = Date.now();
+  const requestId = `vk_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+
+  try {
+    const count = Math.min(Number(req.query.count) || 30, 100);
+
+    const params = new URLSearchParams({
+      owner_id: VK_CONFIG.ownerId,
+      count: String(count),
+      access_token: VK_CONFIG.accessToken,
+      v: VK_CONFIG.apiVersion,
+    });
+
+    const response = await fetch(
+      `https://api.vk.com/method/wall.get?${params.toString()}`
+    );
+
+    const data = await response.json();
+
+    if (data.error) {
+      console.error(`[${requestId}] ❌ Ошибка VK API:`, data.error);
+      return res.status(400).json({
+        error: true,
+        errorCode: data.error.error_code || "VK_API_ERROR",
+        message: data.error.error_msg || "Ошибка при получении постов",
+      });
+    }
+
+    const items = data.response?.items || [];
+    const posts = items
+      .filter((item) => item.text || (item.attachments && item.attachments.length))
+      .map((item) => normalizeVkPost(item));
+
+    console.log(
+      `[${requestId}] ✅ Получено постов: ${posts.length} из ${data.response?.count ?? 0}`
+    );
+
+    res.json({ success: true, count: posts.length, posts });
+  } catch (error) {
+    console.error(`[${requestId}] ❌ Ошибка при получении постов VK:`, {
+      error: error.message,
+      duration: `${Date.now() - startTime}ms`,
+    });
+    res.status(500).json({
+      error: true,
+      errorCode: "INTERNAL_ERROR",
+      message: "Внутренняя ошибка сервера",
+      details: error.message,
+    });
+  }
+});
+
+// Приведение поста VK к структуре, используемой на фронте
+function normalizeVkPost(item) {
+  const rawText = item.text || extractAttachmentText(item);
+  const lines = rawText.split("\n").map((l) => l.trim()).filter(Boolean);
+  const title = lines[0] || "Пост из ВКонтакте";
+  const bodyLines = lines.slice(1);
+  const fullTextHtml = linesToHtml(rawText);
+
+  return {
+    id: `vk_${item.id}`,
+    slug: `vk_${item.id}`,
+    title,
+    image: pickVkPostImage(item),
+    shortText: buildVkShortText(bodyLines),
+    fullText: fullTextHtml,
+    date: item.date ? new Date(item.date * 1000).toISOString().slice(0, 10) : undefined,
+    url: `https://vk.com/wall${item.owner_id}_${item.id}`,
+  };
+}
+
+// Для постов без текста пробуем взять описание из медиавложений (видео/репост)
+function extractAttachmentText(item) {
+  for (const att of item.attachments || []) {
+    const source = att[att.type] || {};
+    if (att.type === "video") {
+      const text = source.title || source.description || "";
+      if (text.trim()) return text.trim();
+    }
+    if (att.type === "wallpost" && source.text) {
+      return source.text.trim();
+    }
+  }
+  return "";
+}
+
+// Выбор превью-изображения из вложений поста
+function pickVkPostImage(item) {
+  const attachments = item.attachments || [];
+  const mediaTypes = ["photo", "album", "doc", "video", "wallpost"];
+  for (const att of attachments) {
+    const source = att[att.type] || {};
+    if (!mediaTypes.includes(att.type)) continue;
+    const sizes = source.sizes || source.image || [];
+    if (!sizes.length) continue;
+    // Приоритет широким размерам, иначе максимальному по площади
+    const preferred =
+      sizes.find((s) => s.type === "w") ||
+      sizes.find((s) => s.type === "x") ||
+      sizes.find((s) => s.type === "y") ||
+      sizes.find((s) => s.type === "z") ||
+      [...sizes].sort((a, b) => b.width * b.height - a.width * a.height)[0];
+    if (preferred?.url) return preferred.url;
+  }
+  return "";
+}
+
+// Короткий текст для карточки (без первой строки-заголовка)
+function buildVkShortText(bodyLines) {
+  const text = bodyLines.join(" ");
+  return text.length > 180 ? `${text.slice(0, 180).trimEnd()}…` : text;
+}
+
+// Преобразование текста поста в простой HTML (переносы строк в параграфы)
+function linesToHtml(rawText) {
+  const paragraphs = rawText
+    .split(/\n{2,}/)
+    .map((chunk) =>
+      chunk
+        .split("\n")
+        .map((l) => escapeHtml(l.trim()))
+        .filter(Boolean)
+        .join("<br/>")
+    )
+    .filter(Boolean);
+  return paragraphs.map((p) => `<p>${p}</p>`).join("");
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 // Определяем текущую среду
 const isProduction = process.env.NODE_ENV === "production";
 const currentConfig = isProduction

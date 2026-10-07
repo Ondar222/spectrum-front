@@ -10,6 +10,17 @@ body {
   line-height: 1.5;
 }
 
+/* Ban horizontal page scrolling on all screens (mobile-friendly).
+   Set only on html: overflow on body would break position: sticky header. */
+html {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  max-width: 100%;
+}
+
 /* Global adaptive typography scale to keep all pages consistent */
 @layer base {
   html {
